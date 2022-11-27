@@ -14,5 +14,10 @@ About text
 - [ ] Checkbox 3
 
 * Fourth note
+:PROPERTIES:
+:prop1: ABC
+:prop2: CDE
+:END:
+
 
 Text
