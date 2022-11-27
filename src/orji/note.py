@@ -43,6 +43,15 @@ class Note:
     @property
     def body(self):
         return Body(self._node)
+    
+    def at(self, lookup):
+        matching_notes = [n for n in self._node.children if n.heading == lookup]
+        if len(matching_notes) == 0:
+            raise Exception(f"No notes found in {self.heading} with name {lookup}")
+        elif len(matching_notes) > 1:
+            raise Exception(f"More than one notes found in {self.heading} with name {lookup}")
+        else:
+            return matching_notes[0]
 
     def __iter__(self):
         for node in self._node.children:

@@ -12,3 +12,7 @@ About text
 - [ ] Checkbox 1
 - [X] Checkbox 2
 - [ ] Checkbox 3
+
+* Fourth note
+
+Text
