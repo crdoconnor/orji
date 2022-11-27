@@ -11,8 +11,10 @@ def load_credentials():
         return repo_user, repo_pass
     else:
         print(f"OS Environ: {os.environ}")
-        raise Exception(f"Environment variables for uploading to PyPI not found: {key_repo_user} and {key_repo_pass}. "
-                        f"Please create an account at https://pypi.org")
+        raise Exception(
+            f"Environment variables for uploading to PyPI not found: {key_repo_user} and {key_repo_pass}. "
+            f"Please create an account at https://pypi.org"
+        )
 
 
 def upload_distribution():

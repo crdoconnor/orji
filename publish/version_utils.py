@@ -24,7 +24,7 @@ def bump_version(config_file: str) -> str:
 
 # Copy the version to the __init__.py file.
 def copy_version_to_package(path: str, v: str):
-    """ Copy the single source of truth version number into the package as well. """
+    """Copy the single source of truth version number into the package as well."""
 
     # Copy __version__ to all root-level files in path.
     copy_files = ["_version.py"]
