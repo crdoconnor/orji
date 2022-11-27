@@ -1,0 +1,92 @@
+
+-------------------------
+Name: A todo note
+Slug: a-todo-note
+State: TODO
+Tags: 
+
+Text:
+
+
+About text
+
+
+Rich:
+
+
+
+About text
+
+-------------------------
+
+-------------------------
+Name: A done note with bullet points
+Slug: a-done-note-with-bullet-points
+State: DONE
+Tags: tag1 
+
+Text:
+
+
++ Bullet one
++ Bullet two
+
+
+Rich:
+
+
+
++ Bullet one
++ Bullet two
+
+-------------------------
+
+-------------------------
+Name: A third note with checkboxes
+Slug: a-third-note-with-checkboxes
+State: None
+Tags: tag2 tag3 
+
+Text:
+
+
+- [ ] Checkbox 1
+- [X] Checkbox 2
+- [ ] Checkbox 3
+
+
+Rich:
+
+
+
+- [ ] Checkbox 1
+- [X] Checkbox 2
+- [ ] Checkbox 3
+
+-------------------------
+
+-------------------------
+Name: Fourth note
+Slug: fourth-note
+State: None
+Tags: 
+
+Text:
+
+
+Text
+
+Rich:
+
+
+
+Text
+-------------------------
+
+
+=========================
+Lookup:
+
+Text: 
+Text
+Property 1: ABC

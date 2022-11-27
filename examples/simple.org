@@ -19,5 +19,4 @@ About text
 :prop2: CDE
 :END:
 
-
 Text
