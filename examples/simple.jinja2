@@ -1,7 +1,18 @@
 {% for note in notes %}
+-------------------------
 Name: {{ note.name }}
 Slug: {{ note.slug }}
 State: {{ note.state }}
+Tags: {% for tag in note.tags %}{{ tag }} {% endfor %}
 
-Text: {{ note.body }}
+Text:
+
+{{ note.body }}
+
+Rich:
+
+{% for line in note.body.lines %}
+{{ line }}
+{%- endfor %}
+-------------------------
 {% endfor %}

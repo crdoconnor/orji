@@ -1,11 +1,14 @@
-* TODO Note 1
+* TODO A todo note
 
 About text
 
-* DONE Note 2
+* DONE A done note with bullet points :tag1:
 
-About text
++ Bullet one
++ Bullet two
 
-* Note 3
+* A third note with checkboxes :tag2:tag3:
 
-About text
+- [ ] Checkbox 1
+- [X] Checkbox 2
+- [ ] Checkbox 3
