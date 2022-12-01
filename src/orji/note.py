@@ -30,6 +30,21 @@ class Note:
         return self._node.heading
 
     @property
+    def indexlookup(self):
+        indices = []
+        is_root = False
+        node = self._node
+        while True:
+            index = [i for i, n in enumerate(node.parent.children) if n == node][0]
+            indices.append(str(index))
+            if node.parent.is_root():
+                break
+            else:
+                node = node.parent
+
+        return "/".join(reversed(indices))
+
+    @property
     def slug(self):
         return slugify(self._node.heading)
 
@@ -48,6 +63,15 @@ class Note:
     @property
     def prop(self):
         return self._node.properties
+
+    def from_indexlookup(self, indexlookup):
+        split = [int(x) for x in indexlookup.split("/")]
+        node = self._node
+
+        for index in split:
+            node = node.children[index]
+
+        return Note(node)
 
     def at(self, lookup):
         matching_notes = [n for n in self._node.children if n.heading == lookup]

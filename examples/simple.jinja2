@@ -4,6 +4,7 @@ Name: {{ note.name }}
 Slug: {{ note.slug }}
 State: {{ note.state }}
 Tags: {% for tag in note.tags %}{{ tag }} {% endfor %}
+ILookup : {{ note.indexlookup }}
 
 Text:
 
@@ -18,7 +19,14 @@ Rich:
 {% endfor %}
 
 =========================
-Lookup:
+Lookup level A:
 
 Text: {{ notes.at("Fourth note").body }}
 Property 1: {{ notes.at("Fourth note").prop["prop1"] }}
+ILookup : {{ notes.at("Fourth note").indexlookup }}
+=========================
+Lookup level C:
+
+Text: {{ notes.at("Fourth note").at("Subnote B").at("Subnote C").body }}
+ILookup : {{ notes.at("Fourth note").at("Subnote B").at("Subnote C").indexlookup }}
+=========================

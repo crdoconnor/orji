@@ -20,3 +20,9 @@ About text
 :END:
 
 Text
+
+** Subnote B
+
+*** Subnote C
+
+Subnote C body.
