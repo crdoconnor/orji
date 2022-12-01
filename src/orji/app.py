@@ -16,11 +16,46 @@ def fail(message):
     raise Failure(message)
 
 
+def environment(latexmode):
+    if latexmode:
+        env = jinja2.Environment(
+            block_start_string="\BLOCK{",
+            block_end_string="}",
+            variable_start_string="\VAR{",
+            variable_end_string="}",
+            comment_start_string="\#{",
+            comment_end_string="}",
+            line_statement_prefix="%%",
+            line_comment_prefix="%#",
+            trim_blocks=True,
+            autoescape=False,
+            undefined=jinja2.StrictUndefined,
+            loader=jinja2.BaseLoader,
+        )
+    else:
+        env = jinja2.Environment(
+            undefined=jinja2.StrictUndefined, loader=jinja2.BaseLoader
+        )
+    env.globals["fail"] = fail
+    return env
+
+
 @click.command()
 @click.argument("orgfile")
 @click.argument("jinjafile")
-@click.option("-i", "--indexlookup", "indexlookup")
-def main(orgfile, jinjafile, indexlookup):
+@click.option(
+    "--indexlookup",
+    "indexlookup",
+    help="Specify zero-indexed subnote to use e.g. 0/0/4",
+)
+@click.option(
+    "--latexmode",
+    is_flag=True,
+    show_default=True,
+    default=False,
+    help="Jinja2 latex mode",
+)
+def main(orgfile, jinjafile, indexlookup, latexmode):
     org_text = Path(orgfile).read_text()
     template_text = Path(jinjafile).read_text()
     parsed = loads(org_text)
@@ -29,13 +64,12 @@ def main(orgfile, jinjafile, indexlookup):
     if indexlookup is not None:
         notes = notes.from_indexlookup(indexlookup)
 
-    environment = jinja2.Environment(
-        undefined=jinja2.StrictUndefined, loader=jinja2.BaseLoader
-    )
-    environment.globals["fail"] = fail
-
     try:
-        output_text = environment.from_string(template_text).render(notes=notes)
+        output_text = (
+            environment(latexmode=latexmode)
+            .from_string(template_text)
+            .render(notes=notes)
+        )
     except jinja2.exceptions.UndefinedError as error:
         lineno = traceback.extract_tb(error.__traceback__)[-1].lineno
         click.echo(f"Template error on line {lineno} of {jinjafile}: {error}", err=True)

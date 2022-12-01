@@ -17,6 +17,10 @@ class Body:
     def lines(self):
         return [Line(line_text) for line_text in self.text.split("\n")]
 
+    @property
+    def strip(self):
+        return self.text.strip()
+
     def __str__(self):
         return self.text
 

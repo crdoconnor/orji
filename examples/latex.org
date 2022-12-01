@@ -1,0 +1,13 @@
+* details
+
+** name
+
+Colm O'Connor
+
+** github
+
+https://github.com/crdoconnor/
+
+* summary
+
+This is a summary about me.
