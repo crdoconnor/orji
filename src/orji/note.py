@@ -1,6 +1,10 @@
 from slugify import slugify
 
 
+class OrjiError(Exception):
+    pass
+
+
 class Line:
     def __init__(self, text):
         self.text = text
@@ -80,10 +84,10 @@ class Note:
     def at(self, lookup):
         matching_notes = [n for n in self._node.children if n.heading == lookup]
         if len(matching_notes) == 0:
-            raise Exception(f"No notes found in {self.heading} with name {lookup}")
+            raise OrjiError(f"No notes found in {self.name} with name {lookup}")
         elif len(matching_notes) > 1:
-            raise Exception(
-                f"More than one notes found in {self.heading} with name {lookup}"
+            raise OrjiError(
+                f"More than one notes found in {self.name} with name {lookup}"
             )
         else:
             return Note(matching_notes[0])
