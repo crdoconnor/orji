@@ -5,7 +5,7 @@
   "description": "",
   "url": "https://github.com/crdoconnor/orji",
   "python_version": "3.8",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "scripts": [
     "orji = orji:main"
   ]
