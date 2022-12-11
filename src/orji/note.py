@@ -1,4 +1,5 @@
 from slugify import slugify
+import re
 
 
 class OrjiError(Exception):
@@ -16,6 +17,17 @@ class Line:
 class Body:
     def __init__(self, node):
         self.text = node.body
+
+    @property
+    def latexed(self):
+        text = self.text
+        text = re.sub(
+            re.compile(r"\[\[(.*?)\]\[(.*?)\]\]"),
+            r"\\href{\1}{\2}",
+            text,
+        )
+        text = text.replace("&", "\\&")
+        return text
 
     @property
     def lines(self):
