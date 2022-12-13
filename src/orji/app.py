@@ -1,5 +1,5 @@
 from ._version import __version__
-from .note import Note
+from .note import Note, OrjiError
 from pathlib import Path
 from orgparse import loads
 import traceback
@@ -75,6 +75,10 @@ def main(orgfile, jinjafile, indexlookup, latexmode):
         click.echo(f"Template error on line {lineno} of {jinjafile}: {error}", err=True)
         exit(1)
     except Failure as error:
+        lineno = traceback.extract_tb(error.__traceback__)[-2].lineno
+        click.echo(f"Failure on line {lineno} of {jinjafile}: {error}", err=True)
+        exit(1)
+    except OrjiError as error:
         lineno = traceback.extract_tb(error.__traceback__)[-2].lineno
         click.echo(f"Failure on line {lineno} of {jinjafile}: {error}", err=True)
         exit(1)

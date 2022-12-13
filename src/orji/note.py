@@ -99,7 +99,7 @@ class Note:
             raise OrjiError(f"No notes found in {self.name} with name {lookup}")
         elif len(matching_notes) > 1:
             raise OrjiError(
-                f"More than one notes found in {self.name} with name {lookup}"
+                f"More than one note found in {self.name} with name {lookup}"
             )
         else:
             return Note(matching_notes[0])
