@@ -2,12 +2,12 @@
 
 ** name
 
-Colm O'Connor
+John Doe
 
 ** github
 
-https://github.com/crdoconnor/
+https://github.com/therealjohndoe
 
 * summary
 
-This is a summary about me.
+This is a summary about me with a [[http://www.google.com][link to a website I made]] & some more stuff.

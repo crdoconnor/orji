@@ -110,7 +110,7 @@
 % \raisebox{-0.00\height}\faLinkedin\ username \ | \ \raisebox{-0.05\height}\faGlobe \ mysite.com  & \hfill \emoji{calling} number
 % \end{tabularx}
 
-%% set details = notes.at("details")
+%% set details = root.at("details")
 
 \begin{tabularx}{\linewidth}{@{} C @{}}
 \Huge{\VAR{ details.at("name").body.strip }} \\[7.5pt]
@@ -127,7 +127,7 @@
 
 %Interests/ Keywords/ Summary
 \section{Summary}
-\VAR{ notes.at("summary").body }
+\VAR{ root.at("summary").body.latexed }
 
 %Experience
 \section{Work Experience}

@@ -68,7 +68,7 @@ def main(orgfile, jinjafile, indexlookup, latexmode):
         output_text = (
             environment(latexmode=latexmode)
             .from_string(template_text)
-            .render(notes=notes)
+            .render(notes=notes, root=notes)
         )
     except jinja2.exceptions.UndefinedError as error:
         lineno = traceback.extract_tb(error.__traceback__)[-1].lineno

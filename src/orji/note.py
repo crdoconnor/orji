@@ -16,7 +16,7 @@ class Line:
 
 class Body:
     def __init__(self, node):
-        self.text = node.body
+        self.text = node.get_body(format="raw")
 
     @property
     def latexed(self):
