@@ -14,9 +14,9 @@ class Line:
         return self.text
 
 
-class Body:
-    def __init__(self, node):
-        self.text = node.get_body(format="raw")
+class TextChunk:
+    def __init__(self, text):
+        self.text = text
 
     @property
     def latexed(self):
@@ -39,6 +39,15 @@ class Body:
 
     def __str__(self):
         return self.text
+
+
+class Body(TextChunk):
+    def __init__(self, text):
+        self.text = text
+
+    @property
+    def paragraphs(self):
+        return [TextChunk(text) for text in self.text.split("\n\n")]
 
 
 class Note:
@@ -78,7 +87,7 @@ class Note:
 
     @property
     def body(self):
-        return Body(self._node)
+        return Body(self._node.get_body(format="raw"))
 
     @property
     def prop(self):
