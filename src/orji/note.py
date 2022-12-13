@@ -47,7 +47,9 @@ class Body(TextChunk):
 
     @property
     def paragraphs(self):
-        return [TextChunk(text) for text in self.text.split("\n\n")]
+        return [
+            TextChunk(text) for text in self.text.split("\n\n") if text.strip() != ""
+        ]
 
 
 class Note:
