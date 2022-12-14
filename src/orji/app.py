@@ -74,6 +74,12 @@ def main(orgfile, jinjafile, indexlookup, latexmode):
         lineno = traceback.extract_tb(error.__traceback__)[-1].lineno
         click.echo(f"Template error on line {lineno} of {jinjafile}: {error}", err=True)
         exit(1)
+    except jinja2.exceptions.TemplateSyntaxError as error:
+        lineno = traceback.extract_tb(error.__traceback__)[-1].lineno
+        click.echo(
+            f"Template syntax error on line {lineno} of {jinjafile}: {error}", err=True
+        )
+        exit(1)
     except Failure as error:
         lineno = traceback.extract_tb(error.__traceback__)[-2].lineno
         click.echo(f"Failure on line {lineno} of {jinjafile}: {error}", err=True)
