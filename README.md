@@ -1,15 +1,34 @@
 # OrJi
 
+OrJi is a command line tool to generate text files using [jinja2](https://en.wikipedia.org/wiki/Jinja_(template_engine))
+and [orgmode](https://en.wikipedia.org/wiki/Org-mode) files. It can be used to generate LaTeX or HTML or any other kind
+of text from an orgmode file.
+
+## Why?
+
+For me so I can write [letters](https://github.com/crdoconnor/orji/blob/main/examples/letter.org) and stuff in [orgzly](https://orgzly.com/) or [plainorg](https://plainorg.com/) and run
+a short script to create a nicely formatted PDF from a [template file](https://github.com/crdoconnor/orji/blob/main/examples/letter.jinja2).
+
+You can do quite a lot more than that, though.
+
+```bash
+cd orji/examples
+orji --latexmode letter.org letter.jinja2 > output.tex
+cd output/
+pdflatex output.tex
+```
+
+
 ## Install
 
 OrJi is typically best installed by installing [pipx](https://pypa.github.io/pipx/)
-through your system package manager and then installing orji using pipx.
+and then installing orji using pipx.
 
 ```bash
 pipx install orji
 ```
 
-## QuickStart
+## Example
 
 ```bash
 orji myorg.org myjinja.jinja2
@@ -45,7 +64,7 @@ Text
 And myjinja2.jinja2:
 
 ```jinja2
-{% for note in notes %}
+{% for note in root %}
 -------------------------
 Name: {{ note.name }}
 Slug: {{ note.slug }}
@@ -67,8 +86,8 @@ Rich:
 =========================
 Lookup:
 
-Text: {{ notes.at("Fourth note").body }}
-Property 1: {{ notes.at("Fourth note").prop["prop1"] }}
+Text: {{ root.at("Fourth note").body }}
+Property 1: {{ root.at("Fourth note").prop["prop1"] }}
 ```
 
 output:
