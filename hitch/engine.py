@@ -61,16 +61,22 @@ class Engine(BaseEngine):
         self.orji_bin = self.pylibrary.bin.orji
 
     @no_stacktrace_for(AssertionError)
-    @validate(cmd=Str(), output=Str())
+    @validate(cmd=Str(), output=Str(), error=Bool())
     def orji(
         self,
         cmd,
         output,
+        error=True
     ):
         from shlex import split
         from templex import Templex
+        
+        command = self.orji_bin(*split(cmd)).in_dir(self.path.working)
+        
+        if error:
+            command = command.ignore_errors()
 
-        actual_output = self.orji_bin(*split(cmd)).in_dir(self.path.working).output()
+        actual_output = command.output()
 
         try:
             Templex(actual_output).assert_match(output)
