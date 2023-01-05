@@ -121,7 +121,7 @@ Quickstart:
         Name: A third note with checkboxes
         Slug: a-third-note-with-checkboxes
         State: None
-        Tags: tag3 tag2 
+        Tags: tag2 tag3 
         ILookup : 2
 
         Text:

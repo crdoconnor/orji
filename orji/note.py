@@ -63,7 +63,6 @@ class Note:
     @property
     def indexlookup(self):
         indices = []
-        is_root = False
         node = self._node
         while True:
             index = [i for i, n in enumerate(node.parent.children) if n == node][0]
@@ -85,7 +84,7 @@ class Note:
 
     @property
     def tags(self):
-        return self._node.tags
+        return sorted(self._node.tags)
 
     @property
     def body(self):

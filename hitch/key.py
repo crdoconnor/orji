@@ -1,5 +1,4 @@
 from hitchstory import StoryCollection
-from strictyaml import Str, Map, Bool, load
 from commandlib import Command, python
 from click import argument, group, pass_context
 from pathquery import pathquery
@@ -105,7 +104,6 @@ def regression():
     Run regression testing - lint and then run all tests.
     """
     _lint()
-    _doctests()
     storybook = _storybook().only_uninherited()
     storybook.with_params(**{"python version": "3.7.0"}).ordered_by_name().play()
 
@@ -131,7 +129,6 @@ def checks():
     """
     toolkit.validate_reformatting()
     toolkit.lint(exclude=["__init__.py", "ruamel"])
-    _doctests()
     storybook = _storybook().only_uninherited()
     storybook.with_params(**{"python version": "3.7.0"}).ordered_by_name().play()
 
@@ -154,7 +151,7 @@ def ipython():
     )
     from commandlib import Command
 
-    version = _personal_settings().data["params"]["python version"]
+    version = "3.7.0"
     Command(DIR.gen.joinpath("py{0}".format(version), "bin", "python"))(
         DIR.gen.joinpath("example.py")
     ).run()
@@ -213,21 +210,13 @@ def readmegen():
 
 
 @cli.command()
-def doctests():
-    """
-    Run doctests in utils.py in python 2 and 3.
-    """
-    _doctests()
-
-
-@cli.command()
 def rerun():
     """
     Rerun last example code block with specified version of Python.
     """
     from commandlib import Command
 
-    version = _personal_settings().data["params"]["python version"]
+    version = "3.7.0"
     Command(DIR.gen.joinpath("py{0}".format(version), "bin", "python"))(
         DIR.gen.joinpath("working", "examplepythoncode.py")
     ).in_dir(DIR.gen.joinpath("working")).run()
