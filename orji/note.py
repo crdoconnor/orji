@@ -28,7 +28,6 @@ class TextChunk:
         )
         text = text.replace("\n+ ", "\n* ")
         return text
-        
 
     @property
     def latexed(self):
