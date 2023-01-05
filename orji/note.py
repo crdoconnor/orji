@@ -19,6 +19,18 @@ class TextChunk:
         self.text = text
 
     @property
+    def markdown(self):
+        text = self.text
+        text = re.sub(
+            re.compile(r"\[\[(.*?)\]\[(.*?)\]\]"),
+            r"[\1](\2)",
+            text,
+        )
+        text = text.replace("\n+ ", "\n* ")
+        return text
+        
+
+    @property
     def latexed(self):
         text = self.text
         text = re.sub(
