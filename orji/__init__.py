@@ -1,2 +1,3 @@
-from ._version import __version__
 from .app import main
+
+__version__ = "DEVELOPMENT_VERSION"

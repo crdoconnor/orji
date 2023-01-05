@@ -175,10 +175,10 @@ def deploy():
     Deploy to pypi as specified version.
     """
     git = Command("git")
-    git("clone", "git@github.com:crdoconnor/strictyaml.git").in_dir(DIR.gen).run()
-    project = DIR.gen / "strictyaml"
+    git("clone", "git@github.com:crdoconnor/orji.git").in_dir(DIR.gen).run()
+    project = DIR.gen / "orji"
     version = DIR.project.joinpath("VERSION").text().rstrip()
-    initpy = DIR.project.joinpath("strictyaml", "__init__.py")
+    initpy = DIR.project.joinpath("orji", "__init__.py")
     original_initpy_contents = initpy.bytes().decode("utf8")
     initpy.write_text(original_initpy_contents.replace("DEVELOPMENT_VERSION", version))
     python("setup.py", "sdist").in_dir(project).run()
@@ -189,7 +189,7 @@ def deploy():
         "-m",
         "twine",
         "upload",
-        "dist/{0}-{1}.tar.gz".format("strictyaml", version),
+        "dist/{0}-{1}.tar.gz".format("orji", version),
     ).in_dir(project).run()
 
 
