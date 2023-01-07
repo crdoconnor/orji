@@ -1,12 +1,12 @@
 LaTeX Curriculum Vitae:
   about: |
     Use jinja2 in LaTeX mode to generate a CV.
-    
+
     The example CV here was cribbed from [ TODO : where? ].
-    
+
     Unlike traditional jinja2, latexmode jinja2 uses slightly different syntax to avoid
     conflicting.
-    
+
     A block is : \BLOCK{ ... }
     A variable is: \VAR{ ... }
     A comment is: \#{ ... }
@@ -33,9 +33,42 @@ LaTeX Curriculum Vitae:
 
         https://github.com/therealjohndoe
 
+        ** email
+
+        johndoe@gmail.com
+
+        ** linkedin
+
+        therealjohndoe
+
+        ** website
+
+        http://www.geocities.com/johndoe
+
+        ** telephone
+
+        07777 777777
+
+
         * summary
 
         This is a summary about me with a [[http://www.google.com][link to a website I made]] & some more stuff.
+
+        * experience
+
+        ** Microsoft
+        :PROPERTIES:
+        :dates: 1980-2000
+        :END:
+
+        Invented Microsoft word.
+
+        ** Google
+        :PROPERTIES:
+        :dates: January 2000-August 2020
+        :END:
+
+        Increased search volume by 50%.
       cv.jinja2: |
         %-----------------------------------------------------------------------------------------------------------------------------------------------%
         %	The MIT License (MIT)
@@ -143,21 +176,15 @@ LaTeX Curriculum Vitae:
         %	TITLE
         %----------------------------------------------------------------------------------------
 
-        % \begin{tabularx}{\linewidth}{ @{}X X@{} }
-        % \huge{Your Name}\vspace{2pt} & \hfill \emoji{incoming-envelope} email@email.com \\
-        % \raisebox{-0.05\height}\faGithub\ username \ | \
-        % \raisebox{-0.00\height}\faLinkedin\ username \ | \ \raisebox{-0.05\height}\faGlobe \ mysite.com  & \hfill \emoji{calling} number
-        % \end{tabularx}
-
         %% set details = root.at("details")
 
         \begin{tabularx}{\linewidth}{@{} C @{}}
         \Huge{\VAR{ details.at("name").body.strip }} \\[7.5pt]
-        \href{\VAR{ details.at("github").body.strip }}{\raisebox{-0.05\height}\faGithub\ username} \ $|$ \ 
-        \href{https://linkedin.com/in/username}{\raisebox{-0.05\height}\faLinkedin\ username} \ $|$ \ 
+        \href{\VAR{ details.at("github").body.strip }}{\raisebox{-0.05\height}\faGithub\ \VAR{ details.at("github").body.strip }} \ $|$ \ 
+        \href{https://linkedin.com/in/\VAR{ details.at("linkedin").body.strip }}{\raisebox{-0.05\height}\faLinkedin\ \VAR{ details.at("linkedin").body.strip }} \ $|$ \ 
         \href{https://mysite.com}{\raisebox{-0.05\height}\faGlobe \ mysite.com} \ $|$ \ 
-        \href{mailto:email@mysite.com}{\raisebox{-0.05\height}\faEnvelope \ email@mysite.com} \ $|$ \ 
-        \href{tel:+000000000000}{\raisebox{-0.05\height}\faMobile \ +00.00.000.000} \\
+        \href{mailto:\VAR{ details.at("email").body.strip }}{\raisebox{-0.05\height}\faEnvelope \ \VAR{ details.at("email").body.strip }} \ $|$ \ 
+        \href{tel:\VAR{ details.at("telephone").body.strip}{\raisebox{-0.05\height}\faMobile \ \VAR{ details.at("telephone").body.strip} \\
         \end{tabularx}
 
         %----------------------------------------------------------------------------------------
@@ -171,22 +198,24 @@ LaTeX Curriculum Vitae:
         %Experience
         \section{Work Experience}
 
+        %% for role in root.at("experience")
         \begin{tabularx}{\linewidth}{ @{}l r@{} }
-        \textbf{Designation} & \hfill Jan 2021 - present \\[3.75pt]
-        \multicolumn{2}{@{}X@{}}{long long line of blah blah that will wrap when the table fills the column width long long line of blah blah that will wrap when the table fills the column width long long line of blah blah that will wrap when the table fills the column width long long line of blah blah that will wrap when the table fills the column width}  \\
+        \textbf{role.name} & \hfill \VAR{ role.prop["dates"] } \\[3.75pt]
+        \multicolumn{2}{@{}X@{}}{\VAR{role.body}}  \\
         \end{tabularx}
+        %% endfor
 
-        \begin{tabularx}{\linewidth}{ @{}l r@{} }
-        \textbf{Designation} & \hfill Mar 2019 - Jan 2021 \\[3.75pt]
-        \multicolumn{2}{@{}X@{}}{
-        \begin{minipage}[t]{\linewidth}
-            \begin{itemize}[nosep,after=\strut, leftmargin=1em, itemsep=3pt]
-                \item[--] long long line of blah blah that will wrap when the table fills the column width
-                \item[--] again, long long line of blah blah that will wrap when the table fills the column width but this time even more long long line of blah blah. again, long long line of blah blah that will wrap when the table fills the column width but this time even more long long line of blah blah
-            \end{itemize}
-            \end{minipage}
-        }
-        \end{tabularx}
+        % \begin{tabularx}{\linewidth}{ @{}l r@{} }
+        % \textbf{Designation} & \hfill Mar 2019 - Jan 2021 \\[3.75pt]
+        % \multicolumn{2}{@{}X@{}}{
+        % \begin{minipage}[t]{\linewidth}
+        %    \begin{itemize}[nosep,after=\strut, leftmargin=1em, itemsep=3pt]
+        %        \item[--] long long line of blah blah that will wrap when the table fills the column width
+        %        \item[--] again, long long line of blah blah that will wrap when the table fills the column width but this time even more long long line of blah blah. again, long long line of blah blah that will wrap when the table fills the column width but this time even more long long line of blah blah
+        %    \end{itemize}
+        %    \end{minipage}
+        %}
+        % \end{tabularx}
 
         %Projects
         \section{Projects}
@@ -333,19 +362,13 @@ LaTeX Curriculum Vitae:
         %	TITLE
         %----------------------------------------------------------------------------------------
 
-        % \begin{tabularx}{\linewidth}{ @{}X X@{} }
-        % \huge{Your Name}\vspace{2pt} & \hfill \emoji{incoming-envelope} email@email.com \\
-        % \raisebox{-0.05\height}\faGithub\ username \ | \
-        % \raisebox{-0.00\height}\faLinkedin\ username \ | \ \raisebox{-0.05\height}\faGlobe \ mysite.com  & \hfill \emoji{calling} number
-        % \end{tabularx}
-
         \begin{tabularx}{\linewidth}{@{} C @{}}
         \Huge{John Doe} \\[7.5pt]
-        \href{https://github.com/therealjohndoe}{\raisebox{-0.05\height}\faGithub\ username} \ $|$ \ 
-        \href{https://linkedin.com/in/username}{\raisebox{-0.05\height}\faLinkedin\ username} \ $|$ \ 
+        \href{https://github.com/therealjohndoe}{\raisebox{-0.05\height}\faGithub\ https://github.com/therealjohndoe} \ $|$ \ 
+        \href{https://linkedin.com/in/therealjohndoe}{\raisebox{-0.05\height}\faLinkedin\ therealjohndoe} \ $|$ \ 
         \href{https://mysite.com}{\raisebox{-0.05\height}\faGlobe \ mysite.com} \ $|$ \ 
-        \href{mailto:email@mysite.com}{\raisebox{-0.05\height}\faEnvelope \ email@mysite.com} \ $|$ \ 
-        \href{tel:+000000000000}{\raisebox{-0.05\height}\faMobile \ +00.00.000.000} \\
+        \href{mailto:johndoe@gmail.com}{\raisebox{-0.05\height}\faEnvelope \ johndoe@gmail.com} \ $|$ \ 
+        \href{tel:07777 777777{\raisebox{-0.05\height}\faMobile \ 07777 777777 \\
         \end{tabularx}
 
         %----------------------------------------------------------------------------------------
@@ -357,25 +380,32 @@ LaTeX Curriculum Vitae:
 
         This is a summary about me with a \href{http://www.google.com}{link to a website I made} \& some more stuff.
 
+
         %Experience
         \section{Work Experience}
 
         \begin{tabularx}{\linewidth}{ @{}l r@{} }
-        \textbf{Designation} & \hfill Jan 2021 - present \\[3.75pt]
-        \multicolumn{2}{@{}X@{}}{long long line of blah blah that will wrap when the table fills the column width long long line of blah blah that will wrap when the table fills the column width long long line of blah blah that will wrap when the table fills the column width long long line of blah blah that will wrap when the table fills the column width}  \\
-        \end{tabularx}
-
-        \begin{tabularx}{\linewidth}{ @{}l r@{} }
-        \textbf{Designation} & \hfill Mar 2019 - Jan 2021 \\[3.75pt]
+        \textbf{role.name} & \hfill 1980-2000 \\[3.75pt]
         \multicolumn{2}{@{}X@{}}{
-        \begin{minipage}[t]{\linewidth}
-            \begin{itemize}[nosep,after=\strut, leftmargin=1em, itemsep=3pt]
-                \item[--] long long line of blah blah that will wrap when the table fills the column width
-                \item[--] again, long long line of blah blah that will wrap when the table fills the column width but this time even more long long line of blah blah. again, long long line of blah blah that will wrap when the table fills the column width but this time even more long long line of blah blah
-            \end{itemize}
-            \end{minipage}
-        }
+        Invented Microsoft word.
+        }  \\
         \end{tabularx}
+        \begin{tabularx}{\linewidth}{ @{}l r@{} }
+        \textbf{role.name} & \hfill January 2000-August 2020 \\[3.75pt]
+        \multicolumn{2}{@{}X@{}}{
+        Increased search volume by 50%.}  \\
+        \end{tabularx}
+        % \begin{tabularx}{\linewidth}{ @{}l r@{} }
+        % \textbf{Designation} & \hfill Mar 2019 - Jan 2021 \\[3.75pt]
+        % \multicolumn{2}{@{}X@{}}{
+        % \begin{minipage}[t]{\linewidth}
+        %    \begin{itemize}[nosep,after=\strut, leftmargin=1em, itemsep=3pt]
+        %        \item[--] long long line of blah blah that will wrap when the table fills the column width
+        %        \item[--] again, long long line of blah blah that will wrap when the table fills the column width but this time even more long long line of blah blah. again, long long line of blah blah that will wrap when the table fills the column width but this time even more long long line of blah blah
+        %    \end{itemize}
+        %    \end{minipage}
+        %}
+        % \end{tabularx}
 
         %Projects
         \section{Projects}

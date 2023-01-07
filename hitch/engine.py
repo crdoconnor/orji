@@ -66,7 +66,7 @@ class Engine(BaseEngine):
         self,
         cmd,
         output,
-        error=True
+        error=False
     ):
         from shlex import split
         from templex import Templex

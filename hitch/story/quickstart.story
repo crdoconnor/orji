@@ -45,12 +45,6 @@ Quickstart:
         Text:
 
         {{ note.body }}
-
-        Rich:
-
-        {% for line in note.body.lines %}
-        {{ line }}
-        {%- endfor %}
         -------------------------
         {% endfor %}
 
@@ -85,13 +79,6 @@ Quickstart:
 
         About text
 
-
-        Rich:
-
-
-
-        About text
-
         -------------------------
 
         -------------------------
@@ -102,14 +89,6 @@ Quickstart:
         ILookup : 1
 
         Text:
-
-
-        + Bullet one
-        + Bullet two
-
-
-        Rich:
-
 
 
         + Bullet one
@@ -131,15 +110,6 @@ Quickstart:
         - [X] Checkbox 2
         - [ ] Checkbox 3
 
-
-        Rich:
-
-
-
-        - [ ] Checkbox 1
-        - [X] Checkbox 2
-        - [ ] Checkbox 3
-
         -------------------------
 
         -------------------------
@@ -150,13 +120,6 @@ Quickstart:
         ILookup : 3
 
         Text:
-
-
-        Text
-
-
-        Rich:
-
 
 
         Text
