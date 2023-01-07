@@ -62,17 +62,12 @@ class Engine(BaseEngine):
 
     @no_stacktrace_for(AssertionError)
     @validate(cmd=Str(), output=Str(), error=Bool())
-    def orji(
-        self,
-        cmd,
-        output,
-        error=False
-    ):
+    def orji(self, cmd, output, error=False):
         from shlex import split
         from templex import Templex
-        
+
         command = self.orji_bin(*split(cmd)).in_dir(self.path.working)
-        
+
         if error:
             command = command.ignore_errors()
 
