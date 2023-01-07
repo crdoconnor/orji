@@ -6,14 +6,6 @@ class OrjiError(Exception):
     pass
 
 
-class Line:
-    def __init__(self, text):
-        self.text = text
-
-    def __str__(self):
-        return self.text
-
-
 class TextChunk:
     def __init__(self, text):
         self.text = text
@@ -39,10 +31,6 @@ class TextChunk:
         )
         text = text.replace("&", "\\&")
         return text
-
-    @property
-    def lines(self):
-        return [Line(line_text) for line_text in self.text.split("\n")]
 
     @property
     def strip(self):
