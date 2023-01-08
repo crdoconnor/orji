@@ -128,7 +128,7 @@ def checks():
     These checks should prevent code that doesn't have the proper checks run from being merged.
     """
     toolkit.validate_reformatting()
-    toolkit.lint(exclude=["__init__.py", "ruamel"])
+    _lint()
     storybook = _storybook().only_uninherited()
     storybook.with_params(**{"python version": "3.7.0"}).ordered_by_name().play()
 
@@ -141,24 +141,8 @@ def reformat():
     toolkit.reformat()
 
 
-@cli.command()
-def ipython():
-    """
-    Run ipython in strictyaml virtualenv.
-    """
-    DIR.gen.joinpath("example.py").write_text(
-        ("from strictyaml import *\n" "import IPython\n" "IPython.embed()\n")
-    )
-    from commandlib import Command
-
-    version = "3.7.0"
-    Command(DIR.gen.joinpath("py{0}".format(version), "bin", "python"))(
-        DIR.gen.joinpath("example.py")
-    ).run()
-
-
 def _lint():
-    toolkit.lint(exclude=["__init__.py", "ruamel"])
+    toolkit.lint()
 
 
 @cli.command()
@@ -177,8 +161,8 @@ def deploy():
     git = Command("git")
     git("clone", "git@github.com:crdoconnor/orji.git").in_dir(DIR.gen).run()
     project = DIR.gen / "orji"
-    version = DIR.project.joinpath("VERSION").text().rstrip()
-    initpy = DIR.project.joinpath("orji", "__init__.py")
+    version = project.joinpath("VERSION").text().rstrip()
+    initpy = project.joinpath("orji", "__init__.py")
     original_initpy_contents = initpy.bytes().decode("utf8")
     initpy.write_text(original_initpy_contents.replace("DEVELOPMENT_VERSION", version))
     python("setup.py", "sdist").in_dir(project).run()
@@ -191,6 +175,9 @@ def deploy():
         "upload",
         "dist/{0}-{1}.tar.gz".format("orji", version),
     ).in_dir(project).run()
+    
+    # Clean up
+    DIR.gen.joinpath("orji").rmtree()
 
 
 @cli.command()
