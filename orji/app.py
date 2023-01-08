@@ -4,6 +4,8 @@ from orgparse import loads
 import traceback
 import jinja2
 import click
+import imp
+import inspect
 from sys import exit
 
 
@@ -15,7 +17,7 @@ def fail(message):
     raise Failure(message)
 
 
-def environment(latexmode):
+def environment(latexmode, pymodule_filename):
     if latexmode:
         env = jinja2.Environment(
             block_start_string=r"\BLOCK{",
@@ -35,6 +37,25 @@ def environment(latexmode):
         env = jinja2.Environment(
             undefined=jinja2.StrictUndefined, loader=jinja2.BaseLoader
         )
+
+    if pymodule_filename is not None:
+        pymodule_filepath = Path(pymodule_filename)
+
+        if not pymodule_filepath.exists():
+            click.echo(f"{pymodule_filename} not found", err=True)
+            exit(1)
+
+        module_contents = {
+            key: item
+            for key, item in inspect.getmembers(
+                imp.load_source(
+                    pymodule_filepath.stem, str(pymodule_filepath.absolute())
+                )
+            )
+            if not key.startswith("_")
+        }
+        env.globals.update(module_contents)
+
     env.globals["fail"] = fail
     return env
 
@@ -54,7 +75,12 @@ def environment(latexmode):
     default=False,
     help="Jinja2 latex mode",
 )
-def main(orgfile, jinjafile, indexlookup, latexmode):
+@click.option(
+    "--module",
+    "pymodule",
+    help="Specify python module to use in template.",
+)
+def main(orgfile, jinjafile, indexlookup, latexmode, pymodule):
     org_text = Path(orgfile).read_text()
     template_text = Path(jinjafile).read_text()
     parsed = loads(org_text)
@@ -65,7 +91,7 @@ def main(orgfile, jinjafile, indexlookup, latexmode):
 
     try:
         output_text = (
-            environment(latexmode=latexmode)
+            environment(latexmode=latexmode, pymodule_filename=pymodule)
             .from_string(template_text)
             .render(notes=notes, root=notes)
         )

@@ -175,7 +175,7 @@ def deploy():
         "upload",
         "dist/{0}-{1}.tar.gz".format("orji", version),
     ).in_dir(project).run()
-    
+
     # Clean up
     DIR.gen.joinpath("orji").rmtree()
 
