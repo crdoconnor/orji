@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-cd $SCRIPT_DIR
-python setup.py sdist bdist_wheel
-python upload.py
-python clean.py
