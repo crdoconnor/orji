@@ -1,4 +1,5 @@
 Module:
+  docs: module
   about: |
     Use a python module with template variables and methods.
   given:

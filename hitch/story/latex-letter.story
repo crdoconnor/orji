@@ -1,4 +1,5 @@
 LaTeX Letter:
+  docs: latex-letter
   about: |
     Use jinja2 in LaTeX mode to generate a letter.
 

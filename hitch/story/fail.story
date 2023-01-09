@@ -1,4 +1,5 @@
 Deliberately fail:
+  docs: deliberate-failure
   about: |
     When your template has an error condition that
     you need to raise, use fail("error message")

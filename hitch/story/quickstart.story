@@ -1,4 +1,5 @@
 Quickstart:
+  docs: quickstart
   about: |
     Use all basic orji template features in one file.
   given:

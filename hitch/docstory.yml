@@ -1,0 +1,29 @@
+story: |
+  # {{ name }}
+  
+  {{ about }}
+  
+  {% for name, prop in given.items() %}
+  {{ prop.documentation() }}
+  {% endfor %}
+  
+  {% for step in steps %}
+  {{ step.documentation() }}
+  {% endfor %}
+
+given:
+  files: |
+    {% for filename, contents in files.items() %}
+    {{ filename }}
+    ```
+    {{ contents }}
+    ```
+    {% endfor %}
+steps:
+  orji: |
+    orji {{ cmd }}
+    
+    {% if error %}Will error with:{% endif %}
+    ```
+    {{ output }}
+    ```

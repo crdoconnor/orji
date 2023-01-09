@@ -1,4 +1,5 @@
 LaTeX Curriculum Vitae:
+  docs: latex-cv
   about: |
     Use jinja2 in LaTeX mode to generate a CV.
 

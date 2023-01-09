@@ -185,7 +185,18 @@ def docgen():
     """
     Build documentation.
     """
-    toolkit.docgen(Engine(DIR))
+    storybook = _storybook().only_uninherited().with_documentation((DIR.key / "docstory.yml").text(), extra={})
+    
+    public = DIR.project / "docs" / "public"
+    
+    if public.exists():
+        public.rmtree()
+    public.mkdir()
+    
+    for story in storybook.ordered_by_name():
+        docs = story.info.get("docs") 
+        if docs is not None:
+            public.joinpath(f"{docs}.md").write_text(story.documentation())
 
 
 @cli.command()
