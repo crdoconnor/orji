@@ -30,6 +30,27 @@ Template syntax error:
       output: |
         Template syntax error on line 5 of example.jinja2: expected token 'end of print statement', got 'be'
 
+
+Template runtime error:
+  given:
+    files:
+      example.org: |
+        * existent
+      example.jinja2: |
+        Brackets 
+
+        {% if 4 is divisiblebyy 3 %}
+        {% endif %}
+
+        Should be closed
+  steps:
+  - orji:
+      cmd: example.org example.jinja2
+      error: yes
+      output: |
+        Template runtime error on line 3 of example.jinja2: No test named 'divisiblebyy' found.
+
+
 Missing variable:
   given:
     files:
