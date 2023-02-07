@@ -1,4 +1,7 @@
 story: |
+  ---
+  title: {{ name }}
+  ---
   # {{ name }}
   
   {{ about }}
@@ -14,6 +17,7 @@ story: |
 given:
   files: |
     {% for filename, contents in files.items() %}
+
     {{ filename }}
     ```
     {{ contents }}

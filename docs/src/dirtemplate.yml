@@ -1,4 +1,0 @@
-base templates: template
-templated:
-- index.md:
-    content: yes

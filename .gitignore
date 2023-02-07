@@ -3,4 +3,8 @@ docs/public/
 .vscode/
 venv/
 
+docs/snippets/
+docs/draft/
+docs/src/using/
+
 *.pyc

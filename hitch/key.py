@@ -5,6 +5,7 @@ from pathquery import pathquery
 import hitchpylibrarytoolkit
 from engine import Engine
 from path import Path
+from docgen import run_docgen
 
 
 class Directories:
@@ -181,30 +182,46 @@ def deploy():
 
 
 @cli.command()
-def docgen():
+def draftdocs():
     """
     Build documentation.
     """
-    storybook = _storybook().only_uninherited().with_documentation((DIR.key / "docstory.yml").text(), extra={})
-    
-    public = DIR.project / "docs" / "public"
-    
-    if public.exists():
-        public.rmtree()
-    public.mkdir()
-    
-    for story in storybook.ordered_by_name():
-        docs = story.info.get("docs") 
-        if docs is not None:
-            public.joinpath(f"{docs}.md").write_text(story.documentation())
+    run_docgen(DIR, _storybook())
+
+
+@cli.command()
+def publishdocs():
+    if DIR.gen.joinpath("hitchstory").exists():
+        DIR.gen.joinpath("hitchstory").rmtree()
+
+    Path("/root/.ssh/known_hosts").write_text(
+        Command("ssh-keyscan", "github.com").output()
+    )
+    Command("git", "clone", "git@github.com:hitchdev/hitchstory.git").in_dir(
+        DIR.gen
+    ).run()
+
+    git = Command("git").in_dir(DIR.gen / "hitchstory")
+    git("config", "user.name", "Bot").run()
+    git("config", "user.email", "bot@hithdev.com").run()
+    git("rm", "-r", "docs/public").run()
+
+    run_docgen(DIR, _storybook({}), publish=True)
+
+    git("add", "docs/public").run()
+    git("commit", "-m", "DOCS : Regenerated docs.").run()
+
+    git("push").run()
 
 
 @cli.command()
 def readmegen():
     """
-    Build README.md and CHANGELOG.md.
+    Build documentation.
     """
-    toolkit.readmegen(Engine(DIR))
+    run_docgen(DIR, _storybook(), readme=True)
+    DIR.project.joinpath("docs", "draft", "index.md").copy("README.md")
+    DIR.project.joinpath("docs", "draft", "changelog.md").copy("CHANGELOG.md")
 
 
 @cli.command()
