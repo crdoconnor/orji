@@ -2,8 +2,9 @@
 title: OrJi
 ---
 
-<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/crdoconnor/orji?style=social"> 
-<img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/orji">
+<a href="https://github.com/crdoconnor/orji"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/crdoconnor/orji?style=social"></a>
+
+<a href="https://pypi.org/pypi/orji"><img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/orji"><a/>
 
 
 OrJi is a command line tool to generate text files using [jinja2](https://en.wikipedia.org/wiki/Jinja_(template_engine))
