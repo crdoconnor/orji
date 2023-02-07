@@ -10,6 +10,5 @@ How to:
 - [LaTeX Letter](latex-letter)
 - [Markdown](markdown)
 - [Module](module)
-- [Quickstart](quickstart)
 
 

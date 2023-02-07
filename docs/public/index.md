@@ -38,7 +38,6 @@ pipx install orji
 - [LaTeX Letter](using/latex-letter)
 - [Markdown](using/markdown)
 - [Module](using/module)
-- [Quickstart](using/quickstart)
 
 
 ## Quickstart
