@@ -82,10 +82,10 @@ class Engine(BaseEngine):
         output = self.orji_bin(*split(cmd)).in_dir(self.path.working).output()
         self.path.working.joinpath("latex.tex").write_text(output)
         from commandlib import Command
+
         self.path.working.chdir()
-        #import IPython ; IPython.embed()
+        # import IPython ; IPython.embed()
         Command("pdflatex", "latex.tex").in_dir(self.path.working).run()
-        
 
     def pause(self, message="Pause"):
         import IPython
