@@ -65,7 +65,7 @@ def run_docgen(paths, storybook, publish=False, readme=False):
     snippets_path.joinpath("quickstart.txt").write_text(
         storybook.with_documentation(
             paths.key.joinpath("docstory.yml").text(),
-            extra={"readme": readme},
+            extra={"title": False},
         )
         .named("Quickstart")
         .documentation()
@@ -101,7 +101,7 @@ def run_docgen(paths, storybook, publish=False, readme=False):
 def generate_storydocs(docstory, docpath, storybook):
     storydocs = storybook.with_documentation(
         docstory,
-        extra={"readme": False},
+        extra={"title": True},
     )
 
     for story in storydocs.ordered_by_file():

@@ -1,5 +1,5 @@
 story: |
-  {%- if not readme -%}
+  {%- if title -%}
   ---
   title: {{ name }}
   ---
