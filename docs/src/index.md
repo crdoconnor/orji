@@ -6,9 +6,8 @@ of text from an orgmode file.
 
 ## Why?
 
-For me so I can write [letters](https://raw.githubusercontent.com/crdoconnor/orji/main/examples/letter.org) and stuff in [orgzly](https://orgzly.com/) or [plainorg](https://plainorg.com/) and run
-a short script to create a nicely formatted PDF from an easily edited [template file](https://github.com/crdoconnor/orji/blob/main/examples/letter.jinja2).
-
+For me so I can write letters and documents in [orgzly](https://orgzly.com/) or [plainorg](https://plainorg.com/) and run
+a short script to create a nicely formatted PDF from a separate template file.
 You can do quite a lot more than that, though.
 
 ## Install
