@@ -1,7 +1,10 @@
 ---
 title: Markdown
 ---
-# MarkdownConvert chunks of orgmode text into markdown using .body.markdown.
+# Markdown
+
+
+Convert chunks of orgmode text into markdown using .body.markdown.
 
 
 
@@ -28,9 +31,12 @@ markdown.jinja2
 
 
 
+Running:
+```
 orji markdown.org markdown.jinja2
+```
 
-
+Will output:
 ```
 
 Text with /emphasis/ and *bold* and a [link](https://www.google).

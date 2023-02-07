@@ -1,25 +1,21 @@
 ---
 title: LaTeX Curriculum Vitae
 ---
-# LaTeX Curriculum VitaeUse jinja2 in LaTeX mode to generate a CV.
+# LaTeX Curriculum Vitae
+
+
+Use jinja2 in LaTeX mode to generate a CV.
 
 The example CV here was cribbed from http://www.LaTeXTemplates.com.
 
 Unlike traditional jinja2, latexmode jinja2 uses different syntax to avoid
 conflicting with latex syntax.
 
-A block is : \BLOCK{ ... }
-A variable is: \VAR{ ... }
-A comment is: \#{ ... }
-A line statement (e.g. for)
-block_start_string="\BLOCK{",
-block_end_string="}",
-variable_start_string="\VAR{",
-variable_end_string="}",
-comment_start_string="\#{",
-comment_end_string="}",
-line_statement_prefix="%%",
-line_comment_prefix="%#",
+* A line statement is: %% (e.g. %% if x = y)
+* A variable start is: \VAR{ ... }
+* A comment is: \#{ ... }
+* A block is : \BLOCK{ ... }
+* A line comment prefix is: %# (e.g. %# commented out line).
 
 
 
@@ -267,9 +263,12 @@ Some More Skills  &  \normalsize{Also some more of this, Some more that, And som
 
 
 
+Running:
+```
 orji --latexmode cv.org cv.jinja2
+```
 
-
+Will output:
 ```
 %-----------------------------------------------------------------------------------------------------------------------------------------------%
 %	The MIT License (MIT)

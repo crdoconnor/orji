@@ -1,25 +1,20 @@
 ---
 title: LaTeX Letter
 ---
-# LaTeX LetterUse jinja2 in LaTeX mode to generate a letter.
+# LaTeX Letter
+
+
+Use jinja2 in LaTeX mode to generate a letter.
 
 The example CV here was cribbed from http://www.LaTeXTemplates.com.
 
-Unlike traditional jinja2, latexmode jinja2 uses slightly different syntax to avoid
-conflicting.
+Unlike traditional jinja2, latexmode jinja2 uses different syntax to avoid conflicting.
 
-A block is : \BLOCK{ ... }
-A variable is: \VAR{ ... }
-A comment is: \#{ ... }
-A line statement (e.g. for)
-block_start_string="\BLOCK{",
-block_end_string="}",
-variable_start_string="\VAR{",
-variable_end_string="}",
-comment_start_string="\#{",
-comment_end_string="}",
-line_statement_prefix="%%",
-line_comment_prefix="%#",
+* A line statement is: %% (e.g. %% if x = y)
+* A variable start is: \VAR{ ... }
+* A comment is: \#{ ... }
+* A block is : \BLOCK{ ... }
+* A line comment prefix is: %# (e.g. %# commented out line).
 
 
 
@@ -179,9 +174,12 @@ Yours faithfully,
 
 
 
+Running:
+```
 orji --latexmode letter.org letter.jinja2
+```
 
-
+Will output:
 ```
 % Thin Formal Letter
 % LaTeX Template

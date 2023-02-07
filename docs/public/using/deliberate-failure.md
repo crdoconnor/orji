@@ -1,7 +1,10 @@
 ---
 title: Deliberately fail
 ---
-# Deliberately failWhen your template has an error condition that
+# Deliberately fail
+
+
+When your template has an error condition that
 you need to raise, use fail("error message")
 to raise the error.
 
@@ -29,7 +32,10 @@ This is some more text.
 
 
 
+Running:
+```
 orji example.org example.jinja2
+```
 
 Will error with:
 ```

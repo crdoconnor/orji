@@ -1,7 +1,10 @@
 ---
 title: All template features
 ---
-# All template featuresUse all orji template features in one file. This template
+# All template features
+
+
+Use all orji template features in one file. This template
 demonstrates getting:
 
 * Name
@@ -83,9 +86,12 @@ ILookup : {{ notes.at("Fourth note").at("Subnote B").at("Subnote C").indexlookup
 
 
 
+Running:
+```
 orji simple.org simple.jinja2
+```
 
-
+Will output:
 ```
 
 -------------------------

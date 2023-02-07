@@ -46,7 +46,10 @@ pipx install orji
 ---
 title: Quickstart
 ---
-# QuickstartSimple org mode file used with simple template.
+# Quickstart
+
+
+Simple org mode file used with simple template.
 
 
 
@@ -86,9 +89,12 @@ simple.jinja2
 
 
 
+Running:
+```
 orji simple.org simple.jinja2
+```
 
-
+Will output:
 ```
 # Wash car (morning)
 

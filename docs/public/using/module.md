@@ -1,7 +1,10 @@
 ---
 title: Module
 ---
-# ModuleUse a python module with template variables and methods.
+# Module
+
+
+Use a python module with template variables and methods.
 
 
 
@@ -35,9 +38,12 @@ def to_upper(string):
 
 
 
+Running:
+```
 orji --module note.py note.org note.jinja2
+```
 
-
+Will output:
 ```
 
 NOTE 1
