@@ -27,9 +27,12 @@ given:
     {% endfor %}
 steps:
   orji: |
+    Running:
+    ```
     orji {{ cmd }}
+    ```
     
-    {% if error %}Will error with:{% endif %}
+    {% if error %}Will error with:{% else %}Will output:{% endif %}
     ```
     {{ output }}
     ```

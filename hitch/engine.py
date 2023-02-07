@@ -15,9 +15,8 @@ from hitchrunpy import (
     HitchRunPyException,
     ExpectedExceptionMessageWasDifferent,
 )
-
-
-CODE_TYPE = Map({"in python 2": Str(), "in python 3": Str()}) | Str()
+from shlex import split
+from templex import Templex
 
 
 class Engine(BaseEngine):
@@ -63,9 +62,6 @@ class Engine(BaseEngine):
     @no_stacktrace_for(AssertionError)
     @validate(cmd=Str(), output=Str(), error=Bool())
     def orji(self, cmd, output, error=False):
-        from shlex import split
-        from templex import Templex
-
         command = self.orji_bin(*split(cmd)).in_dir(self.path.working)
 
         if error:

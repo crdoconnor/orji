@@ -8,18 +8,11 @@ LaTeX Curriculum Vitae:
     Unlike traditional jinja2, latexmode jinja2 uses different syntax to avoid
     conflicting with latex syntax.
 
-    A block is : \BLOCK{ ... }
-    A variable is: \VAR{ ... }
-    A comment is: \#{ ... }
-    A line statement (e.g. for)
-    block_start_string="\BLOCK{",
-    block_end_string="}",
-    variable_start_string="\VAR{",
-    variable_end_string="}",
-    comment_start_string="\#{",
-    comment_end_string="}",
-    line_statement_prefix="%%",
-    line_comment_prefix="%#",
+    * A line statement is: %% (e.g. %% if x = y)
+    * A variable start is: \VAR{ ... }
+    * A comment is: \#{ ... }
+    * A block is : \BLOCK{ ... }
+    * A line comment prefix is: %# (e.g. %# commented out line).
 
   given:
     files:
