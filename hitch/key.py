@@ -206,7 +206,7 @@ def publishdocs():
     git("config", "user.email", "bot@hithdev.com").run()
     git("rm", "-r", "docs/public").run()
 
-    run_docgen(DIR, _storybook({}), publish=True)
+    run_docgen(DIR, _storybook(), publish=True)
 
     git("add", "docs/public").run()
     git("commit", "-m", "DOCS : Regenerated docs.").run()
