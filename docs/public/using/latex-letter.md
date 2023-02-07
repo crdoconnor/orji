@@ -5,7 +5,7 @@ title: LaTeX Letter
 
 Use jinja2 in LaTeX mode to generate a letter.
 
-The example CV here was cribbed from [ TODO : where? ].
+The example CV here was cribbed from http://www.LaTeXTemplates.com.
 
 Unlike traditional jinja2, latexmode jinja2 uses slightly different syntax to avoid
 conflicting.
