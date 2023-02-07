@@ -8,9 +8,8 @@ of text from an orgmode file.
 
 ## Why?
 
-For me so I can write [letters](https://raw.githubusercontent.com/crdoconnor/orji/main/examples/letter.org) and stuff in [orgzly](https://orgzly.com/) or [plainorg](https://plainorg.com/) and run
-a short script to create a nicely formatted PDF from an easily edited [template file](https://github.com/crdoconnor/orji/blob/main/examples/letter.jinja2).
-
+For me so I can write letters and documents in [orgzly](https://orgzly.com/) or [plainorg](https://plainorg.com/) and run
+a short script to create a nicely formatted PDF from a separate template file.
 You can do quite a lot more than that, though.
 
 ## Install
@@ -28,14 +27,20 @@ Typically best installed by installing it through
 pipx install orji
 ```
 
-## Example Usage
+### Using OrJi
 
----
-title: Quickstart
----
-# Quickstart
+- [All template features](https://hitchdev.com/orji/using/all-template-features)
+- [Deliberately fail](https://hitchdev.com/orji/using/deliberate-failure)
+- [LaTeX Curriculum Vitae](https://hitchdev.com/orji/using/latex-cv)
+- [LaTeX Letter](https://hitchdev.com/orji/using/latex-letter)
+- [Markdown](https://hitchdev.com/orji/using/markdown)
+- [Module](https://hitchdev.com/orji/using/module)
+- [Quickstart](https://hitchdev.com/orji/using/quickstart)
 
-Use all basic orji template features in one file.
+
+## Quickstart
+
+Simple org mode file used with simple template.
 
 
 
@@ -43,66 +48,32 @@ Use all basic orji template features in one file.
 
 simple.org
 ```
-* TODO A todo note
+* A normal note
 
-About text
+Just a note
 
-* DONE A done note with bullet points :tag1:
+* TODO Wash car :morning:
 
-+ Bullet one
-+ Bullet two
+Car wash.
 
-* A third note with checkboxes :tag2:tag3:
+* TODO File taxes :evening:
 
-- [ ] Checkbox 1
-- [X] Checkbox 2
-- [ ] Checkbox 3
+File taxes for wife too.
 
-* Fourth note
-:PROPERTIES:
-:prop1: ABC
-:prop2: CDE
-:END:
-
-Text
-
-** Subnote B
-
-*** Subnote C
-
-Subnote C body.
+* DONE Watch TV
 
 ```
 
 
 simple.jinja2
 ```
-{% for note in notes %}
--------------------------
-Name: {{ note.name }}
-Slug: {{ note.slug }}
-State: {{ note.state }}
-Tags: {% for tag in note.tags %}{{ tag }} {% endfor %}
-ILookup : {{ note.indexlookup }}
-
-Text:
+{% for note in root %}
+{%- if note.state == "TODO" -%}
+# {{ note.name }} ({% for tag in note.tags %}{{ tag }}{% endfor %})
 
 {{ note.body }}
--------------------------
+{%- endif -%}
 {% endfor %}
-
-=========================
-Lookup level A:
-
-Text: {{ notes.at("Fourth note").body }}
-Property 1: {{ notes.at("Fourth note").prop["prop1"] }}
-ILookup : {{ notes.at("Fourth note").indexlookup }}
-=========================
-Lookup level C:
-
-Text: {{ notes.at("Fourth note").at("Subnote B").at("Subnote C").body }}
-ILookup : {{ notes.at("Fourth note").at("Subnote B").at("Subnote C").indexlookup }}
-=========================
 
 ```
 
@@ -113,82 +84,15 @@ orji simple.org simple.jinja2
 
 
 ```
-
--------------------------
-Name: A todo note
-Slug: a-todo-note
-State: TODO
-Tags: 
-ILookup : 0
-
-Text:
+# Wash car (morning)
 
 
-About text
-
--------------------------
-
--------------------------
-Name: A done note with bullet points
-Slug: a-done-note-with-bullet-points
-State: DONE
-Tags: tag1 
-ILookup : 1
-
-Text:
+Car wash.
+# File taxes (evening)
 
 
-+ Bullet one
-+ Bullet two
+File taxes for wife too.
 
--------------------------
-
--------------------------
-Name: A third note with checkboxes
-Slug: a-third-note-with-checkboxes
-State: None
-Tags: tag2 tag3 
-ILookup : 2
-
-Text:
-
-
-- [ ] Checkbox 1
-- [X] Checkbox 2
-- [ ] Checkbox 3
-
--------------------------
-
--------------------------
-Name: Fourth note
-Slug: fourth-note
-State: None
-Tags: 
-ILookup : 3
-
-Text:
-
-
-Text
-
--------------------------
-
-
-=========================
-Lookup level A:
-
-Text: 
-Text
-
-Property 1: ABC
-ILookup : 3
-=========================
-Lookup level C:
-
-Text: 
-Subnote C body.
-ILookup : 3/0/0
-=========================
 
 ```
 

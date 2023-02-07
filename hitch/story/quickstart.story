@@ -1,7 +1,15 @@
-Quickstart:
-  docs: quickstart
+All template features:
+  docs: all-template-features
   about: |
-    Use all basic orji template features in one file.
+    Use all orji template features in one file. This template
+    demonstrates getting:
+    
+    * Name
+    * Slug
+    * Tags
+    * ilookup
+    * .at()
+    * Body text
   given:
     files:
       simple.org: |
@@ -35,7 +43,7 @@ Quickstart:
         Subnote C body.
 
       simple.jinja2: |
-        {% for note in notes %}
+        {% for note in root %}
         -------------------------
         Name: {{ note.name }}
         Slug: {{ note.slug }}

@@ -25,6 +25,10 @@ Typically best installed by installing it through
 pipx install orji
 ```
 
-## Example Usage
+### Using OrJi
+
+{{{{ using-contents.txt }}}}
+
+## Quickstart
 
 {{{{ quickstart.txt }}}}

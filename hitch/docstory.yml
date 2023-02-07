@@ -1,8 +1,10 @@
 story: |
+  {%- if not readme -%}
   ---
   title: {{ name }}
   ---
   # {{ name }}
+  {%- endif -%}
   
   {{ about }}
   
