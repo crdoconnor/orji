@@ -1,4 +1,3 @@
-
 ---
 title: Deliberately fail
 ---

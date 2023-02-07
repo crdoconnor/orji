@@ -1,4 +1,3 @@
-
 ---
 title: LaTeX Letter
 ---

@@ -1,4 +1,3 @@
-
 ---
 title: All template features
 ---
