@@ -2,8 +2,6 @@
 title: OrJi
 ---
 
-![](sliced-cucumber.jpg)
-
 <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/crdoconnor/orji?style=social"> 
 <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/orji">
 
