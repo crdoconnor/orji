@@ -34,7 +34,6 @@ pipx install orji
 - [LaTeX Letter](https://hitchdev.com/orji/using/latex-letter)
 - [Markdown](https://hitchdev.com/orji/using/markdown)
 - [Module](https://hitchdev.com/orji/using/module)
-- [Quickstart](https://hitchdev.com/orji/using/quickstart)
 
 
 ## Quickstart
