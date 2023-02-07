@@ -7,8 +7,7 @@ title: OrJi
 
 
 OrJi is a command line tool to generate text files using [jinja2](https://en.wikipedia.org/wiki/Jinja_(template_engine))
-and [orgmode](https://en.wikipedia.org/wiki/Org-mode) files. It can be used to generate LaTeX or HTML or any other kind
-of text from an orgmode file.
+and [orgmode](https://en.wikipedia.org/wiki/Org-mode) files. It can be used to generate LaTeX or HTML or any other kind of text from an orgmode file.
 
 ## Why?
 
@@ -18,13 +17,13 @@ You can do quite a lot more than that, though.
 
 ## Install
 
-OrJi is a command line app that be installed with pip:
+OrJi can be installed with pip:
 
 ```bash
-pipx install orji
+pip install orji
 ```
 
-Typically best installed by installing it through
+As a command line app, it is typically best installed via
 [pipx](https://pypa.github.io/pipx/).
 
 ```bash
