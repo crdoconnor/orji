@@ -191,19 +191,17 @@ def draftdocs():
 
 @cli.command()
 def publishdocs():
-    if DIR.gen.joinpath("hitchstory").exists():
-        DIR.gen.joinpath("hitchstory").rmtree()
+    if DIR.gen.joinpath("orji").exists():
+        DIR.gen.joinpath("orji").rmtree()
 
     Path("/root/.ssh/known_hosts").write_text(
         Command("ssh-keyscan", "github.com").output()
     )
-    Command("git", "clone", "git@github.com:hitchdev/hitchstory.git").in_dir(
-        DIR.gen
-    ).run()
+    Command("git", "clone", "git@github.com:crdoconnor/orji.git").in_dir(DIR.gen).run()
 
-    git = Command("git").in_dir(DIR.gen / "hitchstory")
-    git("config", "user.name", "Bot").run()
-    git("config", "user.email", "bot@hithdev.com").run()
+    git = Command("git").in_dir(DIR.gen / "orji")
+    git("config", "user.name", "Docbot").run()
+    git("config", "user.email", "docbot@hitchdev.com").run()
     git("rm", "-r", "docs/public").run()
 
     run_docgen(DIR, _storybook(), publish=True)

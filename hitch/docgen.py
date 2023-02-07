@@ -53,7 +53,7 @@ def run_docgen(paths, storybook, publish=False, readme=False):
     git = Command("git").in_dir(paths.project)
 
     if publish:
-        dest_path = paths.gen / "hitchstory" / "docs" / "public"
+        dest_path = paths.gen / "orji" / "docs" / "public"
     else:
         dest_path = paths.project / "docs" / "draft"
 
