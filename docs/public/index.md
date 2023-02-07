@@ -43,10 +43,6 @@ pipx install orji
 
 ## Quickstart
 
----
-title: Quickstart
----
-# Quickstart
 
 
 Simple org mode file used with simple template.
