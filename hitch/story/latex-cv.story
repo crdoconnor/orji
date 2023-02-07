@@ -3,10 +3,10 @@ LaTeX Curriculum Vitae:
   about: |
     Use jinja2 in LaTeX mode to generate a CV.
 
-    The example CV here was cribbed from [ TODO : where? ].
+    The example CV here was cribbed from http://www.LaTeXTemplates.com.
 
-    Unlike traditional jinja2, latexmode jinja2 uses slightly different syntax to avoid
-    conflicting.
+    Unlike traditional jinja2, latexmode jinja2 uses different syntax to avoid
+    conflicting with latex syntax.
 
     A block is : \BLOCK{ ... }
     A variable is: \VAR{ ... }

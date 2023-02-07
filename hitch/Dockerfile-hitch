@@ -7,6 +7,8 @@ RUN apt-get install make build-essential libssl-dev zlib1g-dev libbz2-dev librea
   liblzma-dev python-openssl git libuv1-dev python3-virtualenv virtualenv python3-dev -y
 
 
+RUN apt-get install texlive-latex-base -y
+  
 # Isolate system python packages from those used in project
 RUN virtualenv --python=python3 /venv
 RUN mkdir /src
