@@ -1,9 +1,7 @@
 ---
 title: LaTeX Curriculum Vitae
 ---
-# LaTeX Curriculum Vitae
-
-Use jinja2 in LaTeX mode to generate a CV.
+# LaTeX Curriculum VitaeUse jinja2 in LaTeX mode to generate a CV.
 
 The example CV here was cribbed from http://www.LaTeXTemplates.com.
 

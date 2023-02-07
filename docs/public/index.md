@@ -31,14 +31,23 @@ Typically best installed by installing it through
 pipx install orji
 ```
 
-## Example Usage
+### Using OrJi
+
+- [All template features](using/all-template-features)
+- [Deliberately fail](using/deliberate-failure)
+- [LaTeX Curriculum Vitae](using/latex-cv)
+- [LaTeX Letter](using/latex-letter)
+- [Markdown](using/markdown)
+- [Module](using/module)
+- [Quickstart](using/quickstart)
+
+
+## Quickstart
 
 ---
 title: Quickstart
 ---
-# Quickstart
-
-Use all basic orji template features in one file.
+# QuickstartSimple org mode file used with simple template.
 
 
 
@@ -46,66 +55,32 @@ Use all basic orji template features in one file.
 
 simple.org
 ```
-* TODO A todo note
+* A normal note
 
-About text
+Just a note
 
-* DONE A done note with bullet points :tag1:
+* TODO Wash car :morning:
 
-+ Bullet one
-+ Bullet two
+Car wash.
 
-* A third note with checkboxes :tag2:tag3:
+* TODO File taxes :evening:
 
-- [ ] Checkbox 1
-- [X] Checkbox 2
-- [ ] Checkbox 3
+File taxes for wife too.
 
-* Fourth note
-:PROPERTIES:
-:prop1: ABC
-:prop2: CDE
-:END:
-
-Text
-
-** Subnote B
-
-*** Subnote C
-
-Subnote C body.
+* DONE Watch TV
 
 ```
 
 
 simple.jinja2
 ```
-{% for note in notes %}
--------------------------
-Name: {{ note.name }}
-Slug: {{ note.slug }}
-State: {{ note.state }}
-Tags: {% for tag in note.tags %}{{ tag }} {% endfor %}
-ILookup : {{ note.indexlookup }}
-
-Text:
+{% for note in root %}
+{%- if note.state == "TODO" -%}
+# {{ note.name }} ({% for tag in note.tags %}{{ tag }}{% endfor %})
 
 {{ note.body }}
--------------------------
+{%- endif -%}
 {% endfor %}
-
-=========================
-Lookup level A:
-
-Text: {{ notes.at("Fourth note").body }}
-Property 1: {{ notes.at("Fourth note").prop["prop1"] }}
-ILookup : {{ notes.at("Fourth note").indexlookup }}
-=========================
-Lookup level C:
-
-Text: {{ notes.at("Fourth note").at("Subnote B").at("Subnote C").body }}
-ILookup : {{ notes.at("Fourth note").at("Subnote B").at("Subnote C").indexlookup }}
-=========================
 
 ```
 
@@ -116,82 +91,15 @@ orji simple.org simple.jinja2
 
 
 ```
-
--------------------------
-Name: A todo note
-Slug: a-todo-note
-State: TODO
-Tags: 
-ILookup : 0
-
-Text:
+# Wash car (morning)
 
 
-About text
-
--------------------------
-
--------------------------
-Name: A done note with bullet points
-Slug: a-done-note-with-bullet-points
-State: DONE
-Tags: tag1 
-ILookup : 1
-
-Text:
+Car wash.
+# File taxes (evening)
 
 
-+ Bullet one
-+ Bullet two
+File taxes for wife too.
 
--------------------------
-
--------------------------
-Name: A third note with checkboxes
-Slug: a-third-note-with-checkboxes
-State: None
-Tags: tag2 tag3 
-ILookup : 2
-
-Text:
-
-
-- [ ] Checkbox 1
-- [X] Checkbox 2
-- [ ] Checkbox 3
-
--------------------------
-
--------------------------
-Name: Fourth note
-Slug: fourth-note
-State: None
-Tags: 
-ILookup : 3
-
-Text:
-
-
-Text
-
--------------------------
-
-
-=========================
-Lookup level A:
-
-Text: 
-Text
-
-Property 1: ABC
-ILookup : 3
-=========================
-Lookup level C:
-
-Text: 
-Subnote C body.
-ILookup : 3/0/0
-=========================
 
 ```
 

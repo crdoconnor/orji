@@ -1,9 +1,7 @@
 ---
 title: Module
 ---
-# Module
-
-Use a python module with template variables and methods.
+# ModuleUse a python module with template variables and methods.
 
 
 

@@ -1,9 +1,7 @@
 ---
 title: Deliberately fail
 ---
-# Deliberately fail
-
-When your template has an error condition that
+# Deliberately failWhen your template has an error condition that
 you need to raise, use fail("error message")
 to raise the error.
 

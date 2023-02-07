@@ -1,9 +1,7 @@
 ---
 title: LaTeX Letter
 ---
-# LaTeX Letter
-
-Use jinja2 in LaTeX mode to generate a letter.
+# LaTeX LetterUse jinja2 in LaTeX mode to generate a letter.
 
 The example CV here was cribbed from http://www.LaTeXTemplates.com.
 
