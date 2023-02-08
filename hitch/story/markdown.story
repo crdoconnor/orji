@@ -1,4 +1,4 @@
-Markdown:
+Convert chunks of orgmode text into markdown:
   docs: markdown
   about: |
     Convert chunks of orgmode text into markdown using .body.markdown.

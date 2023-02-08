@@ -1,4 +1,4 @@
-All template features:
+Demonstration of all template features:
   docs: all-template-features
   about: |
     Use all orji template features in one file. This template

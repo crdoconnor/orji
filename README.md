@@ -96,10 +96,10 @@ pipx install orji
 
 ### Using OrJi
 
-- [All template features](https://hitchdev.com/orji/using/all-template-features)
-- [Deliberately fail](https://hitchdev.com/orji/using/deliberate-failure)
-- [LaTeX Curriculum Vitae](https://hitchdev.com/orji/using/latex-cv)
-- [LaTeX Letter](https://hitchdev.com/orji/using/latex-letter)
-- [Markdown](https://hitchdev.com/orji/using/markdown)
-- [Module](https://hitchdev.com/orji/using/module)
+- [Demonstration of all template features](https://hitchdev.com/orji/using/all-template-features)
+- [Deliberately trigger a template failure](https://hitchdev.com/orji/using/deliberate-failure)
+- [Example of Generated LaTeX A4 CV](https://hitchdev.com/orji/using/latex-cv)
+- [Example of Generated LaTeX A4 Letter](https://hitchdev.com/orji/using/latex-letter)
+- [Convert chunks of orgmode text into markdown](https://hitchdev.com/orji/using/markdown)
+- [Use a python module with template variables and methods](https://hitchdev.com/orji/using/module)
 

@@ -1,7 +1,10 @@
-Module:
+Use a python module with template variables and methods:
   docs: module
   about: |
-    Use a python module with template variables and methods.
+    This is useful if you want to use custom python logic to
+    generate your output.
+    
+    Don't be tempted to make it too complicated though.
   given:
     files:
       note.org: |

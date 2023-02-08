@@ -1,4 +1,4 @@
-LaTeX Curriculum Vitae:
+Example of Generated LaTeX A4 CV:
   docs: latex-cv
   about: |
     Use jinja2 in LaTeX mode to generate a CV.
@@ -8,11 +8,13 @@ LaTeX Curriculum Vitae:
     Unlike traditional jinja2, latexmode jinja2 uses different syntax to avoid
     conflicting with latex syntax.
 
-    * A line statement is: %% (e.g. %% if x = y)
-    * A variable start is: \VAR{ ... }
-    * A comment is: \#{ ... }
-    * A block is : \BLOCK{ ... }
-    * A line comment prefix is: %# (e.g. %# commented out line).
+    * A line statement is: `%%` (e.g. `%% if x = y`)
+    * A variable start is: `\VAR{ ... }`
+    * A comment is: `\#{ ... }`
+    * A block is : `\BLOCK{ ... }`
+    * A line comment prefix is: `%#` (e.g. `%# commented out line`).
+
+    (note that only some of the values are filled on this template).
 
   given:
     files:

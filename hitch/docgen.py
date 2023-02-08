@@ -11,9 +11,9 @@ DOCS_INTRO = """---
 title: OrJi
 ---
 
-<a href="https://github.com/crdoconnor/orji"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/crdoconnor/orji?style=social"></a>
+<a href="https://github.com/crdoconnor/orji"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/crdoconnor/orji?style=social"/></a>
 
-<a href="https://pypi.org/pypi/orji"><img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/orji"><a/>
+<a href="https://pypi.org/pypi/orji"><img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/orji"/></a>
 """
 
 

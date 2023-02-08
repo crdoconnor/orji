@@ -1,4 +1,4 @@
-LaTeX Letter:
+Example of Generated LaTeX A4 Letter:
   docs: latex-letter
   about: |
     Use jinja2 in LaTeX mode to generate a letter.
@@ -7,11 +7,11 @@ LaTeX Letter:
 
     Unlike traditional jinja2, latexmode jinja2 uses different syntax to avoid conflicting.
 
-    * A line statement is: %% (e.g. %% if x = y)
-    * A variable start is: \VAR{ ... }
-    * A comment is: \#{ ... }
-    * A block is : \BLOCK{ ... }
-    * A line comment prefix is: %# (e.g. %# commented out line).
+    * A line statement is: `%%` (e.g. `%% if x = y`)
+    * A variable start is: `\VAR{ ... }`
+    * A comment is: `\#{ ... }`
+    * A block is : `\BLOCK{ ... }`
+    * A line comment prefix is: `%#` (e.g. `%# commented out line`).
 
   given:
     files:
