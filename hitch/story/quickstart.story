@@ -22,20 +22,22 @@ Quickstart:
         {%- if note.state == "TODO" -%}
         # {{ note.name }} ({% for tag in note.tags %}{{ tag }}{% endfor %})
 
-        {{ note.body }}
-        {%- endif -%}
+        {{ note.body.strip }}
+        {% endif %}
         {% endfor %}
   steps:
   - orji:
       cmd: simple.org simple.jinja2
-      output: |+
+      output: |2+
+
         # Wash car (morning)
 
-
         Car wash.
+
         # File taxes (evening)
 
-
         File taxes for wife too.
+
+
 
 ...

@@ -71,8 +71,8 @@ simple.jinja2
 {%- if note.state == "TODO" -%}
 # {{ note.name }} ({% for tag in note.tags %}{{ tag }}{% endfor %})
 
-{{ note.body }}
-{%- endif -%}
+{{ note.body.strip }}
+{% endif %}
 {% endfor %}
 
 ```
@@ -87,14 +87,16 @@ orji simple.org simple.jinja2
 
 Will output:
 ```
+
 # Wash car (morning)
 
-
 Car wash.
+
 # File taxes (evening)
 
-
 File taxes for wife too.
+
+
 
 
 ```
