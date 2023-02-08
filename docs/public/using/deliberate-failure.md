@@ -1,12 +1,14 @@
 ---
-title: Deliberately fail
+title: Deliberately trigger a template failure
 ---
-# Deliberately fail
+# Deliberately trigger a template failure
 
 
-When your template has an error condition that
-you need to raise, use fail("error message")
-to raise the error.
+When your template has an error condition caused by 
+something in the content, you can use fail("error message")
+to raise the error with a relevant message.
+
+This lets you create templates which [fail fast](https://en.wikipedia.org/wiki/Fail-fast).
 
 
 

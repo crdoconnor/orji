@@ -1,10 +1,13 @@
 ---
-title: Module
+title: Use a python module with template variables and methods
 ---
-# Module
+# Use a python module with template variables and methods
 
 
-Use a python module with template variables and methods.
+This is useful if you want to use custom python logic to
+generate your output.
+
+Don't be tempted to make it too complicated though.
 
 
 

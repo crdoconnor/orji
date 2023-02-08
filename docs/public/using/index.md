@@ -4,11 +4,11 @@ title: Using OrJi
 
 How to:
 
-- [All template features](all-template-features)
-- [Deliberately fail](deliberate-failure)
-- [LaTeX Curriculum Vitae](latex-cv)
-- [LaTeX Letter](latex-letter)
-- [Markdown](markdown)
-- [Module](module)
+- [Demonstration of all template features](all-template-features)
+- [Deliberately trigger a template failure](deliberate-failure)
+- [Example of Generated LaTeX A4 CV](latex-cv)
+- [Example of Generated LaTeX A4 Letter](latex-letter)
+- [Convert chunks of orgmode text into markdown](markdown)
+- [Use a python module with template variables and methods](module)
 
 

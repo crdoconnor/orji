@@ -1,7 +1,7 @@
 ---
-title: All template features
+title: Demonstration of all template features
 ---
-# All template features
+# Demonstration of all template features
 
 
 Use all orji template features in one file. This template

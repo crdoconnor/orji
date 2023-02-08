@@ -2,9 +2,9 @@
 title: OrJi
 ---
 
-<a href="https://github.com/crdoconnor/orji"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/crdoconnor/orji?style=social"></a>
+<a href="https://github.com/crdoconnor/orji"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/crdoconnor/orji?style=social"/></a>
 
-<a href="https://pypi.org/pypi/orji"><img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/orji"><a/>
+<a href="https://pypi.org/pypi/orji"><img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/orji"/></a>
 
 
 OrJi is a command line tool to generate text files using [jinja2](https://en.wikipedia.org/wiki/Jinja_(template_engine))
@@ -101,10 +101,10 @@ pipx install orji
 
 ### Using OrJi
 
-- [All template features](using/all-template-features)
-- [Deliberately fail](using/deliberate-failure)
-- [LaTeX Curriculum Vitae](using/latex-cv)
-- [LaTeX Letter](using/latex-letter)
-- [Markdown](using/markdown)
-- [Module](using/module)
+- [Demonstration of all template features](using/all-template-features)
+- [Deliberately trigger a template failure](using/deliberate-failure)
+- [Example of Generated LaTeX A4 CV](using/latex-cv)
+- [Example of Generated LaTeX A4 Letter](using/latex-letter)
+- [Convert chunks of orgmode text into markdown](using/markdown)
+- [Use a python module with template variables and methods](using/module)
 

@@ -1,7 +1,7 @@
 ---
-title: Markdown
+title: Convert chunks of orgmode text into markdown
 ---
-# Markdown
+# Convert chunks of orgmode text into markdown
 
 
 Convert chunks of orgmode text into markdown using .body.markdown.
