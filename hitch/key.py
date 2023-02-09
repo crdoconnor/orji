@@ -160,8 +160,11 @@ def deploy():
     Deploy to pypi as specified version.
     """
     git = Command("git")
-    git("clone", "git@github.com:crdoconnor/orji.git").in_dir(DIR.gen).run()
     project = DIR.gen / "orji"
+    
+    if project.exists():
+        project.rmtree()
+    git("clone", "git@github.com:crdoconnor/orji.git").in_dir(DIR.gen).run()
     version = project.joinpath("VERSION").text().rstrip()
     initpy = project.joinpath("orji", "__init__.py")
     original_initpy_contents = initpy.bytes().decode("utf8")
