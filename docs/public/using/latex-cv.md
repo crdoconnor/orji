@@ -186,12 +186,12 @@ cv.jinja2
 %% set details = root.at("details")
 
 \begin{tabularx}{\linewidth}{@{} C @{}}
-\Huge{\VAR{ details.at("name").body.strip }} \\[7.5pt]
-\href{\VAR{ details.at("github").body.strip }}{\raisebox{-0.05\height}\faGithub\ \VAR{ details.at("github").body.strip }} \ $|$ \ 
-\href{https://linkedin.com/in/\VAR{ details.at("linkedin").body.strip }}{\raisebox{-0.05\height}\faLinkedin\ \VAR{ details.at("linkedin").body.strip }} \ $|$ \ 
+\Huge{\VAR{ details.at("name").body }} \\[7.5pt]
+\href{\VAR{ details.at("github").body }}{\raisebox{-0.05\height}\faGithub\ \VAR{ details.at("github").body }} \ $|$ \ 
+\href{https://linkedin.com/in/\VAR{ details.at("linkedin").body }}{\raisebox{-0.05\height}\faLinkedin\ \VAR{ details.at("linkedin").body }} \ $|$ \ 
 \href{https://mysite.com}{\raisebox{-0.05\height}\faGlobe \ mysite.com} \ $|$ \ 
-\href{mailto:\VAR{ details.at("email").body.strip }}{\raisebox{-0.05\height}\faEnvelope \ \VAR{ details.at("email").body.strip }} \ $|$ \ 
-\href{tel:\VAR{ details.at("telephone").body.strip}{\raisebox{-0.05\height}\faMobile \ \VAR{ details.at("telephone").body.strip} \\
+\href{mailto:\VAR{ details.at("email").body }}{\raisebox{-0.05\height}\faEnvelope \ \VAR{ details.at("email").body }} \ $|$ \ 
+\href{tel:\VAR{ details.at("telephone").body}{\raisebox{-0.05\height}\faMobile \ \VAR{ details.at("telephone").body} \\
 \end{tabularx}
 
 %----------------------------------------------------------------------------------------
@@ -393,23 +393,18 @@ Will output:
 
 %Interests/ Keywords/ Summary
 \section{Summary}
-
 This is a summary about me with a \href{http://www.google.com}{link to a website I made} \& some more stuff.
-
 
 %Experience
 \section{Work Experience}
 
 \begin{tabularx}{\linewidth}{ @{}l r@{} }
 \textbf{role.name} & \hfill 1980-2000 \\[3.75pt]
-\multicolumn{2}{@{}X@{}}{
-Invented Microsoft word.
-}  \\
+\multicolumn{2}{@{}X@{}}{Invented Microsoft word.}  \\
 \end{tabularx}
 \begin{tabularx}{\linewidth}{ @{}l r@{} }
 \textbf{role.name} & \hfill January 2000-August 2020 \\[3.75pt]
-\multicolumn{2}{@{}X@{}}{
-Increased search volume by 50%.}  \\
+\multicolumn{2}{@{}X@{}}{Increased search volume by 50%.}  \\
 \end{tabularx}
 % \begin{tabularx}{\linewidth}{ @{}l r@{} }
 % \textbf{Designation} & \hfill Mar 2019 - Jan 2021 \\[3.75pt]

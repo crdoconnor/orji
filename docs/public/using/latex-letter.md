@@ -118,13 +118,13 @@ letter.jinja2
 %% set fromdetails = root.at("from details")
 
 \signature{
-    \VAR{fromdetails.at("name").body.strip}
+    \VAR{fromdetails.at("name").body}
 } % Your name for the signature at the bottom
 
 \address{
-\VAR{ fromdetails.at("address").body.strip.replace("\n", "\\\\ \n") } \\
-\VAR{ fromdetails.at("telephone").body.strip } \\
-\VAR{ fromdetails.at("email").body.strip }
+\VAR{ fromdetails.at("address").body.text.replace("\n", "\\\\ \n") } \\
+\VAR{ fromdetails.at("telephone").body } \\
+\VAR{ fromdetails.at("email").body }
 } % Your address and phone number
 
 %----------------------------------------------------------------------------------------
@@ -136,7 +136,7 @@ letter.jinja2
 %----------------------------------------------------------------------------------------
 
 \begin{letter}{
-\VAR{ root.at("to address").body.strip.replace("\n", "\\\\ \n") }
+\VAR{ root.at("to address").body.text.replace("\n", "\\\\ \n") }
 } % Name/title of the addressee
 
 %----------------------------------------------------------------------------------------
@@ -235,10 +235,12 @@ Will output:
 } % Your name for the signature at the bottom
 
 \address{
+\\ 
 1234 NW Bobcat Lane,\\ 
 Bobcat City,\\ 
 MO\\ 
-65584-5678. \\
+65584-5678.\\ 
+ \\
 +1-541-754-3010 \\
 johndoe@gmail.com
 } % Your address and phone number
@@ -252,9 +254,11 @@ johndoe@gmail.com
 %----------------------------------------------------------------------------------------
 
 \begin{letter}{
+\\ 
 123 Elf Road,\\ 
 North Pole,\\ 
-88888
+88888\\ 
+
 } % Name/title of the addressee
 
 %----------------------------------------------------------------------------------------
@@ -264,11 +268,9 @@ North Pole,\\
 \opening{\textbf{Dear Sir or Madam,}}
 
 
-
 Could I get world peace? Failing that maybe an Xbox.
 
 Many thanks!
-
 
 
 \vspace{2\parskip} % Extra whitespace for aesthetics
@@ -278,7 +280,6 @@ Yours faithfully,
 }
 
 \ps{
-
 P.S. An iPhone would also be acceptable.
 } % Postscript text, comment this line to remove it
 

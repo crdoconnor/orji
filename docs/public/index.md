@@ -47,7 +47,7 @@ simple.jinja2
 {%- if note.state == "TODO" -%}
 # {{ note.name }} ({% for tag in note.tags %}{{ tag }}{% endfor %})
 
-{{ note.body.strip }}
+{{ note.body }}
 {% endif %}
 {% endfor %}
 

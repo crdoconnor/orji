@@ -38,7 +38,6 @@ orji markdown.org markdown.jinja2
 
 Will output:
 ```
-
 Text with /emphasis/ and *bold* and a [link](https://www.google).
 
 * Bullet one

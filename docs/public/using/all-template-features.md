@@ -103,9 +103,7 @@ ILookup : 0
 
 Text:
 
-
 About text
-
 -------------------------
 
 -------------------------
@@ -117,10 +115,8 @@ ILookup : 1
 
 Text:
 
-
 + Bullet one
 + Bullet two
-
 -------------------------
 
 -------------------------
@@ -132,11 +128,9 @@ ILookup : 2
 
 Text:
 
-
 - [ ] Checkbox 1
 - [X] Checkbox 2
 - [ ] Checkbox 3
-
 -------------------------
 
 -------------------------
@@ -148,25 +142,20 @@ ILookup : 3
 
 Text:
 
-
 Text
-
 -------------------------
 
 
 =========================
 Lookup level A:
 
-Text: 
-Text
-
+Text: Text
 Property 1: ABC
 ILookup : 3
 =========================
 Lookup level C:
 
-Text: 
-Subnote C body.
+Text: Subnote C body.
 ILookup : 3/0/0
 =========================
 
