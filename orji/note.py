@@ -19,7 +19,7 @@ class TextChunk:
             text,
         )
         text = text.replace("\n+ ", "\n* ")
-        return text
+        return text.strip()
 
     @property
     def latexed(self):
@@ -30,14 +30,14 @@ class TextChunk:
             text,
         )
         text = text.replace("&", "\\&")
-        return text
+        return text.strip()
 
     @property
     def strip(self):
         return self.text.strip()
 
     def __str__(self):
-        return self.text
+        return self.text.strip()
 
 
 class Body(TextChunk):

@@ -3,7 +3,7 @@ Demonstration of all template features:
   about: |
     Use all orji template features in one file. This template
     demonstrates getting:
-    
+
     * Name
     * Slug
     * Tags
@@ -85,9 +85,7 @@ Demonstration of all template features:
 
         Text:
 
-
         About text
-
         -------------------------
 
         -------------------------
@@ -99,10 +97,8 @@ Demonstration of all template features:
 
         Text:
 
-
         + Bullet one
         + Bullet two
-
         -------------------------
 
         -------------------------
@@ -114,11 +110,9 @@ Demonstration of all template features:
 
         Text:
 
-
         - [ ] Checkbox 1
         - [X] Checkbox 2
         - [ ] Checkbox 3
-
         -------------------------
 
         -------------------------
@@ -130,24 +124,19 @@ Demonstration of all template features:
 
         Text:
 
-
         Text
-
         -------------------------
 
 
         =========================
         Lookup level A:
 
-        Text: 
-        Text
-
+        Text: Text
         Property 1: ABC
         ILookup : 3
         =========================
         Lookup level C:
 
-        Text: 
-        Subnote C body.
+        Text: Subnote C body.
         ILookup : 3/0/0
         =========================

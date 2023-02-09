@@ -108,13 +108,13 @@ Example of Generated LaTeX A4 Letter:
         %% set fromdetails = root.at("from details")
 
         \signature{
-            \VAR{fromdetails.at("name").body.strip}
+            \VAR{fromdetails.at("name").body}
         } % Your name for the signature at the bottom
 
         \address{
-        \VAR{ fromdetails.at("address").body.strip.replace("\n", "\\\\ \n") } \\
-        \VAR{ fromdetails.at("telephone").body.strip } \\
-        \VAR{ fromdetails.at("email").body.strip }
+        \VAR{ fromdetails.at("address").body.text.replace("\n", "\\\\ \n") } \\
+        \VAR{ fromdetails.at("telephone").body } \\
+        \VAR{ fromdetails.at("email").body }
         } % Your address and phone number
 
         %----------------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ Example of Generated LaTeX A4 Letter:
         %----------------------------------------------------------------------------------------
 
         \begin{letter}{
-        \VAR{ root.at("to address").body.strip.replace("\n", "\\\\ \n") }
+        \VAR{ root.at("to address").body.text.replace("\n", "\\\\ \n") }
         } % Name/title of the addressee
 
         %----------------------------------------------------------------------------------------
@@ -217,10 +217,12 @@ Example of Generated LaTeX A4 Letter:
         } % Your name for the signature at the bottom
 
         \address{
+        \\ 
         1234 NW Bobcat Lane,\\ 
         Bobcat City,\\ 
         MO\\ 
-        65584-5678. \\
+        65584-5678.\\ 
+         \\
         +1-541-754-3010 \\
         johndoe@gmail.com
         } % Your address and phone number
@@ -234,9 +236,11 @@ Example of Generated LaTeX A4 Letter:
         %----------------------------------------------------------------------------------------
 
         \begin{letter}{
+        \\ 
         123 Elf Road,\\ 
         North Pole,\\ 
-        88888
+        88888\\ 
+
         } % Name/title of the addressee
 
         %----------------------------------------------------------------------------------------
@@ -246,11 +250,9 @@ Example of Generated LaTeX A4 Letter:
         \opening{\textbf{Dear Sir or Madam,}}
 
 
-
         Could I get world peace? Failing that maybe an Xbox.
 
         Many thanks!
-
 
 
         \vspace{2\parskip} % Extra whitespace for aesthetics
@@ -260,7 +262,6 @@ Example of Generated LaTeX A4 Letter:
         }
 
         \ps{
-
         P.S. An iPhone would also be acceptable.
         } % Postscript text, comment this line to remove it
 
@@ -272,6 +273,6 @@ Example of Generated LaTeX A4 Letter:
 
         \end{document}
 
-        
+
   #- pdf: 
       #cmd: --latexmode letter.org letter.jinja2
