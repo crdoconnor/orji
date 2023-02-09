@@ -21,14 +21,14 @@ given:
     {% for filename, contents in files.items() %}
 
     {{ filename }}
-    ```
+    ```{{ filename.split(".")[1] }}
     {{ contents }}
     ```
     {% endfor %}
 steps:
   orji: |
     Running:
-    ```
+    ```bash
     orji {{ cmd }}
     ```
     
