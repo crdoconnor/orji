@@ -24,7 +24,7 @@ conflicting with latex syntax.
 
 
 cv.org
-```
+```org
 * details
 
 ** name
@@ -76,7 +76,7 @@ Increased search volume by 50%.
 
 
 cv.jinja2
-```
+```jinja2
 %-----------------------------------------------------------------------------------------------------------------------------------------------%
 %	The MIT License (MIT)
 %
@@ -266,7 +266,7 @@ Some More Skills  &  \normalsize{Also some more of this, Some more that, And som
 
 
 Running:
-```
+```bash
 orji --latexmode cv.org cv.jinja2
 ```
 

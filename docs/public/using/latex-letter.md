@@ -21,7 +21,7 @@ Unlike traditional jinja2, latexmode jinja2 uses different syntax to avoid confl
 
 
 letter.org
-```
+```org
 * from details
 ** name
 
@@ -65,7 +65,7 @@ P.S. An iPhone would also be acceptable.
 
 
 letter.jinja2
-```
+```jinja2
 % Thin Formal Letter
 % LaTeX Template
 % Version 2.0 (7/2/17)
@@ -175,7 +175,7 @@ Yours faithfully,
 
 
 Running:
-```
+```bash
 orji --latexmode letter.org letter.jinja2
 ```
 

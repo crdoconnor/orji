@@ -15,14 +15,14 @@ This lets you create templates which [fail fast](https://en.wikipedia.org/wiki/F
 
 
 example.org
-```
+```org
 * existent
 
 ```
 
 
 example.jinja2
-```
+```jinja2
 This is some text
 
 {{ fail("this shouldn't happen") }}
@@ -35,7 +35,7 @@ This is some more text.
 
 
 Running:
-```
+```bash
 orji example.org example.jinja2
 ```
 

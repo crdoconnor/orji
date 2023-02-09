@@ -11,7 +11,7 @@ Convert chunks of orgmode text into markdown using .body.markdown.
 
 
 markdown.org
-```
+```org
 * Note title
 
 Text with /emphasis/ and *bold* and a [[link][https://www.google]].
@@ -23,7 +23,7 @@ Text with /emphasis/ and *bold* and a [[link][https://www.google]].
 
 
 markdown.jinja2
-```
+```jinja2
 {{ root.at("Note title").body.markdown }}
 
 ```
@@ -32,7 +32,7 @@ markdown.jinja2
 
 
 Running:
-```
+```bash
 orji markdown.org markdown.jinja2
 ```
 

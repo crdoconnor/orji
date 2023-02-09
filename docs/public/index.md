@@ -23,7 +23,7 @@ Simple org mode file used with simple template.
 
 
 simple.org
-```
+```org
 * A normal note
 
 Just a note
@@ -42,7 +42,7 @@ File taxes for wife too.
 
 
 simple.jinja2
-```
+```jinja2
 {% for note in root %}
 {%- if note.state == "TODO" -%}
 # {{ note.name }} ({% for tag in note.tags %}{{ tag }}{% endfor %})
@@ -57,7 +57,7 @@ simple.jinja2
 
 
 Running:
-```
+```bash
 orji simple.org simple.jinja2
 ```
 
