@@ -1,21 +1,16 @@
 from hitchstory import StoryCollection
-from commandlib import Command, python
-from click import argument, group, pass_context
 from pathquery import pathquery
+from click import argument, group, pass_context
 import hitchpylibrarytoolkit
 from engine import Engine
-from path import Path
-from docgen import run_docgen
 
 
-class Directories:
-    gen = Path("/gen")
-    key = Path("/src/hitch/")
-    project = Path("/src/")
-    share = Path("/gen")
-
-
-DIR = Directories()
+toolkit = hitchpylibrarytoolkit.ProjectToolkitV2(
+    "OrJi",
+    "orji",
+    "crdoconnor/orji",
+    image="",
+)
 
 
 @group(invoke_without_command=True)
@@ -25,113 +20,72 @@ def cli(ctx):
     pass
 
 
-PROJECT_NAME = "orji"
-
-toolkit = hitchpylibrarytoolkit.ProjectToolkit(
-    PROJECT_NAME,
-    DIR,
-)
-
-"""
-----------------------------
-Non-runnable utility methods
----------------------------
-"""
+DIR = toolkit.DIR
 
 
 def _storybook(**settings):
-    return StoryCollection(
-        pathquery(DIR.key / "story").ext("story"), Engine(DIR, **settings)
-    )
+    return StoryCollection(pathquery(DIR.key).ext("story"), Engine(DIR, **settings))
 
 
 def _current_version():
-    return DIR.project.joinpath("VERSION").bytes().decode("utf8").rstrip()
+    return DIR.project.joinpath("VERSION").text().rstrip()
 
 
-"""
------------------
-RUNNABLE COMMANDS
------------------
-"""
-
-
-@cli.command()
-@argument("keywords", nargs=-1)
-def bdd(keywords):
-    """
-    Run story matching keywords.
-    """
-    _storybook().only_uninherited().shortcut(*keywords).play()
-
-
-@cli.command()
-@argument("pyversion", nargs=1)
-@argument("keywords", nargs=-1)
-def tver(pyversion, keywords):
-    """
-    Run story against specific version of Python - e.g. tver 3.7.0 modify multi line
-    """
-    _storybook().with_params(
-        **{"python version": pyversion}
-    ).only_uninherited().shortcut(*keywords).play()
+def _devenv():
+    return toolkit.devenv()
 
 
 @cli.command()
 @argument("keywords", nargs=-1)
 def rbdd(keywords):
     """
-    Run story matching keywords and rewrite story if code changed.
+    Run story with name containing keywords and rewrite.
     """
-    _storybook(rewrite=True).with_params(
-        **{"python version": "3.7.0"}
-    ).only_uninherited().shortcut(*keywords).play()
+    _storybook(python_path=_devenv().python_path, rewrite=True).shortcut(
+        *keywords
+    ).play()
 
 
 @cli.command()
-@argument("filename", nargs=1)
+@argument("keywords", nargs=-1)
+def bdd(keywords):
+    """
+    Run story with name containing keywords.
+    """
+    _storybook(python_path=_devenv().python_path).shortcut(*keywords).play()
+
+
+@cli.command()
+@argument("filename")
 def regressfile(filename):
     """
-    Run all stories in filename 'filename' in python 3.7.
+    Run all stories in filename 'filename'.
     """
-    _storybook().with_params(**{"python version": "3.7.0"}).in_filename(
-        filename
-    ).ordered_by_name().play()
+    StoryCollection(
+        pathquery(DIR.key).ext("story"), Engine(DIR, python_path=_devenv().python_path)
+    ).in_filename(filename).ordered_by_name().play()
+
+
+@cli.command()
+def rewriteall():
+    """
+    Run all stories in rewrite mode.
+    """
+    StoryCollection(
+        pathquery(DIR.key).ext("story"),
+        Engine(DIR, python_path=_devenv().python_path, rewrite=True),
+    ).only_uninherited().ordered_by_name().play()
 
 
 @cli.command()
 def regression():
     """
-    Run regression testing - lint and then run all tests.
+    Continuos integration - lint and run all stories.
     """
-    _lint()
-    storybook = _storybook().only_uninherited()
-    storybook.with_params(**{"python version": "3.7.0"}).ordered_by_name().play()
-
-
-@cli.command()
-@argument("python_path", nargs=1)
-@argument("python_version", nargs=1)
-def regression_on_python_path(python_path, python_version):
-    """
-    Run regression tests - e.g. hk regression_on_python_path /usr/bin/python 3.7.0
-    """
-    _storybook(python_path=python_path).with_params(
-        **{"python version": python_version}
+    # toolkit.lint(exclude=["__init__.py"])
+    StoryCollection(
+        pathquery(DIR.key).ext("story"), Engine(DIR, python_path=_devenv().python_path)
     ).only_uninherited().ordered_by_name().play()
-
-
-@cli.command()
-def checks():
-    """
-    Run all checks ensure linter, code formatter, tests and docgen all run correctly.
-
-    These checks should prevent code that doesn't have the proper checks run from being merged.
-    """
-    toolkit.validate_reformatting()
-    _lint()
-    storybook = _storybook().only_uninherited()
-    storybook.with_params(**{"python version": "3.7.0"}).ordered_by_name().play()
 
 
 @cli.command()
@@ -142,46 +96,22 @@ def reformat():
     toolkit.reformat()
 
 
-def _lint():
-    toolkit.lint()
-
-
 @cli.command()
 def lint():
     """
     Lint project code and hitch code.
     """
-    _lint()
+    toolkit.lint(exclude=["__init__.py"])
 
 
 @cli.command()
-def deploy():
+@argument("test", required=False)
+def deploy(test="test"):
     """
     Deploy to pypi as specified version.
     """
-    git = Command("git")
-    project = DIR.gen / "orji"
-    
-    if project.exists():
-        project.rmtree()
-    git("clone", "git@github.com:crdoconnor/orji.git").in_dir(DIR.gen).run()
-    version = project.joinpath("VERSION").text().rstrip()
-    initpy = project.joinpath("orji", "__init__.py")
-    original_initpy_contents = initpy.bytes().decode("utf8")
-    initpy.write_text(original_initpy_contents.replace("DEVELOPMENT_VERSION", version))
-    python("setup.py", "sdist").in_dir(project).run()
-    initpy.write_text(original_initpy_contents)
-
-    # Upload to pypi
-    python(
-        "-m",
-        "twine",
-        "upload",
-        "dist/{0}-{1}.tar.gz".format("orji", version),
-    ).in_dir(project).run()
-
-    # Clean up
-    DIR.gen.joinpath("orji").rmtree()
+    testpypi = not (test == "live")
+    toolkit.deploy(testpypi=testpypi)
 
 
 @cli.command()
@@ -189,74 +119,68 @@ def draftdocs():
     """
     Build documentation.
     """
-    run_docgen(DIR, _storybook())
+    toolkit.draft_docs(storybook=_storybook(python_path=_devenv().python_path))
 
 
 @cli.command()
 def publishdocs():
-    if DIR.gen.joinpath("orji").exists():
-        DIR.gen.joinpath("orji").rmtree()
-
-    Path("/root/.ssh/known_hosts").write_text(
-        Command("ssh-keyscan", "github.com").output()
-    )
-    Command("git", "clone", "git@github.com:crdoconnor/orji.git").in_dir(DIR.gen).run()
-
-    git = Command("git").in_dir(DIR.gen / "orji")
-    git("config", "user.name", "Docbot").run()
-    git("config", "user.email", "docbot@hitchdev.com").run()
-    git("rm", "-r", "docs/public").run()
-
-    run_docgen(DIR, _storybook(), publish=True)
-
-    git("add", "docs/public").run()
-    git("commit", "-m", "DOCS : Regenerated docs.").run()
-
-    git("push").run()
-
-
-@cli.command()
-def readmegen():
-    """
-    Build documentation.
-    """
-    run_docgen(DIR, _storybook(), readme=True)
-    DIR.project.joinpath("docs", "draft", "index.md").copy("README.md")
-    DIR.project.joinpath("docs", "draft", "changelog.md").copy("CHANGELOG.md")
-
-
-@cli.command()
-def rerun():
-    """
-    Rerun last example code block with specified version of Python.
-    """
-    from commandlib import Command
-
-    version = "3.7.0"
-    Command(DIR.gen.joinpath("py{0}".format(version), "bin", "python"))(
-        DIR.gen.joinpath("working", "examplepythoncode.py")
-    ).in_dir(DIR.gen.joinpath("working")).run()
-
-
-@cli.command()
-def bash():
-    """
-    Run bash
-    """
-    from commandlib import Command
-
-    Command("bash").run()
+    """Publish pushed docs."""
+    toolkit.publish(storybook=_storybook(python_path=_devenv().python_path))
 
 
 @cli.command()
 def build():
-    import hitchpylibrarytoolkit
+    _devenv()
 
-    hitchpylibrarytoolkit.project_build(
-        "strictyaml",
-        DIR,
-        "3.7.0",
-        {"ruamel.yaml": "0.16.5"},
+
+@cli.command()
+def cleanpyenv():
+    pyenv.Pyenv(DIR.gen / "pyenv").clean()
+
+
+@cli.command()
+def cleandevenv():
+    DIR.gen.joinpath("pyenv", "versions", "devvenv").remove()
+
+
+@cli.command()
+@argument("strategy_name", nargs=1)
+def envirotest(strategy_name):
+    """Run tests on package / python version combinations."""
+    import envirotest
+    import pyenv
+
+    test_package = pyenv.PythonRequirements(
+        [
+            "prettystack=={}".format(_current_version()),
+        ],
+        test_repo=True,
+    )
+
+    test_package = pyenv.PythonProjectDirectory(DIR.project)
+
+    prerequisites = [
+        pyenv.PythonVersionDependentRequirement(
+            package="markupsafe",
+            lower_version="2.0.0",
+            python_version_threshold="3.9",
+            higher_version="2.1.2",
+        ),
+        pyenv.PythonRequirements(
+            [
+                "ensure",
+            ]
+        ),
+    ]
+
+    envirotest.run_test(
+        pyenv.Pyenv(DIR.gen / "pyenv"),
+        DIR.project.joinpath("pyproject.toml").text(),
+        test_package,
+        prerequisites,
+        strategy_name,
+        _storybook,
+        lambda python_path: False,
     )
 
 

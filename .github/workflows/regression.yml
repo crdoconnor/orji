@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - main
+    - master
   pull_request:
 
 jobs:
@@ -15,16 +15,12 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
 
-      #- name: ensure qemu installed so arm containers work
-        #run: |
-          #sudo apt-get update
-          #sudo apt-get install qemu-system-arm qemu-efi qemu-user-static -y
-
       - name: build
         run: |
           mkdir -p ~/.ssh/
           touch ~/.ssh/id_rsa
           touch ~/.ssh/id_rsa.pub
+          echo test | podman secret create pypitoken -
           ./key.sh make
 
       - name: regression

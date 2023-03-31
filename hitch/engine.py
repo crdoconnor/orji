@@ -17,6 +17,7 @@ from hitchrunpy import (
 )
 from shlex import split
 from templex import Templex
+from commandlib import Command
 
 
 class Engine(BaseEngine):
@@ -52,12 +53,8 @@ class Engine(BaseEngine):
         if not self.path.profile.exists():
             self.path.profile.mkdir()
 
-        self.pylibrary = hitchpylibrarytoolkit.PyLibraryBuild(
-            "orji", self.path
-        ).with_python_version("3.7.0")
-        self.pylibrary.ensure_built()
-        self.python = self.pylibrary.bin.python
-        self.orji_bin = self.pylibrary.bin.orji
+        self.python = Command(self._python_path)
+        self.orji_bin = Command(self._python_path.parent / "orji")
 
     @no_stacktrace_for(AssertionError)
     @validate(cmd=Str(), output=Str(), error=Bool())

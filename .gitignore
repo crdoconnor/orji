@@ -6,4 +6,6 @@ docs/snippets/
 docs/draft/
 docs/src/using/
 
+hitchpylibrarytoolkit/
+
 *.pyc

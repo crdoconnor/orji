@@ -2,7 +2,9 @@ argcomplete==1.12.2
     # via hitchrun
 backcall==0.2.0
     # via ipython
-black==21.11b1
+build==0.1.0
+    # via build
+black==23.1.0
     # via hitchpylibrarytoolkit
 bleach==4.1.0
     # via readme-renderer
@@ -48,7 +50,7 @@ hitchbuild==0.6.3
     #   hitchbuildpy
 hitchbuildpy==0.5.4
     # via hitchpylibrarytoolkit
-hitchpylibrarytoolkit==0.5.1
+hitchpylibrarytoolkit==0.6.6
     # via -r hitchreqs.in
 hitchrun==0.4.0
     # via
@@ -92,7 +94,7 @@ mccabe==0.6.1
     # via flake8
 mypy-extensions==0.4.3
     # via black
-packaging==21.3
+packaging==22.0
     # via bleach
 parso==0.7.1
     # via jedi
@@ -210,7 +212,7 @@ typing-extensions==4.0.0
     #   gitpython
 urllib3==1.26.7
     # via requests
-uvloop==0.11.2
+uvloop==0.17.0
     # via icommandlib
 wcwidth==0.2.5
     # via
