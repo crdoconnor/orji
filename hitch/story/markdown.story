@@ -7,7 +7,7 @@ Convert chunks of orgmode text into markdown:
       markdown.org: |
         * Note title
 
-        Text with /emphasis/ and *bold* and a [[link][https://www.google]].
+        Text with /emphasis/ and *bold* and a [[https://www.google][link]].
 
         + Bullet one
         + Bullet two

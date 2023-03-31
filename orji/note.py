@@ -15,7 +15,7 @@ class TextChunk:
         text = self.text
         text = re.sub(
             re.compile(r"\[\[(.*?)\]\[(.*?)\]\]"),
-            r"[\1](\2)",
+            r"[\2](\1)",
             text,
         )
         text = text.replace("\n+ ", "\n* ")
