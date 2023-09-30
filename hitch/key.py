@@ -134,11 +134,6 @@ def build():
 
 
 @cli.command()
-def cleanpyenv():
-    pyenv.Pyenv(DIR.gen / "pyenv").clean()
-
-
-@cli.command()
 def cleandevenv():
     DIR.gen.joinpath("pyenv", "versions", "devvenv").remove()
 

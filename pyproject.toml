@@ -30,7 +30,7 @@ dependencies = [
 dynamic = ["version", "readme"]
 
 [project.scripts]
-orji = "orji:main"
+orji = "orji:cli"
 
 [project.urls]
 homepage = "https://hitchdev.com/orji"
