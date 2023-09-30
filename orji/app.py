@@ -61,6 +61,7 @@ def environment(latexmode, pymodule_filename):
 
 
 @click.command()
+@click.argument("cmd")
 @click.argument("orgfile")
 @click.argument("jinjafile")
 @click.option(
@@ -80,7 +81,7 @@ def environment(latexmode, pymodule_filename):
     "pymodule",
     help="Specify python module to use in template.",
 )
-def main(orgfile, jinjafile, indexlookup, latexmode, pymodule):
+def main(cmd, orgfile, jinjafile, indexlookup, latexmode, pymodule):
     org_text = Path(orgfile).read_text()
     template_text = Path(jinjafile).read_text()
     parsed = loads(org_text)

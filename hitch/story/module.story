@@ -21,7 +21,7 @@ Use a python module with template variables and methods:
             return string.upper()
   steps:
   - orji:
-      cmd: --module note.py note.org note.jinja2
+      cmd: cat --module note.py note.org note.jinja2
       output: |2+
 
         NOTE 1

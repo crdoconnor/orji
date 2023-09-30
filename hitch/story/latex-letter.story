@@ -161,7 +161,7 @@ Example of Generated LaTeX A4 Letter:
 
   steps:
   - orji:
-      cmd: --latexmode letter.org letter.jinja2
+      cmd: cat --latexmode letter.org letter.jinja2
       output: |
         % Thin Formal Letter
         % LaTeX Template
