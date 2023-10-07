@@ -48,6 +48,9 @@ class Engine(BaseEngine):
         self.path.working.mkdir()
 
         for filename, contents in self.given["files"].items():
+            filepath = self.path.working.joinpath(filename)
+            if not filepath.dirname().exists():
+                filepath.dirname().mkdir()
             self.path.working.joinpath(filename).write_text(contents)
 
         if not self.path.profile.exists():
@@ -67,7 +70,7 @@ class Engine(BaseEngine):
         actual_output = command.output()
 
         try:
-            Templex(actual_output).assert_match(output)
+            Templex(output).assert_match(actual_output)
         except AssertionError:
             if self._rewrite:
                 self.current_step.update(output=actual_output)

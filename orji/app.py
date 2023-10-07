@@ -1,4 +1,5 @@
 from .cat import cat
+from .run import run
 import click
 
 
@@ -8,3 +9,4 @@ def cli():
 
 
 cli.add_command(cat)
+cli.add_command(run)
