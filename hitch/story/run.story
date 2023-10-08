@@ -4,9 +4,15 @@ Run templated script to send email:
   given:
     files:
       org/simple.org: |
-        * TODO A normal note :selfemail:
+        * TODO An email I want to send :email:
 
-        Send this note as an email to my personal email account.
+        ** email
+
+        billg@microsoft.com
+
+        ** body
+
+        Windows sucks.
 
         * TODO Wash car :morning:
 
@@ -21,11 +27,12 @@ Run templated script to send email:
         * Another note
 
         * Another irrelevant note.
-      orun/selfemail.sh: |
-        cat {{ notebody }}
+      orun/email.sh: |
+        echo {{ note.at("body").body.text.strip() }}
+        echo {{ note.at("email").body.text.strip() }}
   steps:
   - orji:
       cmd: run org orun
-      output: |2
-
-        Send this note as an email to my personal email account.
+      output: |
+        Windows sucks.
+        billg@microsoft.com

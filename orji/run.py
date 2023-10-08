@@ -82,16 +82,16 @@ def run(orgdir, rundir):
     tmp = Path("/tmp")
     
     for orgfile in orgdir.glob("*.org"):
-        for note in loads(Path(orgfile).read_text()).children:
-            if note.todo == "TODO":
+        for note in Note(loads(Path(orgfile).read_text())):
+            if note.state == "TODO":
                 for tag in note.tags:
                     if tag in scripts.keys():
                         notebody_path = tmp.joinpath("notebody.txt")
-                        notebody_path.write_text(note.body)
+                        notebody_path.write_text(note.body.text)
                         tmp_script = tmp.joinpath("{}.sh".format(tag))
                         tmp_script.write_text(
                             env.from_string(scripts[tag])
-                            .render(notebody=notebody_path)
+                            .render(notebody=notebody_path, note=note)
                         )                        
                         tmp_script.chmod(tmp_script.stat().st_mode | stat.S_IEXEC)
                         os.system(tmp_script)
