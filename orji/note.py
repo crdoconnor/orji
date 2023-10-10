@@ -45,6 +45,13 @@ class Body(TextChunk):
         self.text = text
 
     @property
+    def oneline(self):
+        if "\n" not in self.text.strip():
+            return self.text.strip()
+        else:
+            raise OrjiError(f"{self.text} is not one line")
+
+    @property
     def paragraphs(self):
         return [
             TextChunk(text) for text in self.text.split("\n\n") if text.strip() != ""

@@ -28,8 +28,8 @@ Run templated script to send email:
 
         * Another irrelevant note.
       orun/email.sh: |
-        echo {{ note.at("body").body.text.strip() }}
-        echo {{ note.at("email").body.text.strip() }}
+        echo {{ note.at("body").body.oneline }}
+        echo {{ note.at("email").body.oneline }}
   steps:
   - orji:
       cmd: run org orun
