@@ -9,6 +9,7 @@ import inspect
 from sys import exit
 import stat
 import os
+from .template import Template
 
 
 class Failure(Exception):
@@ -79,6 +80,7 @@ def run(orgdir, rundir):
         for script in rundir.glob("*.sh")
     }
     env = environment(False, None)
+
     tmp = Path("/tmp")
     
     for orgfile in orgdir.glob("*.org"):
@@ -89,6 +91,7 @@ def run(orgdir, rundir):
                         notebody_path = tmp.joinpath("notebody.txt")
                         notebody_path.write_text(note.body.text)
                         tmp_script = tmp.joinpath("{}.sh".format(tag))
+                        
                         tmp_script.write_text(
                             env.from_string(scripts[tag])
                             .render(notebody=notebody_path, note=note)
