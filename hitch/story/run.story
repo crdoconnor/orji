@@ -29,10 +29,11 @@ Run templated script to send email:
         * Another irrelevant note.
       orun/email.sh: |
         echo {{ note.at("body").body.oneline }}
-        echo {{ note.at("email").body.oneline }}
+        cat {{ note.at("email").body.tempfile() }}
   steps:
   - orji:
       cmd: run org orun
       output: |
         Windows sucks.
+
         billg@microsoft.com
