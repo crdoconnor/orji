@@ -37,3 +37,34 @@ Run templated script to send email:
         Windows sucks.
 
         billg@microsoft.com
+
+
+
+Run templated failing script:
+  based on: Run templated script to send email
+  about: |
+    Simple org mode file used with simple template.
+  given:
+    files:
+      orun/email.sh: |
+        echo {{ note.at("body").body.oneline }}
+        cat {{ note.at("email").body.tempfile() }}
+        exit 1
+  replacement steps:
+  - orji:
+      cmd: run org orun
+      error: yes
+      output: |
+        Windows sucks.
+
+        billg@microsoft.com
+        echo {{ note.at("body").body.oneline }}
+        cat {{ note.at("email").body.tempfile() }}
+        exit 1
+
+
+        echo Windows sucks.
+        cat /tmp/76695.txt
+        exit 1
+
+

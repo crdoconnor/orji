@@ -4,12 +4,13 @@ from orgparse import loads
 import traceback
 import jinja2
 import click
+from click import echo
 import imp
 import inspect
 from sys import exit
 import stat
-import os
 from .template import Template
+import subprocess
 
 
 class Failure(Exception):
@@ -91,12 +92,16 @@ def run(orgdir, rundir):
                         notebody_path = tmp.joinpath("notebody.txt")
                         notebody_path.write_text(note.body.text)
                         tmp_script = tmp.joinpath("{}.sh".format(tag))
-                        
-                        tmp_script.write_text(
-                            env.from_string(scripts[tag])
-                            .render(notebody=notebody_path, note=note)
-                        )                        
+
+                        rendered_script = env.from_string(scripts[tag])\
+                            .render(notebody=notebody_path, note=note) 
+
+                        tmp_script.write_text(rendered_script)
                         tmp_script.chmod(tmp_script.stat().st_mode | stat.S_IEXEC)
-                        os.system(tmp_script)
-                        #subprocess.call(["sh", tmp_script])
-                        #import web_pdb; web_pdb.set_trace()
+                        return_code = subprocess.call([tmp_script], shell=True)
+
+                        if return_code != 0:
+                            echo(scripts[tag])
+                            echo("")
+                            echo(rendered_script)
+                            exit(1)
