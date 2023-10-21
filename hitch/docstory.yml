@@ -1,5 +1,5 @@
 story: |
-  {%- if title -%}
+  {%- if include_title -%}
   ---
   title: {{ name }}
   ---
