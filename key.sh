@@ -16,6 +16,7 @@ hitchrun() {
         -v $GEN_VOLUME_NAME:/gen \
         -v ~/.ssh/id_rsa:/root/.ssh/id_rsa \
         -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub \
+        -e CI=$CI \
         -p 5555:5555 \
         --secret pypitoken,type=env,target=PYPITOKEN \
         --workdir /src \
