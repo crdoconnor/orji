@@ -4,6 +4,8 @@ from hitchstory import (
     exceptions,
     validate,
     no_stacktrace_for,
+    strings_match,
+    Failure
 )
 from hitchstory import GivenDefinition, GivenProperty, InfoDefinition, InfoProperty
 from templex import Templex
@@ -60,7 +62,8 @@ class Engine(BaseEngine):
             self.path.profile.mkdir()
 
         self.python = Command(self._python_path)
-        self.orji_bin = Command(self._python_path.parent / "orji")
+        self.orji_bin = Command(self._python_path.parent / "orji")\
+            .with_env(MOCK="yes")
 
     @no_stacktrace_for(AssertionError)
     @validate(cmd=Str(), output=Str(), error=Bool())
@@ -73,8 +76,8 @@ class Engine(BaseEngine):
         actual_output = command.output()
 
         try:
-            Templex(output).assert_match(actual_output)
-        except AssertionError:
+            strings_match(output, actual_output)
+        except Failure:
             if self._rewrite:
                 self.current_step.update(output=actual_output)
             else:

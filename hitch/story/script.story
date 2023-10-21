@@ -64,7 +64,7 @@ Run templated failing script:
 
 
         echo Windows sucks.
-        cat /tmp/76695.txt
+        cat /tmp/11111.txt
         exit 1
 
 

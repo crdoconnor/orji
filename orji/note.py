@@ -1,5 +1,6 @@
 from slugify import slugify
 from pathlib import Path
+from orji.utils import random_5_digit_number
 import re
 
 
@@ -53,11 +54,9 @@ class Body(TextChunk):
             raise OrjiError(f"{self.text} is not one line")
 
     def tempfile(self):
-        import random
-        filepath = Path(f"/tmp/{random.randint(10000, 99999)}.txt")
+        filepath = Path(f"/tmp/{random_5_digit_number()}.txt")
         filepath.write_text(self.text)
         return filepath.absolute()
-
 
     @property
     def paragraphs(self):

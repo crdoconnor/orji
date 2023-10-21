@@ -1,7 +1,6 @@
-from .note import Note, OrjiError
+from .note import Note
 from pathlib import Path
 from orgparse import loads
-import traceback
 import jinja2
 import click
 from click import echo
@@ -9,7 +8,6 @@ import imp
 import inspect
 from sys import exit
 import stat
-from .template import Template
 import subprocess
 
 
@@ -70,20 +68,17 @@ def environment(latexmode, pymodule_filename):
 def run(orgdir, rundir):
     orgdir = Path(orgdir)
     rundir = Path(rundir)
-    
+
     assert orgdir.is_dir()
     assert rundir.is_dir()
     assert len(list(orgdir.glob("*.org"))), "orgdir must contain org files"
     assert len(list(rundir.glob("*.sh"))), "rundir must contain sh files"
-    
-    scripts = {
-        script.stem: script.read_text()
-        for script in rundir.glob("*.sh")
-    }
+
+    scripts = {script.stem: script.read_text() for script in rundir.glob("*.sh")}
     env = environment(False, None)
 
     tmp = Path("/tmp")
-    
+
     for orgfile in orgdir.glob("*.org"):
         for note in Note(loads(Path(orgfile).read_text())):
             if note.state == "TODO":
@@ -93,8 +88,9 @@ def run(orgdir, rundir):
                         notebody_path.write_text(note.body.text)
                         tmp_script = tmp.joinpath("{}.sh".format(tag))
 
-                        rendered_script = env.from_string(scripts[tag])\
-                            .render(notebody=notebody_path, note=note) 
+                        rendered_script = env.from_string(scripts[tag]).render(
+                            notebody=notebody_path, note=note
+                        )
 
                         tmp_script.write_text(rendered_script)
                         tmp_script.chmod(tmp_script.stat().st_mode | stat.S_IEXEC)

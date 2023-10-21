@@ -60,7 +60,9 @@ def environment(latexmode, pymodule_filename):
 
 
 class Template:
-    def __init__(self, template_text, jinjafile, latexmode=None, pymodule_filename=None):
+    def __init__(
+        self, template_text, jinjafile, latexmode=None, pymodule_filename=None
+    ):
         self._template_text = template_text
         self._jinjafile = jinjafile
         self._latexmode = latexmode
@@ -72,27 +74,34 @@ class Template:
             return self._env.from_string(self._template_text).render(**vars)
         except jinja2.exceptions.UndefinedError as error:
             lineno = traceback.extract_tb(error.__traceback__)[-1].lineno
-            click.echo(f"Template error on line {lineno} of {self._jinjafile}: {error}", err=True)
+            click.echo(
+                f"Template error on line {lineno} of {self._jinjafile}: {error}",
+                err=True,
+            )
             exit(1)
         except jinja2.exceptions.TemplateSyntaxError as error:
             lineno = traceback.extract_tb(error.__traceback__)[-1].lineno
             click.echo(
-                f"Template syntax error on line {lineno} of {self._jinjafile}: {error}", err=True
+                f"Template syntax error on line {lineno} of {self._jinjafile}: {error}",
+                err=True,
             )
             exit(1)
         except jinja2.exceptions.TemplateRuntimeError as error:
             lineno = traceback.extract_tb(error.__traceback__)[-1].lineno
             click.echo(
-                f"Template runtime error on line {lineno} of {self._jinjafile}: {error}", err=True
+                f"Template runtime error on line {lineno} of {self._jinjafile}: {error}",
+                err=True,
             )
             exit(1)
         except Failure as error:
             lineno = traceback.extract_tb(error.__traceback__)[-2].lineno
-            click.echo(f"Failure on line {lineno} of {self._jinjafile}: {error}", err=True)
+            click.echo(
+                f"Failure on line {lineno} of {self._jinjafile}: {error}", err=True
+            )
             exit(1)
         except OrjiError as error:
             lineno = traceback.extract_tb(error.__traceback__)[-2].lineno
-            click.echo(f"Failure on line {lineno} of {self._jinjafile}: {error}", err=True)
+            click.echo(
+                f"Failure on line {lineno} of {self._jinjafile}: {error}", err=True
+            )
             exit(1)
-
- 
