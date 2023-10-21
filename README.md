@@ -53,7 +53,7 @@ simple.jinja2
 
 Running:
 ```bash
-orji simple.org simple.jinja2
+orji cat simple.org simple.jinja2
 ```
 
 Will output:

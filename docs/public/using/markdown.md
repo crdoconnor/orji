@@ -14,7 +14,7 @@ markdown.org
 ```org
 * Note title
 
-Text with /emphasis/ and *bold* and a [[link][https://www.google]].
+Text with /emphasis/ and *bold* and a [[https://www.google][link]].
 
 + Bullet one
 + Bullet two
@@ -33,7 +33,7 @@ markdown.jinja2
 
 Running:
 ```bash
-orji markdown.org markdown.jinja2
+orji cat markdown.org markdown.jinja2
 ```
 
 Will output:

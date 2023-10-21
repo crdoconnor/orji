@@ -267,7 +267,7 @@ Some More Skills  &  \normalsize{Also some more of this, Some more that, And som
 
 Running:
 ```bash
-orji --latexmode cv.org cv.jinja2
+orji cat --latexmode cv.org cv.jinja2
 ```
 
 Will output:

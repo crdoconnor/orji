@@ -1,10 +1,11 @@
 # Changelog
 
 
-### Latest
+### 2.1.0
 
+* BUGFIX : Fix url / name wrong way around converting to markdown.
+* FEATURE : Upgrade orji to use pyproject.toml.
 
-No relevant code changes.
 
 ### 2.0.0
 

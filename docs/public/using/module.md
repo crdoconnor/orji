@@ -43,7 +43,7 @@ def to_upper(string):
 
 Running:
 ```bash
-orji --module note.py note.org note.jinja2
+orji cat --module note.py note.org note.jinja2
 ```
 
 Will output:

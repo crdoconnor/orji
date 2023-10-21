@@ -88,7 +88,7 @@ ILookup : {{ notes.at("Fourth note").at("Subnote B").at("Subnote C").indexlookup
 
 Running:
 ```bash
-orji simple.org simple.jinja2
+orji cat simple.org simple.jinja2
 ```
 
 Will output:

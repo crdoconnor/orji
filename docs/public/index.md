@@ -2,10 +2,9 @@
 title: OrJi
 ---
 
-<a href="https://github.com/crdoconnor/orji"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/crdoconnor/orji?style=social"/></a>
 
-<a href="https://pypi.org/pypi/orji"><img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/orji"/></a>
 
+<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/crdoconnor/orji?style=social"><img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/orji">
 
 OrJi is a command line tool to generate text files using [jinja2](https://en.wikipedia.org/wiki/Jinja_(template_engine))
 and [orgmode](https://en.wikipedia.org/wiki/Org-mode) files. It can be used to generate LaTeX, Markdown or HTML or any other kind of text from an orgmode file.
@@ -58,7 +57,7 @@ simple.jinja2
 
 Running:
 ```bash
-orji simple.org simple.jinja2
+orji cat simple.org simple.jinja2
 ```
 
 Will output:

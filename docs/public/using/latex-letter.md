@@ -176,7 +176,7 @@ Yours faithfully,
 
 Running:
 ```bash
-orji --latexmode letter.org letter.jinja2
+orji cat --latexmode letter.org letter.jinja2
 ```
 
 Will output:

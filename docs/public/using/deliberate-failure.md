@@ -36,7 +36,7 @@ This is some more text.
 
 Running:
 ```bash
-orji example.org example.jinja2
+orji cat example.org example.jinja2
 ```
 
 Will error with:
