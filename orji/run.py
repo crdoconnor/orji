@@ -1,67 +1,65 @@
 from .note import Note
 from pathlib import Path
 from orgparse import loads
-import jinja2
 import click
 from click import echo
-import imp
-import inspect
 from sys import exit
 import stat
 import subprocess
 from .utils import random_5_digit_number
 import shutil
+from .template import Template
 
 
-class Failure(Exception):
-    pass
+# class Failure(Exception):
+#     pass
 
 
-def fail(message):
-    raise Failure(message)
+# def fail(message):
+#     raise Failure(message)
 
 
-def environment(latexmode, pymodule_filename):
-    if latexmode:
-        env = jinja2.Environment(
-            block_start_string=r"\BLOCK{",
-            block_end_string="}",
-            variable_start_string=r"\VAR{",
-            variable_end_string="}",
-            comment_start_string=r"\#{",
-            comment_end_string="}",
-            line_statement_prefix="%%",
-            line_comment_prefix="%#",
-            trim_blocks=True,
-            autoescape=False,
-            undefined=jinja2.StrictUndefined,
-            loader=jinja2.BaseLoader,
-        )
-    else:
-        env = jinja2.Environment(
-            undefined=jinja2.StrictUndefined, loader=jinja2.BaseLoader
-        )
+# def environment(latexmode, pymodule_filename):
+#     if latexmode:
+#         env = jinja2.Environment(
+#             block_start_string=r"\BLOCK{",
+#             block_end_string="}",
+#             variable_start_string=r"\VAR{",
+#             variable_end_string="}",
+#             comment_start_string=r"\#{",
+#             comment_end_string="}",
+#             line_statement_prefix="%%",
+#             line_comment_prefix="%#",
+#             trim_blocks=True,
+#             autoescape=False,
+#             undefined=jinja2.StrictUndefined,
+#             loader=jinja2.BaseLoader,
+#         )
+#     else:
+#         env = jinja2.Environment(
+#             undefined=jinja2.StrictUndefined, loader=jinja2.BaseLoader
+#         )
 
-    if pymodule_filename is not None:
-        pymodule_filepath = Path(pymodule_filename)
+#     if pymodule_filename is not None:
+#         pymodule_filepath = Path(pymodule_filename)
 
-        if not pymodule_filepath.exists():
-            click.echo(f"{pymodule_filename} not found", err=True)
-            exit(1)
+#         if not pymodule_filepath.exists():
+#             click.echo(f"{pymodule_filename} not found", err=True)
+#             exit(1)
 
-        module_contents = {
-            key: item
-            for key, item in inspect.getmembers(
-                imp.load_source(
-                    pymodule_filepath.stem, str(pymodule_filepath.absolute())
-                )
-            )
-            if not key.startswith("_")
-        }
-        env.globals.update(module_contents)
+#         module_contents = {
+#             key: item
+#             for key, item in inspect.getmembers(
+#                 imp.load_source(
+#                     pymodule_filepath.stem, str(pymodule_filepath.absolute())
+#                 )
+#             )
+#             if not key.startswith("_")
+#         }
+#         env.globals.update(module_contents)
 
-    env.globals["fail"] = fail
-    return env
+#     env.globals["fail"] = fail
+#     return env
 
 
 @click.command()
@@ -77,7 +75,6 @@ def run(orgdir, rundir):
     assert len(list(rundir.glob("*.sh"))), "rundir must contain sh files"
 
     scripts = {script.stem: script.read_text() for script in rundir.glob("*.sh")}
-    env = environment(False, None)
 
     temp_dir = Path(".")
     working_dir = temp_dir / f"{random_5_digit_number()}.tmp"
@@ -93,9 +90,13 @@ def run(orgdir, rundir):
                         notebody_path.write_text(note.body.text)
                         tmp_script = working_dir.joinpath("{}.sh".format(tag))
 
-                        rendered_script = env.from_string(scripts[tag]).render(
-                            notebody=notebody_path, note=note
-                        )
+                        rendered_script = Template(
+                            scripts[tag], f"{tag}.sh"
+                        ).render(notebody=notebody_path, note=note)
+
+                        # rendered_script = env.from_string(scripts[tag]).render(
+                        #     notebody=notebody_path, note=note
+                        # )
 
                         tmp_script.write_text(rendered_script)
                         tmp_script.chmod(tmp_script.stat().st_mode | stat.S_IEXEC)
