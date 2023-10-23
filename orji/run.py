@@ -9,6 +9,8 @@ import inspect
 from sys import exit
 import stat
 import subprocess
+from .utils import random_5_digit_number
+import shutil
 
 
 class Failure(Exception):
@@ -77,16 +79,19 @@ def run(orgdir, rundir):
     scripts = {script.stem: script.read_text() for script in rundir.glob("*.sh")}
     env = environment(False, None)
 
-    tmp = Path("/tmp")
+    temp_dir = Path(".")
+    working_dir = temp_dir / f"{random_5_digit_number()}.tmp"
+
+    working_dir.mkdir()
 
     for orgfile in orgdir.glob("*.org"):
-        for note in Note(loads(Path(orgfile).read_text())):
+        for note in Note(loads(Path(orgfile).read_text()), working_dir=working_dir):
             if note.state == "TODO":
                 for tag in note.tags:
                     if tag in scripts.keys():
-                        notebody_path = tmp.joinpath("notebody.txt")
+                        notebody_path = working_dir.joinpath("notebody.txt")
                         notebody_path.write_text(note.body.text)
-                        tmp_script = tmp.joinpath("{}.sh".format(tag))
+                        tmp_script = working_dir.joinpath("{}.sh".format(tag))
 
                         rendered_script = env.from_string(scripts[tag]).render(
                             notebody=notebody_path, note=note
@@ -101,3 +106,5 @@ def run(orgdir, rundir):
                             echo("")
                             echo(rendered_script)
                             exit(1)
+
+    shutil.rmtree(working_dir)

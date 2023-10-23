@@ -43,8 +43,9 @@ class TextChunk:
 
 
 class Body(TextChunk):
-    def __init__(self, text):
+    def __init__(self, text, working_dir):
         self.text = text
+        self._working_dir = working_dir
 
     @property
     def oneline(self):
@@ -54,7 +55,7 @@ class Body(TextChunk):
             raise OrjiError(f"{self.text} is not one line")
 
     def tempfile(self):
-        filepath = Path(f"/tmp/{random_5_digit_number()}.txt")
+        filepath = Path(f"{self._working_dir}/{random_5_digit_number()}.txt")
         filepath.write_text(self.text)
         return filepath.absolute()
 
@@ -66,8 +67,9 @@ class Body(TextChunk):
 
 
 class Note:
-    def __init__(self, node):
+    def __init__(self, node, working_dir):
         self._node = node
+        self._working_dir = working_dir
 
     @property
     def name(self):
@@ -101,7 +103,7 @@ class Note:
 
     @property
     def body(self):
-        return Body(self._node.get_body(format="raw"))
+        return Body(self._node.get_body(format="raw"), self._working_dir)
 
     @property
     def prop(self):
@@ -136,8 +138,8 @@ class Note:
                 f"More than one note found in {self.name} with name {lookup}"
             )
         else:
-            return Note(matching_notes[0])
+            return Note(matching_notes[0], working_dir=self._working_dir)
 
     def __iter__(self):
         for node in self._node.children:
-            yield Note(node)
+            yield Note(node, working_dir=self._working_dir)
