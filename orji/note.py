@@ -116,7 +116,7 @@ class Note:
         for index in split:
             node = node.children[index]
 
-        return Note(node)
+        return Note(node, self._working_dir)
 
     def has(self, lookup):
         matching_notes = [n for n in self._node.children if n.heading == lookup]

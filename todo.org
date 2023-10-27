@@ -1,4 +1,0 @@
-* large-message
-* error if nothing matched
-* output dir (random if not specified)
-* temp dir
