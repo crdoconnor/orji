@@ -71,7 +71,7 @@ def run(orgdir, rundir, tmp, out):
 
                         tmp_script.write_text(rendered_script)
                         tmp_script.chmod(tmp_script.stat().st_mode | stat.S_IEXEC)
-                        return_code = subprocess.call([tmp_script], shell=True)
+                        return_code = subprocess.call(["bash", "-c", tmp_script])
                         if return_code != 0:
                             print(f"\n\nERROR running {tag}.sh in {working_dir}")
                             exit(return_code)
