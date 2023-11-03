@@ -217,12 +217,10 @@ Example of Generated LaTeX A4 Letter:
         } % Your name for the signature at the bottom
 
         \address{
-        \\ 
         1234 NW Bobcat Lane,\\ 
         Bobcat City,\\ 
         MO\\ 
-        65584-5678.\\ 
-         \\
+        65584-5678. \\
         +1-541-754-3010 \\
         johndoe@gmail.com
         } % Your address and phone number
@@ -236,11 +234,9 @@ Example of Generated LaTeX A4 Letter:
         %----------------------------------------------------------------------------------------
 
         \begin{letter}{
-        \\ 
         123 Elf Road,\\ 
         North Pole,\\ 
-        88888\\ 
-
+        88888
         } % Name/title of the addressee
 
         %----------------------------------------------------------------------------------------

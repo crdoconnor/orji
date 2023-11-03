@@ -9,6 +9,7 @@ import subprocess
 from .utils import random_5_digit_number
 import shutil
 from .template import Template
+import orgmunge
 
 
 @click.command()
@@ -50,14 +51,20 @@ def run(orgdir, rundir, tmp, out):
     script_run = False
 
     for orgfile in orgdir.glob("*.org"):
-        for note in Note(loads(Path(orgfile).read_text()), working_dir=working_dir):
+        parsed_munge = orgmunge.Org(
+            Path(orgfile).read_text(),
+            from_file=False,
+            todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
+        )
+
+        for note in Note(parsed_munge.root, working_dir=working_dir):
             if note.state == "TODO":
                 for tag in note.tags:
                     if tag in scripts.keys():
                         script_run = True
 
                         notebody_path = working_dir.joinpath("notebody.txt")
-                        notebody_path.write_text(note.body.text)
+                        notebody_path.write_text(str(note.body))
                         tmp_script = working_dir.joinpath("{}.sh".format(tag))
 
                         rendered_script = Template(scripts[tag], f"{tag}.sh").render(

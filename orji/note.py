@@ -10,7 +10,7 @@ class OrjiError(Exception):
 
 class TextChunk:
     def __init__(self, text):
-        self.text = text
+        self.text = str(text) if text is not None else ""
 
     @property
     def markdown(self):
@@ -44,7 +44,8 @@ class TextChunk:
 
 class Body(TextChunk):
     def __init__(self, text, working_dir):
-        self.text = text
+        # import web_pdb; web_pdb.set_trace()
+        self.text = str(text) if text is not None else ""
         self._working_dir = working_dir
 
     @property
@@ -55,6 +56,7 @@ class Body(TextChunk):
             raise OrjiError(f"{self.text} is not one line")
 
     def tempfile(self):
+        # import web_pdb;web_pdb.set_trace()
         filepath = Path(f"{self._working_dir}/{random_5_digit_number()}.txt")
         filepath.write_text(self.text)
         return filepath.absolute()
@@ -73,16 +75,17 @@ class Note:
 
     @property
     def name(self):
-        return self._node.heading
+        return self._node.headline.title
 
     @property
     def indexlookup(self):
         indices = []
         node = self._node
         while True:
+            # import web_pdb; web_pdb.set_trace()
             index = [i for i, n in enumerate(node.parent.children) if n == node][0]
             indices.append(str(index))
-            if node.parent.is_root():
+            if node.parent.parent is None:
                 break
             else:
                 node = node.parent
@@ -91,7 +94,7 @@ class Note:
 
     @property
     def slug(self):
-        return slugify(self._node.heading)
+        return slugify(self._node.headline.title)
 
     @property
     def state(self):
@@ -99,11 +102,12 @@ class Note:
 
     @property
     def tags(self):
-        return sorted(self._node.tags)
+        unsorted = self._node.tags
+        return sorted(unsorted) if unsorted is not None else []
 
     @property
     def body(self):
-        return Body(self._node.get_body(format="raw"), self._working_dir)
+        return Body(self._node.body, self._working_dir)
 
     @property
     def prop(self):
@@ -119,7 +123,7 @@ class Note:
         return Note(node, self._working_dir)
 
     def has(self, lookup):
-        matching_notes = [n for n in self._node.children if n.heading == lookup]
+        matching_notes = [n for n in self._node.children if n.headline.title == lookup]
         if len(matching_notes) == 0:
             return False
         elif len(matching_notes) > 1:
@@ -130,7 +134,7 @@ class Note:
             return True
 
     def at(self, lookup):
-        matching_notes = [n for n in self._node.children if n.heading == lookup]
+        matching_notes = [n for n in self._node.children if n.headline.title == lookup]
         if len(matching_notes) == 0:
             raise OrjiError(f"No notes found in {self.name} with name {lookup}")
         elif len(matching_notes) > 1:

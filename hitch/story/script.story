@@ -30,15 +30,16 @@ Run templated script to send email:
       orun/email.sh: |
         echo {{ note.at("body").body.oneline }}
         cat {{ note.at("email").body.tempfile() }}
-        cat {{ tmp / "tempfile.tmp" }}
-        cat {{ out / "outfile.out" }}
+
+        echo {{ tmp }}
+        echo {{ out }}
   steps:
   - orji:
       cmd: run org orun
       output: |
         Windows sucks.
-
-        billg@microsoft.com
+        billg@microsoft.com/gen/working/11111.tmp
+        /gen/working
 
 
 
@@ -58,9 +59,7 @@ Run templated failing script:
       error: yes
       output: |
         Windows sucks.
-
         billg@microsoft.com
-
 
         ERROR running email.sh in /gen/working/11111.tmp
 

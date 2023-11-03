@@ -5,6 +5,7 @@ import click
 from .template import Template
 from .utils import random_5_digit_number
 import shutil
+import orgmunge
 
 
 @click.command()
@@ -33,8 +34,13 @@ def cat(orgfile, jinjafile, indexlookup, latexmode, pymodule):
     temp_dir = Path(".")
     working_dir = temp_dir / f"{random_5_digit_number()}.tmp"
     working_dir.mkdir()
+    munge_parsed = orgmunge.Org(
+        org_text,
+        from_file=False,
+        todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
+    )
     parsed = loads(org_text)
-    notes = Note(parsed, working_dir=working_dir)
+    notes = Note(munge_parsed.root, working_dir=working_dir)
 
     if indexlookup is not None:
         notes = notes.from_indexlookup(indexlookup)
