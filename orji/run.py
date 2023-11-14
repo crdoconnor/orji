@@ -69,6 +69,7 @@ def run(orgdir, rundir, tmp, out):
 
                         rendered_script = Template(scripts[tag], f"{tag}.sh").render(
                             notebody=notebody_path,
+                            orgfile=orgfile,
                             note=note,
                             tmp=working_dir,
                             out=out_dir,

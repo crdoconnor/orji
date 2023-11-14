@@ -31,6 +31,8 @@ Run templated script to send email:
         echo {{ note.at("body").body.oneline }}
         cat {{ note.at("email").body.tempfile() }}
 
+        echo
+        echo {{ orgfile }}
         echo {{ tmp }}
         echo {{ out }}
   steps:
@@ -38,7 +40,9 @@ Run templated script to send email:
       cmd: run org orun
       output: |
         Windows sucks.
-        billg@microsoft.com/gen/working/11111.tmp
+        billg@microsoft.com
+        /gen/working/org/simple.org
+        /gen/working/11111.tmp
         /gen/working
 
 
