@@ -10,6 +10,7 @@ from .utils import random_5_digit_number
 import shutil
 from .template import Template
 import orgmunge
+import os
 
 
 @click.command()
@@ -19,11 +20,8 @@ import orgmunge
     "--out",
     help="Output folder. Defaults to current.",
 )
-@click.option(
-    "--tmp",
-    help="Parent of tmp directories. Defaults to current.",
-)
-def run(orgdir, rundir, tmp, out):
+def run(orgdir, rundir, out):
+    tmp = os.getenv("ORJITMP")
     orgdir = Path(orgdir).absolute()
     rundir = Path(rundir).absolute()
 
