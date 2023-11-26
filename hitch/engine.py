@@ -5,11 +5,11 @@ from hitchstory import (
     validate,
     no_stacktrace_for,
     strings_match,
-    Failure
+    Failure,
 )
 from hitchstory import GivenDefinition, GivenProperty, InfoDefinition, InfoProperty
 from templex import Templex
-from strictyaml import Optional, Str, Map, Int, Bool, Enum, load, MapPattern
+from strictyaml import Optional, Str, Map, Int, Bool, Enum, load, MapPattern, EmptyDict
 from path import Path
 import hitchpylibrarytoolkit
 from hitchrunpy import (
@@ -62,13 +62,18 @@ class Engine(BaseEngine):
             self.path.profile.mkdir()
 
         self.python = Command(self._python_path)
-        self.orji_bin = Command(self._python_path.parent / "orji")\
-            .with_env(MOCK="yes")
+        self.orji_bin = Command(self._python_path.parent / "orji").with_env(MOCK="yes")
 
     @no_stacktrace_for(AssertionError)
-    @validate(cmd=Str(), output=Str(), error=Bool())
-    def orji(self, cmd, output, error=False):
-        command = self.orji_bin(*split(cmd)).in_dir(self.path.working)
+    @validate(
+        cmd=Str(),
+        output=Str(),
+        env=MapPattern(Str(), Str()) | EmptyDict(),
+        error=Bool(),
+    )
+    def orji(self, cmd, output, env=None, error=False):
+        env = {} if env is None else env
+        command = self.orji_bin(*split(cmd)).with_env(**env).in_dir(self.path.working)
 
         if error:
             command = command.ignore_errors()

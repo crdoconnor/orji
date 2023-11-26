@@ -37,6 +37,8 @@ Run templated script to send email:
         echo {{ out }}
   steps:
   - orji:
+      env:
+        ORJITMP: ./tmp
       cmd: run org orun
       output: |
         Windows sucks.

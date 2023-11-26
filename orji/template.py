@@ -1,11 +1,13 @@
 from .note import OrjiError
 import jinja2
 import click
-import imp
 import traceback
 from sys import exit
 from pathlib import Path
 import inspect
+
+
+import importlib.machinery, importlib.util
 
 
 class Failure(Exception):
@@ -44,13 +46,16 @@ def environment(latexmode, pymodule_filename):
             click.echo(f"{pymodule_filename} not found", err=True)
             exit(1)
 
+        loader = importlib.machinery.SourceFileLoader(
+            pymodule_filepath.stem, str(pymodule_filepath.absolute())
+        )
+        spec = importlib.util.spec_from_loader(loader.name, loader)
+        pymodule = importlib.util.module_from_spec(spec)
+        loader.exec_module(pymodule)
+
         module_contents = {
             key: item
-            for key, item in inspect.getmembers(
-                imp.load_source(
-                    pymodule_filepath.stem, str(pymodule_filepath.absolute())
-                )
-            )
+            for key, item in inspect.getmembers(pymodule)
             if not key.startswith("_")
         }
         env.globals.update(module_contents)
