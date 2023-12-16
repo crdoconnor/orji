@@ -1,4 +1,5 @@
 Run templated script to send email:
+  docs: script
   about: |
     Simple org mode file used with simple template.
   given:
@@ -35,6 +36,7 @@ Run templated script to send email:
         echo {{ orgfile }}
         echo {{ tmp }}
         echo {{ out }}
+      tmp/_:
   steps:
   - orji:
       env:
@@ -44,7 +46,7 @@ Run templated script to send email:
         Windows sucks.
         billg@microsoft.com
         /gen/working/org/simple.org
-        /gen/working/11111.tmp
+        /gen/working/tmp/11111.tmp
         /gen/working
 
 

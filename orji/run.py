@@ -32,10 +32,6 @@ def run(orgdir, rundir, out):
 
     scripts = {script.stem: script.read_text() for script in rundir.glob("*.sh")}
 
-    assert (
-        len(list(name for name in scripts.keys() if "-" in name)) == 0
-    ), "Do not use dashes in script files"
-
     temp_dir = Path("." if tmp is None else tmp).absolute()
     out_dir = Path("." if out is None else out).absolute()
 
@@ -47,6 +43,8 @@ def run(orgdir, rundir, out):
     working_dir.mkdir()
 
     script_run = False
+    
+    matching_notes = []
 
     for orgfile in orgdir.glob("*.org"):
         parsed_munge = orgmunge.Org(
@@ -59,30 +57,40 @@ def run(orgdir, rundir, out):
             if note.state == "TODO":
                 for tag in note.tags:
                     if tag in scripts.keys():
-                        script_run = True
+                        matching_notes.append((orgfile, tag, note))
 
-                        notebody_path = working_dir.joinpath("notebody.txt")
-                        notebody_path.write_text(str(note.body))
-                        tmp_script = working_dir.joinpath("{}.sh".format(tag))
-
-                        rendered_script = Template(scripts[tag], f"{tag}.sh").render(
-                            notebody=notebody_path,
-                            orgfile=orgfile,
-                            note=note,
-                            tmp=working_dir,
-                            out=out_dir,
-                            rundir=rundir,
-                            orgdir=orgdir,
-                        )
-
-                        tmp_script.write_text(rendered_script)
-                        tmp_script.chmod(tmp_script.stat().st_mode | stat.S_IEXEC)
-                        return_code = subprocess.call(["bash", "-e", tmp_script])
-                        if return_code != 0:
-                            print(f"\n\nERROR running {tag}.sh in {working_dir}")
-                            exit(return_code)
-
-    shutil.rmtree(working_dir)
-    if not script_run:
+    if len(matching_notes) == 0:
+        shutil.rmtree(working_dir)
         echo("No scripts were run")
         exit(1)
+    elif len(matching_notes) > 1:
+        shutil.rmtree(working_dir)
+        echo("Multiple matching notes use --multiple to run all of them")
+        echo("")
+        for orgfile, _, note in matching_notes:
+            echo(f"{orgfile}: {note.indexlookup}: {note.name}")
+        exit(1)
+    else:
+        for orgfile, tag, note in matching_notes:
+            notebody_path = working_dir.joinpath("notebody.txt")
+            notebody_path.write_text(str(note.body))
+            tmp_script = working_dir.joinpath("{}.sh".format(tag))
+
+            rendered_script = Template(scripts[tag], f"{tag}.sh").render(
+                notebody=notebody_path,
+                orgfile=orgfile,
+                note=note,
+                tmp=working_dir,
+                out=out_dir,
+                rundir=rundir,
+                orgdir=orgdir,
+            )
+
+            tmp_script.write_text(rendered_script)
+            tmp_script.chmod(tmp_script.stat().st_mode | stat.S_IEXEC)
+            return_code = subprocess.call(["bash", "-e", tmp_script])
+            if return_code != 0:
+                print(f"\n\nERROR running {tag}.sh in {working_dir}")
+                exit(return_code)
+
+    shutil.rmtree(working_dir)
