@@ -33,3 +33,14 @@ Templated with more than one note:
 
             /gen/working/org/simple.org: 0: Wash car
             /gen/working/org/simple2.org: 1: File taxes
+
+    Run multiple:
+      steps:
+      - orji:
+          env:
+            ORJITMP: ./tmp
+          cmd: run --multiple org orun
+          error: yes
+          output: |
+            Car wash.
+            File taxes for wife too.

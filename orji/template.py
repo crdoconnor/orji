@@ -5,9 +5,8 @@ import traceback
 from sys import exit
 from pathlib import Path
 import inspect
-
-
-import importlib.machinery, importlib.util
+import importlib.machinery
+import importlib.util
 
 
 class Failure(Exception):

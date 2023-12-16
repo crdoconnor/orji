@@ -1,6 +1,5 @@
 from .note import Note
 from pathlib import Path
-from orgparse import loads
 import click
 from .template import Template
 from .utils import random_5_digit_number
@@ -39,7 +38,6 @@ def cat(orgfile, jinjafile, indexlookup, latexmode, pymodule):
         from_file=False,
         todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
     )
-    parsed = loads(org_text)
     notes = Note(munge_parsed.root, working_dir=working_dir)
 
     if indexlookup is not None:

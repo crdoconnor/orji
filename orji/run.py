@@ -1,6 +1,5 @@
 from .note import Note
 from pathlib import Path
-from orgparse import loads
 import click
 from click import echo
 from sys import exit
@@ -20,7 +19,12 @@ import os
     "--out",
     help="Output folder. Defaults to current.",
 )
-def run(orgdir, rundir, out):
+@click.option(
+    "--multiple/--single",
+    help="Output folder. Defaults to current.",
+    default=False,
+)
+def run(orgdir, rundir, out, multiple):
     tmp = os.getenv("ORJITMP")
     orgdir = Path(orgdir).absolute()
     rundir = Path(rundir).absolute()
@@ -42,8 +46,6 @@ def run(orgdir, rundir, out):
     working_dir = temp_dir / f"{random_5_digit_number()}.tmp"
     working_dir.mkdir()
 
-    script_run = False
-    
     matching_notes = []
 
     for orgfile in orgdir.glob("*.org"):
@@ -59,11 +61,11 @@ def run(orgdir, rundir, out):
                     if tag in scripts.keys():
                         matching_notes.append((orgfile, tag, note))
 
-    if len(matching_notes) == 0:
+    if len(matching_notes) == 0 and not multiple:
         shutil.rmtree(working_dir)
         echo("No scripts were run")
         exit(1)
-    elif len(matching_notes) > 1:
+    elif len(matching_notes) > 1 and not multiple:
         shutil.rmtree(working_dir)
         echo("Multiple matching notes use --multiple to run all of them")
         echo("")
