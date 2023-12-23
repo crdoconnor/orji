@@ -1,9 +1,6 @@
 from slugify import slugify
+from .exceptions import OrjiError
 import re
-
-
-class OrjiError(Exception):
-    pass
 
 
 class TextChunk:

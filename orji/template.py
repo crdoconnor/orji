@@ -1,4 +1,4 @@
-from .note import OrjiError
+from .exceptions import OrjiError, Failure
 import jinja2
 import click
 import traceback
@@ -7,10 +7,6 @@ from pathlib import Path
 import inspect
 import importlib.machinery
 import importlib.util
-
-
-class Failure(Exception):
-    pass
 
 
 def fail(message):
