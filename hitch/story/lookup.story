@@ -23,7 +23,7 @@ Lookup:
         {{ root.body}}
   steps:
   - orji:
-      cmd: out --indexlookup 0 simple.org simple.jinja2
+      cmd: out simple.org//0 simple.jinja2
       output: |
         TITLE: A normal note
 

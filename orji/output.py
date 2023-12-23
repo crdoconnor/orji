@@ -7,13 +7,8 @@ from .tempdir import TempDir
 
 
 @click.command()
-@click.argument("orgfile")
+@click.argument("orglookup")
 @click.argument("jinjafile")
-@click.option(
-    "--indexlookup",
-    "indexlookup",
-    help="Specify zero-indexed subnote to use e.g. 0/0/4",
-)
 @click.option(
     "--latexmode",
     is_flag=True,
@@ -26,7 +21,9 @@ from .tempdir import TempDir
     "pymodule",
     help="Specify python module to use in template.",
 )
-def output(orgfile, jinjafile, indexlookup, latexmode, pymodule):
+def output(orglookup, jinjafile, latexmode, pymodule):
+    orgfile = orglookup.split("//")[0]
+    indexlookup = orglookup.split("//")[1] if len(orglookup.split("//")) == 2 else None
     temp_dir = TempDir()
     temp_dir.create()
     org_text = Path(orgfile).read_text()
