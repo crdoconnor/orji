@@ -2,8 +2,8 @@ from .note import Note
 from pathlib import Path
 import click
 from .template import Template
-from .utils import random_5_digit_number
 import orgmunge
+from .tempdir import TempDir
 
 
 @click.command()
@@ -16,14 +16,12 @@ import orgmunge
     help="Put file contents into {{ text }}",
 )
 def insert(jinjafile, relative, location, textfile):
+    temp_dir = TempDir()
+    temp_dir.create()
     template_text = Path(jinjafile).read_text()
     output_text = Template(template_text, jinjafile).render(
         text=Path(textfile).read_text()
     )
-    temp_dir = Path(".")
-    working_dir = temp_dir / f"{random_5_digit_number()}.tmp"
-    working_dir.mkdir()
-
     chunk_to_insert = orgmunge.Org(
         output_text,
         from_file=False,
@@ -38,9 +36,10 @@ def insert(jinjafile, relative, location, textfile):
         from_file=False,
         todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
     )
-    write_notes = Note(write_parsed.root, working_dir=working_dir)
+    write_notes = Note(write_parsed.root, temp_dir=temp_dir)
     chunk_to_insert.initial_body = ""
     write_notes._node.add_child(chunk_to_insert.root)
     write_parsed.initial_body = ""
     write_parsed.write(write_file)
     click.echo("Written note successfully")
+    temp_dir.destroy()

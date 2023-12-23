@@ -1,6 +1,4 @@
 from slugify import slugify
-from pathlib import Path
-from orji.utils import random_5_digit_number
 import re
 
 
@@ -43,9 +41,9 @@ class TextChunk:
 
 
 class Body(TextChunk):
-    def __init__(self, text, working_dir):
+    def __init__(self, text, temp_dir):
         self.text = str(text) if text is not None else ""
-        self._working_dir = working_dir
+        self._temp_dir = temp_dir
 
     @property
     def oneline(self):
@@ -55,9 +53,7 @@ class Body(TextChunk):
             raise OrjiError(f"{self.text} is not one line")
 
     def tempfile(self):
-        filepath = Path(f"{self._working_dir}/{random_5_digit_number()}.txt")
-        filepath.write_text(self.text)
-        return filepath.absolute()
+        return self._temp_dir.tempfile(self.text)
 
     @property
     def paragraphs(self):
@@ -67,9 +63,9 @@ class Body(TextChunk):
 
 
 class Note:
-    def __init__(self, node, working_dir):
+    def __init__(self, node, temp_dir):
         self._node = node
-        self._working_dir = working_dir
+        self._temp_dir = temp_dir
 
     @property
     def name(self):
@@ -104,7 +100,7 @@ class Note:
 
     @property
     def body(self):
-        return Body(self._node.body, self._working_dir)
+        return Body(self._node.body, self._temp_dir)
 
     @property
     def prop(self):
@@ -117,7 +113,7 @@ class Note:
         for index in split:
             node = node.children[index]
 
-        return Note(node, self._working_dir)
+        return Note(node, self._temp_dir)
 
     def has(self, lookup):
         matching_notes = [n for n in self._node.children if n.headline.title == lookup]
@@ -139,8 +135,8 @@ class Note:
                 f"More than one note found in {self.name} with name {lookup}"
             )
         else:
-            return Note(matching_notes[0], working_dir=self._working_dir)
+            return Note(matching_notes[0], temp_dir=self._temp_dir)
 
     def __iter__(self):
         for node in self._node.children:
-            yield Note(node, working_dir=self._working_dir)
+            yield Note(node, temp_dir=self._temp_dir)

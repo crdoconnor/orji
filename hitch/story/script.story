@@ -69,6 +69,6 @@ Run templated failing script:
         Windows sucks.
         billg@microsoft.com
 
-        ERROR running email.sh in /gen/working/11111.tmp
+        ERROR running email.sh in 11111.tmp
 
 

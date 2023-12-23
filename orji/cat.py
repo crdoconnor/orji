@@ -2,9 +2,8 @@ from .note import Note
 from pathlib import Path
 import click
 from .template import Template
-from .utils import random_5_digit_number
-import shutil
 import orgmunge
+from .tempdir import TempDir
 
 
 @click.command()
@@ -28,17 +27,16 @@ import orgmunge
     help="Specify python module to use in template.",
 )
 def cat(orgfile, jinjafile, indexlookup, latexmode, pymodule):
+    temp_dir = TempDir()
+    temp_dir.create()
     org_text = Path(orgfile).read_text()
     template_text = Path(jinjafile).read_text()
-    temp_dir = Path(".")
-    working_dir = temp_dir / f"{random_5_digit_number()}.tmp"
-    working_dir.mkdir()
     munge_parsed = orgmunge.Org(
         org_text,
         from_file=False,
         todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
     )
-    notes = Note(munge_parsed.root, working_dir=working_dir)
+    notes = Note(munge_parsed.root, temp_dir=temp_dir)
 
     if indexlookup is not None:
         notes = notes.from_indexlookup(indexlookup)
@@ -48,4 +46,4 @@ def cat(orgfile, jinjafile, indexlookup, latexmode, pymodule):
     ).render(notes=notes, root=notes)
 
     click.echo(output_text)
-    shutil.rmtree(working_dir)
+    temp_dir.destroy()
