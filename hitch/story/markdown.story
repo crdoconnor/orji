@@ -18,7 +18,7 @@ Convert chunks of orgmode text into markdown:
 
   steps:
   - orji:
-      cmd: cat markdown.org markdown.jinja2
+      cmd: out markdown.org markdown.jinja2
       output: |
         Text with /emphasis/ and *bold* and a [link](https://www.google).
 

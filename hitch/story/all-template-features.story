@@ -73,7 +73,7 @@ Demonstration of all template features:
 
   steps:
   - orji:
-      cmd: cat simple.org simple.jinja2
+      cmd: out simple.org simple.jinja2
       output: |2
 
         -------------------------

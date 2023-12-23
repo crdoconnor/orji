@@ -27,7 +27,7 @@ Quickstart:
         {% endfor %}
   steps:
   - orji:
-      cmd: cat simple.org simple.jinja2
+      cmd: out simple.org simple.jinja2
       output: |2+
 
         # Wash car (morning)

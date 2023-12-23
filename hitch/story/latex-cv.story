@@ -250,7 +250,7 @@ Example of Generated LaTeX A4 CV:
         \end{document}
   steps:
   - orji:
-      cmd: cat --latexmode cv.org cv.jinja2
+      cmd: out --latexmode cv.org cv.jinja2
       output: |
         %-----------------------------------------------------------------------------------------------------------------------------------------------%
         %	The MIT License (MIT)

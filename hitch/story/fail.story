@@ -20,7 +20,7 @@ Deliberately trigger a template failure:
 
   steps:
   - orji:
-      cmd: cat example.org example.jinja2
+      cmd: out example.org example.jinja2
       error: yes
       output: |
         Failure on line 3 of example.jinja2: this shouldn't happen
