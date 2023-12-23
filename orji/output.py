@@ -26,7 +26,7 @@ from .tempdir import TempDir
     "pymodule",
     help="Specify python module to use in template.",
 )
-def cat(orgfile, jinjafile, indexlookup, latexmode, pymodule):
+def output(orgfile, jinjafile, indexlookup, latexmode, pymodule):
     temp_dir = TempDir()
     temp_dir.create()
     org_text = Path(orgfile).read_text()
