@@ -47,36 +47,5 @@ def cat(orgfile, jinjafile, indexlookup, latexmode, pymodule):
         template_text, jinjafile, latexmode=latexmode, pymodule_filename=pymodule
     ).render(notes=notes, root=notes)
 
-    # try:
-    #     output_text = (
-    #         environment(latexmode=latexmode, pymodule_filename=pymodule)
-    #         .from_string(template_text)
-    #         .render(notes=notes, root=notes)
-    #     )
-    # except jinja2.exceptions.UndefinedError as error:
-    #     lineno = traceback.extract_tb(error.__traceback__)[-1].lineno
-    #     click.echo(f"Template error on line {lineno} of {jinjafile}: {error}", err=True)
-    #     exit(1)
-    # except jinja2.exceptions.TemplateSyntaxError as error:
-    #     lineno = traceback.extract_tb(error.__traceback__)[-1].lineno
-    #     click.echo(
-    #         f"Template syntax error on line {lineno} of {jinjafile}: {error}", err=True
-    #     )
-    #     exit(1)
-    # except jinja2.exceptions.TemplateRuntimeError as error:
-    #     lineno = traceback.extract_tb(error.__traceback__)[-1].lineno
-    #     click.echo(
-    #         f"Template runtime error on line {lineno} of {jinjafile}: {error}", err=True
-    #     )
-    #     exit(1)
-    # except Failure as error:
-    #     lineno = traceback.extract_tb(error.__traceback__)[-2].lineno
-    #     click.echo(f"Failure on line {lineno} of {jinjafile}: {error}", err=True)
-    #     exit(1)
-    # except OrjiError as error:
-    #     lineno = traceback.extract_tb(error.__traceback__)[-2].lineno
-    #     click.echo(f"Failure on line {lineno} of {jinjafile}: {error}", err=True)
-    #     exit(1)
-
     click.echo(output_text)
     shutil.rmtree(working_dir)

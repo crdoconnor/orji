@@ -44,7 +44,6 @@ class TextChunk:
 
 class Body(TextChunk):
     def __init__(self, text, working_dir):
-        # import web_pdb; web_pdb.set_trace()
         self.text = str(text) if text is not None else ""
         self._working_dir = working_dir
 
@@ -56,7 +55,6 @@ class Body(TextChunk):
             raise OrjiError(f"{self.text} is not one line")
 
     def tempfile(self):
-        # import web_pdb;web_pdb.set_trace()
         filepath = Path(f"{self._working_dir}/{random_5_digit_number()}.txt")
         filepath.write_text(self.text)
         return filepath.absolute()
@@ -82,7 +80,6 @@ class Note:
         indices = []
         node = self._node
         while True:
-            # import web_pdb; web_pdb.set_trace()
             index = [i for i, n in enumerate(node.parent.children) if n == node][0]
             indices.append(str(index))
             if node.parent.parent is None:

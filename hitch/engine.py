@@ -89,6 +89,18 @@ class Engine(BaseEngine):
                 raise
 
     @no_stacktrace_for(AssertionError)
+    def file_contents(self, filename, contents):
+        filepath = self.path.working.joinpath(filename)
+        assert filepath.exists()
+        try:
+            strings_match(contents, filepath.text())
+        except Failure:
+            if self._rewrite:
+                self.current_step.update(contents=filepath.text())
+            else:
+                raise
+
+    @no_stacktrace_for(AssertionError)
     def pdf(self, cmd):
         output = self.orji_bin(*split(cmd)).in_dir(self.path.working).output()
         self.path.working.joinpath("latex.tex").write_text(output)

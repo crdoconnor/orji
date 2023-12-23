@@ -86,6 +86,9 @@ case "$1" in
     "bash")
         hitchrun "bash"
         ;;
+    "ipy")
+        hitchrun "/gen/pyenv/versions/devvenv/bin/ipython"
+        ;;
     *)
         hitchrun "/gen/venv/bin/python hitch/key.py $1 $2 $3 $4 $5 $6 $7 $8 $9"
         ;; 
