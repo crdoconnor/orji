@@ -4,6 +4,7 @@ import click
 from .template import Template
 import orgmunge
 from .tempdir import TempDir
+from .lookup import Lookup
 
 
 @click.command()
@@ -22,8 +23,9 @@ from .tempdir import TempDir
     help="Specify python module to use in template.",
 )
 def output(orglookup, jinjafile, latexmode, pymodule):
-    orgfile = orglookup.split("//")[0]
-    indexlookup = orglookup.split("//")[1] if len(orglookup.split("//")) == 2 else None
+    lookup = Lookup(orglookup)
+    orgfile = lookup.filepath
+    indexlookup = lookup.ref
     temp_dir = TempDir()
     temp_dir.create()
     org_text = Path(orgfile).read_text()
