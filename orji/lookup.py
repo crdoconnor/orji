@@ -10,4 +10,4 @@ class Lookup:
             self.filepath = split[0]
             self.ref = split[1]
         else:
-            raise Exception("Can only be one // in an orji lookup")
+            raise NotImplementedError
