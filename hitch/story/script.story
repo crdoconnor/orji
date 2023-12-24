@@ -1,10 +1,16 @@
-Run templated script to send email:
+Run:
   docs: orji-run
   about: |
-    With script mode, you can "orji run" with a directory of templated scripts
-    and a directory or org files.
+    With org run, you can hit one button and trigger a variety of different scripts
+    depending upon what is in your notes.
     
-    It will look through all of them for a TODO note with a tag matching a templated script.
+    The scripts could:
+    
+    * Send an email
+    * Generate a PDF
+    * Export data
+    
+    It will look through all of them for a TODO note with a tag matching a templated script (sh) file.
     
     You can use this to trigger templated bash scripts which can execute
     pre-defined tasks from notes.
@@ -60,7 +66,7 @@ Run templated script to send email:
 
 
 
-Run templated failing script:
+Run failing:
   based on: Run templated script to send email
   about: |
     Simple org mode file used with simple template.
