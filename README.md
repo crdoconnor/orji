@@ -18,7 +18,7 @@ Simple org mode file used with simple template.
 
 
 simple.org
-```org
+```simple.org
 * A normal note
 
 Just a note
@@ -37,7 +37,7 @@ File taxes for wife too.
 
 
 simple.jinja2
-```jinja2
+```simple.jinja2
 {% for note in root %}
 {%- if note.state == "TODO" -%}
 # {{ note.name }} ({% for tag in note.tags %}{{ tag }}{% endfor %})
@@ -53,7 +53,7 @@ simple.jinja2
 
 Running:
 ```bash
-orji cat simple.org simple.jinja2
+orji out simple.org simple.jinja2
 ```
 
 Will output:
@@ -98,8 +98,11 @@ pipx install orji
 
 - [Demonstration of all template features](https://hitchdev.com/orji/using/all-template-features)
 - [Deliberately trigger a template failure](https://hitchdev.com/orji/using/deliberate-failure)
+- [Insert file into org mode file](https://hitchdev.com/orji/using/insert)
 - [Example of Generated LaTeX A4 CV](https://hitchdev.com/orji/using/latex-cv)
 - [Example of Generated LaTeX A4 Letter](https://hitchdev.com/orji/using/latex-letter)
 - [Convert chunks of orgmode text into markdown](https://hitchdev.com/orji/using/markdown)
 - [Use a python module with template variables and methods](https://hitchdev.com/orji/using/module)
+- [Templated with more than one note](https://hitchdev.com/orji/using/orji-run-multiple)
+- [Run templated script to send email](https://hitchdev.com/orji/using/orji-run)
 

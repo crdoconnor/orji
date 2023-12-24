@@ -14,7 +14,7 @@ Don't be tempted to make it too complicated though.
 
 
 note.org
-```org
+```note.org
 * Note 1
 
 * Note 2
@@ -23,7 +23,7 @@ note.org
 
 
 note.jinja2
-```jinja2
+```note.jinja2
 {% for note in root %}
 {{ to_upper(note.name) }}
 {% endfor %}
@@ -32,7 +32,7 @@ note.jinja2
 
 
 note.py
-```py
+```note.py
 def to_upper(string):
     return string.upper()
 
@@ -43,7 +43,7 @@ def to_upper(string):
 
 Running:
 ```bash
-orji cat --module note.py note.org note.jinja2
+orji out --module note.py note.org note.jinja2
 ```
 
 Will output:

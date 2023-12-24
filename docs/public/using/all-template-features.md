@@ -19,7 +19,7 @@ demonstrates getting:
 
 
 simple.org
-```org
+```simple.org
 * TODO A todo note
 
 About text
@@ -53,7 +53,7 @@ Subnote C body.
 
 
 simple.jinja2
-```jinja2
+```simple.jinja2
 {% for note in root %}
 -------------------------
 Name: {{ note.name }}
@@ -88,7 +88,7 @@ ILookup : {{ notes.at("Fourth note").at("Subnote B").at("Subnote C").indexlookup
 
 Running:
 ```bash
-orji cat simple.org simple.jinja2
+orji out simple.org simple.jinja2
 ```
 
 Will output:
