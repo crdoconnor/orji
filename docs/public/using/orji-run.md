@@ -4,7 +4,17 @@ title: Run templated script to send email
 # Run templated script to send email
 
 
-Simple org mode file used with simple template.
+With script mode, you can "orji run" with a directory of templated scripts
+and a directory or org files.
+
+It will look through all of them for a TODO note with a tag matching a templated script.
+
+You can use this to trigger templated bash scripts which can execute
+pre-defined tasks from notes.
+
+This example runs a bash script to send an email.
+
+If there are zero or two notes matching scripts then it will raise an error.
 
 
 
@@ -53,12 +63,6 @@ echo
 echo {{ orgfile }}
 echo {{ tmp }}
 echo {{ out }}
-
-```
-
-
-tmp/_
-```tmp/_
 
 ```
 

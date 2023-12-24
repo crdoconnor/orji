@@ -107,5 +107,6 @@ pipx install orji
 - [Example of Generated LaTeX A4 Letter](using/latex-letter)
 - [Convert chunks of orgmode text into markdown](using/markdown)
 - [Use a python module with template variables and methods](using/module)
-- [Run templated script to send email](using/script)
+- [Templated with more than one note](using/orji-run-multiple)
+- [Run templated script to send email](using/orji-run)
 

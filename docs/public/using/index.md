@@ -11,6 +11,7 @@ How to:
 - [Example of Generated LaTeX A4 Letter](latex-letter)
 - [Convert chunks of orgmode text into markdown](markdown)
 - [Use a python module with template variables and methods](module)
-- [Run templated script to send email](script)
+- [Templated with more than one note](orji-run-multiple)
+- [Run templated script to send email](orji-run)
 
 
