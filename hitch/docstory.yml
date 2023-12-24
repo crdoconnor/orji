@@ -18,10 +18,10 @@ story: |
 
 given:
   files: |
-    {% for filename, contents in files.items() %}
+    {% for filename, contents in files.items() %}{% set ext = filename.split(".")[-1] %}
 
     {{ filename }}
-    ```{{ filename }}
+    ```{% if ext == "py" %}python{% elif ext == "sh" %}bash{% endif %}
     {{ contents }}
     ```
     {% endfor %}

@@ -57,6 +57,7 @@ class Engine(BaseEngine):
             if not filepath.dirname().exists():
                 filepath.dirname().mkdir()
             self.path.working.joinpath(filename).write_text(contents)
+            self.path.working.joinpath("tmp").mkdir()
 
         if not self.path.profile.exists():
             self.path.profile.mkdir()
