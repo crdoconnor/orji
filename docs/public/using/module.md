@@ -14,7 +14,7 @@ Don't be tempted to make it too complicated though.
 
 
 note.org
-```note.org
+```
 * Note 1
 
 * Note 2
@@ -23,7 +23,7 @@ note.org
 
 
 note.jinja2
-```note.jinja2
+```
 {% for note in root %}
 {{ to_upper(note.name) }}
 {% endfor %}
@@ -32,7 +32,7 @@ note.jinja2
 
 
 note.py
-```note.py
+```python
 def to_upper(string):
     return string.upper()
 

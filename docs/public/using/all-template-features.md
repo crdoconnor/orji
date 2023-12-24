@@ -19,7 +19,7 @@ demonstrates getting:
 
 
 simple.org
-```simple.org
+```
 * TODO A todo note
 
 About text
@@ -53,7 +53,7 @@ Subnote C body.
 
 
 simple.jinja2
-```simple.jinja2
+```
 {% for note in root %}
 -------------------------
 Name: {{ note.name }}

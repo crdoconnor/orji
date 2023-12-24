@@ -15,14 +15,14 @@ This lets you create templates which [fail fast](https://en.wikipedia.org/wiki/F
 
 
 example.org
-```example.org
+```
 * existent
 
 ```
 
 
 example.jinja2
-```example.jinja2
+```
 This is some text
 
 {{ fail("this shouldn't happen") }}

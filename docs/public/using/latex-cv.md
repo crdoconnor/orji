@@ -24,7 +24,7 @@ conflicting with latex syntax.
 
 
 cv.org
-```cv.org
+```
 * details
 
 ** name
@@ -76,7 +76,7 @@ Increased search volume by 50%.
 
 
 cv.jinja2
-```cv.jinja2
+```
 %-----------------------------------------------------------------------------------------------------------------------------------------------%
 %	The MIT License (MIT)
 %

@@ -21,7 +21,7 @@ If there are zero or two notes matching scripts then it will raise an error.
 
 
 org/simple.org
-```org/simple.org
+```
 * TODO An email I want to send :email:
 
 ** email
@@ -46,7 +46,7 @@ File taxes for wife too.
 
 
 org/simple2.org
-```org/simple2.org
+```
 * Another note
 
 * Another irrelevant note.
@@ -55,7 +55,7 @@ org/simple2.org
 
 
 orun/email.sh
-```orun/email.sh
+```bash
 echo {{ note.at("body").body.oneline }}
 cat {{ note.at("email").body.tempfile() }}
 

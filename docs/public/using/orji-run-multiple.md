@@ -21,7 +21,7 @@ With --multiple then multiple matching scripts will be run.
 
 
 org/simple.org
-```org/simple.org
+```
 * TODO Wash car :email-reminder:
 
 Car wash.
@@ -32,7 +32,7 @@ Car wash.
 
 
 org/simple2.org
-```org/simple2.org
+```
 * Another note
 
 * TODO File taxes :email-reminder:
@@ -45,7 +45,7 @@ File taxes for wife too.
 
 
 orun/email-reminder.sh
-```orun/email-reminder.sh
+```bash
 echo {{ note.body.oneline }}
 
 ```
