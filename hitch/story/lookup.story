@@ -8,6 +8,10 @@ Lookup:
 
         Just a note
 
+        ** A subnote
+
+        A subnote of the top note.
+
         * TODO Wash car :morning:
 
         Car wash.
@@ -20,11 +24,22 @@ Lookup:
       simple.jinja2: |
         TITLE: {{ root.name }}
 
-        {{ root.body}}
-  steps:
-  - orji:
-      cmd: out simple.org//0 simple.jinja2
-      output: |
-        TITLE: A normal note
+        {{ root.body }}
+  variations:
+    First note:
+      steps:
+      - orji:
+          cmd: out simple.org//0 simple.jinja2
+          output: |
+            TITLE: A normal note
 
-        Just a note
+            Just a note
+
+    Sub note:
+      steps:
+      - orji:
+          cmd: out simple.org//0/0 simple.jinja2
+          output: |
+            TITLE: A subnote
+
+            A subnote of the top note.
