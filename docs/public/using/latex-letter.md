@@ -21,7 +21,7 @@ Unlike traditional jinja2, latexmode jinja2 uses different syntax to avoid confl
 
 
 letter.org
-```org
+```letter.org
 * from details
 ** name
 
@@ -65,7 +65,7 @@ P.S. An iPhone would also be acceptable.
 
 
 letter.jinja2
-```jinja2
+```letter.jinja2
 % Thin Formal Letter
 % LaTeX Template
 % Version 2.0 (7/2/17)
@@ -176,7 +176,7 @@ Yours faithfully,
 
 Running:
 ```bash
-orji cat --latexmode letter.org letter.jinja2
+orji out --latexmode letter.org letter.jinja2
 ```
 
 Will output:
@@ -235,12 +235,10 @@ Will output:
 } % Your name for the signature at the bottom
 
 \address{
-\\ 
 1234 NW Bobcat Lane,\\ 
 Bobcat City,\\ 
 MO\\ 
-65584-5678.\\ 
- \\
+65584-5678. \\
 +1-541-754-3010 \\
 johndoe@gmail.com
 } % Your address and phone number
@@ -254,11 +252,9 @@ johndoe@gmail.com
 %----------------------------------------------------------------------------------------
 
 \begin{letter}{
-\\ 
 123 Elf Road,\\ 
 North Pole,\\ 
-88888\\ 
-
+88888
 } % Name/title of the addressee
 
 %----------------------------------------------------------------------------------------
