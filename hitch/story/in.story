@@ -13,7 +13,6 @@ Insert file into org mode file:
         * TODO New note
 
         {{ text }}
-      tmp/_:
   steps:
   - orji:
       env:

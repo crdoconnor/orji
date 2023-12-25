@@ -67,7 +67,7 @@ Run:
 
 
 Run failing:
-  based on: Run templated script to send email
+  based on: run
   about: |
     Simple org mode file used with simple template.
   given:

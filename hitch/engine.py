@@ -51,13 +51,13 @@ class Engine(BaseEngine):
         if self.path.working.exists():
             self.path.working.rmtree()
         self.path.working.mkdir()
+        self.path.working.joinpath("tmp").mkdir()
 
         for filename, contents in self.given["files"].items():
             filepath = self.path.working.joinpath(filename)
             if not filepath.dirname().exists():
                 filepath.dirname().mkdir()
             self.path.working.joinpath(filename).write_text(contents)
-            self.path.working.joinpath("tmp").mkdir()
 
         if not self.path.profile.exists():
             self.path.profile.mkdir()
