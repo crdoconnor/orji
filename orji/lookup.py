@@ -14,6 +14,9 @@ class LookupItem:
         if item.isdigit():
             self.item_type = LookupItemType.INDEX
             self.index = int(item)
+        elif item.startswith("'") and item.endswith("'"):
+            self.name = item.strip("'")
+            self.item_type = LookupItemType.NAME
         else:
             self.item_type = LookupItemType.NAME
             self.name = item
@@ -51,7 +54,9 @@ class Lookup:
             if item.item_type == LookupItemType.INDEX:
                 current_note = current_note.children[item.index]
             else:
-                matching_notes = [note for note in current_note.children if note.name == item.name]
+                matching_notes = [
+                    note for note in current_note.children if note.name == item.name
+                ]
                 if len(matching_notes) == 1:
                     return matching_notes[0]
                 else:

@@ -59,3 +59,12 @@ Lookup:
             TITLE: Subnote of first note
 
             A subnote of the top note.
+
+    Sub note look up note with title zero:
+      steps:
+      - orji:
+          cmd: out "simple.org//0/'0'" simple.jinja2
+          output: |
+            TITLE: 0
+
+            A subnote with the title zero
