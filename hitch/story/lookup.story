@@ -11,9 +11,13 @@ Lookup:
 
         Just a note
 
-        ** Subnote
+        ** Subnote of first note
 
         A subnote of the top note.
+
+        ** 0
+
+        A subnote with the title zero
 
         * TODO Wash car :morning:
 
@@ -43,15 +47,15 @@ Lookup:
       - orji:
           cmd: out simple.org//0/0 simple.jinja2
           output: |
-            TITLE: Subnote
+            TITLE: Subnote of first note
 
             A subnote of the top note.
 
     Sub note by name:
       steps:
       - orji:
-          cmd: out simple.org//0/Subnote simple.jinja2
+          cmd: out "simple.org//0/Subnote of first note" simple.jinja2
           output: |
-            TITLE: Subnote
+            TITLE: Subnote of first note
 
             A subnote of the top note.
