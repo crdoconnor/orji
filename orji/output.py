@@ -1,8 +1,6 @@
-from .note import Note
 from pathlib import Path
 import click
 from .template import Template
-import orgmunge
 from .tempdir import TempDir
 from .lookup import Lookup
 
@@ -24,21 +22,10 @@ from .lookup import Lookup
 )
 def output(orglookup, jinjafile, latexmode, pymodule):
     lookup = Lookup(orglookup)
-    orgfile = lookup.filepath
-    indexlookup = lookup.ref
     temp_dir = TempDir()
     temp_dir.create()
-    org_text = Path(orgfile).read_text()
     template_text = Path(jinjafile).read_text()
-    munge_parsed = orgmunge.Org(
-        org_text,
-        from_file=False,
-        todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
-    )
-    notes = Note(munge_parsed.root, temp_dir=temp_dir)
-
-    if indexlookup is not None:
-        notes = notes.from_indexlookup(indexlookup)
+    notes = lookup.load(temp_dir)
 
     output_text = Template(
         template_text, jinjafile, latexmode=latexmode, pymodule_filename=pymodule

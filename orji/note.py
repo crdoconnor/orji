@@ -134,6 +134,10 @@ class Note:
         else:
             return Note(matching_notes[0], temp_dir=self._temp_dir)
 
+    @property
+    def children(self):
+        return [Note(node, temp_dir=self._temp_dir) for node in self._node.children]
+
     def __iter__(self):
         for node in self._node.children:
             yield Note(node, temp_dir=self._temp_dir)

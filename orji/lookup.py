@@ -16,6 +16,7 @@ class Lookup:
         if len(split) == 1:
             self.filepath = split[0]
             self.ref = None
+            self.parsed_ref = []
         elif len(split) == 2:
             self.filepath = split[0]
             self.ref = split[1]
