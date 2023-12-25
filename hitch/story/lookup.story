@@ -1,6 +1,9 @@
 Lookup:
   about: |
-    Use index based lookups to grab specific notes.
+    Orji uses lookups to reference or grab specific notes.
+
+    The lookup can be based upon index (if it is a number) or
+    note name.
   given:
     files:
       simple.org: |
@@ -8,7 +11,7 @@ Lookup:
 
         Just a note
 
-        ** A subnote
+        ** Subnote
 
         A subnote of the top note.
 
@@ -35,11 +38,20 @@ Lookup:
 
             Just a note
 
-    Sub note:
+    Sub note by index:
       steps:
       - orji:
           cmd: out simple.org//0/0 simple.jinja2
           output: |
-            TITLE: A subnote
+            TITLE: Subnote
+
+            A subnote of the top note.
+
+    Sub note by name:
+      steps:
+      - orji:
+          cmd: out simple.org//0/Subnote simple.jinja2
+          output: |
+            TITLE: Subnote
 
             A subnote of the top note.

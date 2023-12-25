@@ -1,11 +1,22 @@
 import orgmunge
 from .note import Note
 from pathlib import Path
+from enum import Enum
+
+
+class LookupItemType(Enum):
+    INDEX = 0
+    NAME = 1
 
 
 class LookupItem:
-    def __init__(self, item):
-        self.index = int(item)
+    def __init__(self, item: str):
+        if item.isdigit():
+            self.item_type = LookupItemType.INDEX
+            self.index = int(item)
+        else:
+            self.item_type = LookupItemType.NAME
+            self.name = item
 
 
 class Lookup:
@@ -37,5 +48,12 @@ class Lookup:
         )
         current_note = Note(munge_parsed.root, temp_dir=temp_dir)
         for item in self.parsed_ref:
-            current_note = current_note.children[item.index]
+            if item.item_type == LookupItemType.INDEX:
+                current_note = current_note.children[item.index]
+            else:
+                matching_notes = [note for note in current_note.children if note.name == item.name]
+                if len(matching_notes) == 1:
+                    return matching_notes[0]
+                else:
+                    raise NotImplementedError
         return current_note
