@@ -4,6 +4,12 @@ from pathlib import Path
 from enum import Enum
 
 
+class LookupType(Enum):
+    FILE = 0
+    ABSOLUTE = 1
+    RELATIVE = 2
+
+
 class LookupItemType(Enum):
     INDEX = 0
     NAME = 1
@@ -24,23 +30,19 @@ class LookupItem:
 
 class Lookup:
     def __init__(self, text):
-        self._text = text
-
-        split = text.split("//")
-        if len(split) == 1:
-            self.filepath = split[0]
-            self.ref = None
-            self.parsed_ref = []
-        elif len(split) == 2:
-            self.filepath = split[0]
-            self.ref = split[1]
-            self.parsed_ref = [LookupItem(item) for item in split[1].split("/")]
-        else:
+        if "//" in text:
+            self.lookup_type = LookupType.FILE
+            self.filepath, ref = text.split("//")
+            self.parsed_ref = [LookupItem(item) for item in ref.split("/")]
+        elif text.startswith("./"):
+            self.lookup_type = LookupType.RELATIVE
             raise NotImplementedError
-
-    @property
-    def full(self):
-        return True
+        elif text.startswith("/"):
+            self.lookup_type = LookupType.ABSOLUTE
+            raise NotImplementedError
+        else:
+            self.lookup_type = LookupType.RELATIVE
+            raise NotImplementedError
 
     def load(self, temp_dir):
         org_text = Path(self.filepath).read_text()
