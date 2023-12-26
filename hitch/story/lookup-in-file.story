@@ -34,7 +34,8 @@ Lookup in file:
 
         Different ways of grabbing first note:
 
-        * {{ note.at("A normal note").name }}
+        * {{ at("A normal note").name }}
+        * {{ at("0").name }}
   steps:
   - orji:
       cmd: out simple.org simple.jinja2
@@ -43,4 +44,5 @@ Lookup in file:
 
         Different ways of grabbing first note:
 
+        * A normal note
         * A normal note
