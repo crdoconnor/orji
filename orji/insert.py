@@ -4,6 +4,7 @@ import click
 from .template import Template
 import orgmunge
 from .tempdir import TempDir
+from .loader import Loader
 
 
 @click.command()
@@ -18,6 +19,7 @@ from .tempdir import TempDir
 def insert(jinjafile, relative, location, textfile):
     temp_dir = TempDir()
     temp_dir.create()
+    loader = Loader(temp_dir)
     template_text = Path(jinjafile).read_text()
     output_text = Template(template_text, jinjafile).render(
         text=Path(textfile).read_text()
@@ -36,7 +38,7 @@ def insert(jinjafile, relative, location, textfile):
         from_file=False,
         todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
     )
-    write_notes = Note(write_parsed.root, temp_dir=temp_dir)
+    write_notes = Note(write_parsed.root, loader=loader)
     chunk_to_insert.initial_body = ""
     write_notes._node.add_child(chunk_to_insert.root)
     write_parsed.initial_body = ""

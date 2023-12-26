@@ -1,7 +1,5 @@
-import orgmunge
-from .note import Note
-from pathlib import Path
 from enum import Enum
+from .exceptions import OrjiError
 
 
 class LookupType(Enum):
@@ -30,11 +28,15 @@ class LookupItem:
 
 
 class Lookup:
-    def __init__(self, text, in_file=True):
+    def __init__(self, text, relative_to=None):
+        self.relative_to = relative_to
+
         if "//" in text:
             self.lookup_type = LookupType.FILE
-            self.filepath, ref = text.split("//")
-            self.parsed_ref = [LookupItem(item) for item in ref.split("/")]
+            split = text.split("//")
+            self.filepath = split[0]
+            self.ref = split[1]
+            self.parsed_ref = [LookupItem(item) for item in self.ref.split("/")]
         elif text.startswith("./"):
             self.lookup_type = LookupType.RELATIVE
             raise NotImplementedError
@@ -42,18 +44,21 @@ class Lookup:
             self.lookup_type = LookupType.ABSOLUTE
             raise NotImplementedError
         else:
-            self.lookup_type = LookupType.FILEONLY
-            self.filepath = text
-            self.parsed_ref = []
+            if relative_to is None:
+                self.lookup_type = LookupType.FILEONLY
+                self.filepath = text
+                self.parsed_ref = []
+                self.ref = None
+            else:
+                self.lookup_type = LookupType.RELATIVE
+                self.ref = text
+                self.parsed_ref = [LookupItem(item) for item in text.split("/")]
 
-    def load(self, temp_dir):
-        org_text = Path(self.filepath).read_text()
-        munge_parsed = orgmunge.Org(
-            org_text,
-            from_file=False,
-            todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
-        )
-        current_note = Note(munge_parsed.root, temp_dir=temp_dir)
+    def load(self, loader):
+        if self.relative_to is None:
+            current_note = loader.load(self.filepath)
+        else:
+            current_note = self.relative_to
         for item in self.parsed_ref:
             if item.item_type == LookupItemType.INDEX:
                 current_note = current_note.children[item.index]
@@ -63,6 +68,8 @@ class Lookup:
                 ]
                 if len(matching_notes) == 1:
                     return matching_notes[0]
+                elif len(matching_notes) > 1:
+                    raise OrjiError(f"More than one note found matching '{self.ref}'")
                 else:
-                    raise NotImplementedError
+                    raise OrjiError(f"No notes matching '{self.ref}' found.")
         return current_note

@@ -8,6 +8,7 @@ import subprocess
 from .template import Template
 import orgmunge
 from .tempdir import TempDir
+from .loader import Loader
 
 
 @click.command()
@@ -25,6 +26,7 @@ from .tempdir import TempDir
 def run(orgdir, rundir, out, multiple):
     temp_dir = TempDir()
     temp_dir.create()
+    loader = Loader(temp_dir)
     orgdir = Path(orgdir).absolute()
     rundir = Path(rundir).absolute()
 
@@ -49,7 +51,7 @@ def run(orgdir, rundir, out, multiple):
             todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
         )
 
-        for note in Note(parsed_munge.root, temp_dir=temp_dir):
+        for note in Note(parsed_munge.root, loader=loader):
             if note.state == "TODO":
                 for tag in note.tags:
                     if tag in scripts.keys():

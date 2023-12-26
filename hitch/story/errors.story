@@ -10,7 +10,7 @@ At nonexistent node:
       cmd: out example.org example.jinja2
       error: yes
       output: |
-        Failure on line 1 of example.jinja2: No notes found in ROOT with name nonexistent
+        Failure on line 128 of example.jinja2: No notes matching 'nonexistent' found.
 
 Template syntax error:
   given:

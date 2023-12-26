@@ -3,6 +3,7 @@ import click
 from .template import Template
 from .tempdir import TempDir
 from .lookup import Lookup
+from .loader import Loader
 
 
 @click.command()
@@ -24,8 +25,9 @@ def output(orglookup, jinjafile, latexmode, pymodule):
     lookup = Lookup(orglookup)
     temp_dir = TempDir()
     temp_dir.create()
+    loader = Loader(temp_dir)
     template_text = Path(jinjafile).read_text()
-    notes = lookup.load(temp_dir)
+    notes = lookup.load(loader)
 
     output_text = Template(
         template_text, jinjafile, latexmode=latexmode, pymodule_filename=pymodule

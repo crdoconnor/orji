@@ -1,5 +1,6 @@
 from slugify import slugify
 from .exceptions import OrjiError
+from .lookup import Lookup
 import re
 
 
@@ -60,9 +61,9 @@ class Body(TextChunk):
 
 
 class Note:
-    def __init__(self, node, temp_dir):
+    def __init__(self, node, loader):
         self._node = node
-        self._temp_dir = temp_dir
+        self._loader = loader
 
     @property
     def name(self):
@@ -97,7 +98,7 @@ class Note:
 
     @property
     def body(self):
-        return Body(self._node.body, self._temp_dir)
+        return Body(self._node.body, self._loader._temp_dir)
 
     @property
     def prop(self):
@@ -110,7 +111,7 @@ class Note:
         for index in split:
             node = node.children[index]
 
-        return Note(node, self._temp_dir)
+        return Note(node, self._loader)
 
     def has(self, lookup):
         matching_notes = [n for n in self._node.children if n.headline.title == lookup]
@@ -124,20 +125,12 @@ class Note:
             return True
 
     def at(self, lookup):
-        matching_notes = [n for n in self._node.children if n.headline.title == lookup]
-        if len(matching_notes) == 0:
-            raise OrjiError(f"No notes found in {self.name} with name {lookup}")
-        elif len(matching_notes) > 1:
-            raise OrjiError(
-                f"More than one note found in {self.name} with name {lookup}"
-            )
-        else:
-            return Note(matching_notes[0], temp_dir=self._temp_dir)
+        return Lookup(lookup, relative_to=self).load(loader=self._loader)
 
     @property
     def children(self):
-        return [Note(node, temp_dir=self._temp_dir) for node in self._node.children]
+        return [Note(node, self._loader) for node in self._node.children]
 
     def __iter__(self):
         for node in self._node.children:
-            yield Note(node, temp_dir=self._temp_dir)
+            yield Note(node, self._loader)
