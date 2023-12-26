@@ -39,9 +39,14 @@ def insert(jinjafile, relative, location, textfile):
         todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
     )
     write_notes = Note(write_parsed.root, loader=loader)
-    chunk_to_insert.initial_body = ""
-    write_notes._node.add_child(chunk_to_insert.root)
-    write_parsed.initial_body = ""
+    if relative == "above":
+        for note in chunk_to_insert.root.children:
+            write_notes._node.add_child(note)
+    elif relative == "below":
+        for note in chunk_to_insert.root.children:
+            write_notes._node.add_child(note)
+    else:
+        raise NotImplementedError("f{relative} not implemented")
     write_parsed.write(write_file)
     click.echo("Written note successfully")
     temp_dir.destroy()
