@@ -8,6 +8,7 @@ class LookupType(Enum):
     FILE = 0
     ABSOLUTE = 1
     RELATIVE = 2
+    FILEONLY = 3
 
 
 class LookupItemType(Enum):
@@ -29,7 +30,7 @@ class LookupItem:
 
 
 class Lookup:
-    def __init__(self, text):
+    def __init__(self, text, in_file=True):
         if "//" in text:
             self.lookup_type = LookupType.FILE
             self.filepath, ref = text.split("//")
@@ -41,8 +42,9 @@ class Lookup:
             self.lookup_type = LookupType.ABSOLUTE
             raise NotImplementedError
         else:
-            self.lookup_type = LookupType.RELATIVE
-            raise NotImplementedError
+            self.lookup_type = LookupType.FILEONLY
+            self.filepath = text
+            self.parsed_ref = []
 
     def load(self, temp_dir):
         org_text = Path(self.filepath).read_text()

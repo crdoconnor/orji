@@ -3,20 +3,20 @@ Run:
   about: |
     With org run, you can hit one button and trigger a variety of different scripts
     depending upon what is in your notes.
-    
+
     The scripts could:
-    
+
     * Send an email
     * Generate a PDF
     * Export data
-    
+
     It will look through all of them for a TODO note with a tag matching a templated script (sh) file.
-    
+
     You can use this to trigger templated bash scripts which can execute
     pre-defined tasks from notes.
-    
+
     This example runs a bash script to send an email.
-    
+
     If there are zero or two notes matching scripts then it will raise an error.
   given:
     files:
@@ -84,6 +84,6 @@ Run failing:
         Windows sucks.
         billg@microsoft.com
 
-        ERROR running email.sh in 11111.tmp
+        ERROR running email.sh in /gen/working/11111.tmp
 
 
