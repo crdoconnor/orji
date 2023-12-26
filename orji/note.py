@@ -114,15 +114,7 @@ class Note:
         return Note(node, self._loader)
 
     def has(self, lookup):
-        matching_notes = [n for n in self._node.children if n.headline.title == lookup]
-        if len(matching_notes) == 0:
-            return False
-        elif len(matching_notes) > 1:
-            raise OrjiError(
-                f"More than one note found in {self.name} with name {lookup}"
-            )
-        else:
-            return True
+        return Lookup(lookup, relative_to=self).exists(loader=self._loader)
 
     def at(self, lookup):
         return Lookup(lookup, relative_to=self).load(loader=self._loader)

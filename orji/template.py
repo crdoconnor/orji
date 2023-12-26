@@ -100,7 +100,7 @@ class Template:
             )
             exit(1)
         except OrjiError as error:
-            lineno = traceback.extract_tb(error.__traceback__)[-2].lineno
+            lineno = traceback.extract_tb(error.__traceback__)[-3].lineno
             click.echo(
                 f"Failure on line {lineno} of {self._jinjafile}: {error}", err=True
             )

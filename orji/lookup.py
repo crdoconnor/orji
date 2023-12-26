@@ -54,7 +54,10 @@ class Lookup:
                 self.ref = text
                 self.parsed_ref = [LookupItem(item) for item in text.split("/")]
 
-    def load(self, loader):
+    def exists(self, loader):
+        return self.load(loader, fail_if_nonexistent=False) is not None
+
+    def load(self, loader, fail_if_nonexistent=True):
         if self.relative_to is None:
             current_note = loader.load(self.filepath)
         else:
@@ -71,5 +74,8 @@ class Lookup:
                 elif len(matching_notes) > 1:
                     raise OrjiError(f"More than one note found matching '{self.ref}'")
                 else:
-                    raise OrjiError(f"No notes matching '{self.ref}' found.")
+                    if fail_if_nonexistent:
+                        raise OrjiError(f"No notes matching '{self.ref}' found.")
+                    else:
+                        return None
         return current_note

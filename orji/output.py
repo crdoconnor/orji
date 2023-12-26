@@ -31,7 +31,7 @@ def output(orglookup, jinjafile, latexmode, pymodule):
 
     output_text = Template(
         template_text, jinjafile, latexmode=latexmode, pymodule_filename=pymodule
-    ).render(note=notes, notes=notes, root=notes, at=notes.at)
+    ).render(note=notes, notes=notes, root=notes, at=notes.at, has=notes.has)
 
     click.echo(output_text)
     temp_dir.destroy()

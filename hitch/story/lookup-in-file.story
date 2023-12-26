@@ -36,6 +36,10 @@ Lookup in file:
 
         * {{ at("A normal note").name }}
         * {{ at("0").name }}
+
+        Does the first note exist?
+
+        * {% if has("A normal note") %}Yes{% endif %}
   steps:
   - orji:
       cmd: out simple.org simple.jinja2
@@ -46,3 +50,7 @@ Lookup in file:
 
         * A normal note
         * A normal note
+
+        Does the first note exist?
+
+        * Yes
