@@ -21,12 +21,14 @@ class TempDir:
     """
 
     def __init__(self):
-        self._root = Path(os.getenv("ORJITMP", "."))
+        self.orjitmp = Path(os.getenv("ORJITMP", "."))
 
     def create(self):
-        assert self._root.exists()
-        assert self._root.is_dir()
-        self.working_dir = self._root / f"{random_5_digit_number()}.tmp"
+        assert self.orjitmp.exists()
+        assert self.orjitmp.is_dir()
+        self.working_dir = self.orjitmp.joinpath(
+            f"{random_5_digit_number()}.tmp"
+        ).absolute()
         self.working_dir.mkdir()
 
     def tempfile(self, text, filename=None):
