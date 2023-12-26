@@ -29,7 +29,7 @@ def output(orglookup, jinjafile, latexmode, pymodule):
 
     output_text = Template(
         template_text, jinjafile, latexmode=latexmode, pymodule_filename=pymodule
-    ).render(notes=notes, root=notes)
+    ).render(note=notes, notes=notes, root=notes)
 
     click.echo(output_text)
     temp_dir.destroy()
