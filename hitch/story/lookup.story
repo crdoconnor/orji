@@ -1,4 +1,4 @@
-Lookup:
+Lookup from CLI:
   about: |
     Orji uses lookups to reference or grab specific notes.
 
