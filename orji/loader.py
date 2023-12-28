@@ -14,4 +14,4 @@ class Loader:
             from_file=False,
             todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
         )
-        return Note(munge_parsed.root, loader=self)
+        return Note(munge_parsed.root, loader=self, org=munge_parsed)

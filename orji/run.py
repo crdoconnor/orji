@@ -51,7 +51,7 @@ def run(orgdir, rundir, out, multiple):
             todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
         )
 
-        for note in Note(parsed_munge.root, loader=loader):
+        for note in Note(parsed_munge.root, loader=loader, org=parsed_munge):
             if note.state == "TODO":
                 for tag in note.tags:
                     if tag in scripts.keys():

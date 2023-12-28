@@ -5,6 +5,7 @@ from .template import Template
 import orgmunge
 from .tempdir import TempDir
 from .loader import Loader
+from .lookup import Lookup
 
 
 @click.command()
@@ -20,6 +21,7 @@ def insert(jinjafile, relative, location, textfile):
     temp_dir = TempDir()
     temp_dir.create()
     loader = Loader(temp_dir)
+    lookup = Lookup(location)
     template_text = Path(jinjafile).read_text()
     output_text = Template(template_text, jinjafile).render(
         text=Path(textfile).read_text()
@@ -30,23 +32,15 @@ def insert(jinjafile, relative, location, textfile):
         todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
     )
 
-    write_file = location.split(".org/")[0] + ".org"
-    _ = location.split(".org/")[1]
-
-    write_parsed = orgmunge.Org(
-        Path(write_file).read_text(),
-        from_file=False,
-        todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
-    )
-    write_notes = Note(write_parsed.root, loader=loader)
+    write_note = lookup.load(loader)
     if relative == "above":
         for note in chunk_to_insert.root.children:
-            write_notes._node.add_child(note)
+            write_note._node.add_child(note)
     elif relative == "below":
         for note in chunk_to_insert.root.children:
-            write_notes._node.add_child(note)
+            write_note._node.add_child(note)
     else:
         raise NotImplementedError("f{relative} not implemented")
-    write_parsed.write(write_file)
-    click.echo("Written note successfully")
+    Path(lookup.filepath).write_text(str(write_note))
+    click.echo("Written note(s) successfully")
     temp_dir.destroy()

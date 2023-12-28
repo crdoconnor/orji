@@ -61,9 +61,10 @@ class Body(TextChunk):
 
 
 class Note:
-    def __init__(self, node, loader):
+    def __init__(self, node, loader, org):
         self._node = node
         self._loader = loader
+        self._org = org
 
     @property
     def name(self):
@@ -111,7 +112,7 @@ class Note:
         for index in split:
             node = node.children[index]
 
-        return Note(node, self._loader)
+        return Note(node, self._loader, self._rg)
 
     def has(self, lookup):
         return Lookup(lookup, relative_to=self).exists(loader=self._loader)
@@ -119,10 +120,13 @@ class Note:
     def at(self, lookup):
         return Lookup(lookup, relative_to=self).load(loader=self._loader)
 
+    def __str__(self):
+        return str(self._org)
+
     @property
     def children(self):
-        return [Note(node, self._loader) for node in self._node.children]
+        return [Note(node, self._loader, self._org) for node in self._node.children]
 
     def __iter__(self):
         for node in self._node.children:
-            yield Note(node, self._loader)
+            yield Note(node, self._loader, self._org)
