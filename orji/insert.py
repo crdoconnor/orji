@@ -1,4 +1,3 @@
-from .note import Note
 from pathlib import Path
 import click
 from .template import Template
