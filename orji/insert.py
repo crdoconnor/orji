@@ -32,6 +32,8 @@ def insert(jinjafile, relative, location, textfile):
     )
 
     write_note = lookup.load(loader)
+
+    assert len(chunk_to_insert.root.children) == 1
     if relative == "above":
         for note in chunk_to_insert.root.children:
             write_note._node.sibling.add_child(note)
@@ -49,6 +51,16 @@ def insert(jinjafile, relative, location, textfile):
             note.demote()
             note.sibling = write_note._node
             note.demote()
+    elif relative == "replace":
+        for note in chunk_to_insert.root.children:
+            write_note._node.sibling.add_child(note)
+            note.sibling = write_note._node.sibling
+            note.demote()
+            parent = write_note._node.parent
+            node_index = [
+                i for i, node in enumerate(parent.children) if node == write_note._node
+            ][0]
+            del parent.children[node_index]
     else:
         raise NotImplementedError("f{relative} not implemented")
     Path(lookup.filepath).write_text(str(write_note))
