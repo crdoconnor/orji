@@ -42,6 +42,13 @@ def insert(jinjafile, relative, location, textfile):
             write_note._node.add_child(note)
             note.sibling = write_note._node
             note.demote()
+    elif relative == "under":
+        for note in chunk_to_insert.root.children:
+            write_note._node.add_child(note)
+            note.sibling = write_note._node
+            note.demote()
+            note.sibling = write_note._node
+            note.demote()
     else:
         raise NotImplementedError("f{relative} not implemented")
     Path(lookup.filepath).write_text(str(write_note))
