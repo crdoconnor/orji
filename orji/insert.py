@@ -51,11 +51,11 @@ def insert(jinjafile, relative, location, textfile):
                 note.demote()
     elif relative == "under":
         for note in chunk_to_insert.root.children:
-            write_note._node.add_child(note)
-            note.sibling = write_note._node
-            note.demote()
-            note.sibling = write_note._node
-            note.demote()
+            write_note._node.parent.add_child(note)
+
+            for _ in range(write_note._node.level):
+                note.sibling = write_note._node
+                note.demote()
     elif relative == "replace":
         for note in chunk_to_insert.root.children:
             write_note._node.sibling.add_child(note)
