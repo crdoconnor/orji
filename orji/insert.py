@@ -5,6 +5,7 @@ import orgmunge
 from .tempdir import TempDir
 from .loader import Loader
 from .lookup import Lookup
+from .ical import ICal
 
 
 @click.command()
@@ -16,14 +17,20 @@ from .lookup import Lookup
     "textfile",
     help="Put file contents into {{ text }}",
 )
-def insert(jinjafile, relative, location, textfile):
+@click.option(
+    "--ical",
+    "icalfile",
+    help="Put ical file contents into {{ ical }}",
+)
+def insert(jinjafile, relative, location, textfile, icalfile):
     temp_dir = TempDir()
     temp_dir.create()
     loader = Loader(temp_dir)
     lookup = Lookup(location)
     template_text = Path(jinjafile).read_text()
     output_text = Template(template_text, jinjafile).render(
-        text=Path(textfile).read_text()
+        text=Path(textfile).read_text() if textfile is not None else None,
+        ical=ICal(icalfile) if icalfile is not None else None,
     )
     chunk_to_insert = orgmunge.Org(
         output_text,
