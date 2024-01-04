@@ -43,7 +43,7 @@ Insert ical file:
           contents: |
             * Meetings
             ** Networld+Interop Conference
-            SCHEDULED: <2024-01-04 Thu 10:05-11:50>
+            SCHEDULED: <1996-07-04 Thu 12:00>
             Networld+Interop Conference and Exhibit
             Atlanta World Congress Center
             Atlanta, Georgia

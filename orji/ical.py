@@ -1,4 +1,5 @@
 from pathlib import Path
+from orgmunge import ORG_TIME_FORMAT
 import icalendar
 import jinja2
 
@@ -26,7 +27,11 @@ class Event:
 
     @property
     def scheduled(self):
-        return "2024-01-04 Thu 10:05-11:50"
+        return (
+            self._ievent.get("DTSTAMP")
+            .from_ical(self._ievent.get("DTSTAMP"))
+            .strftime(ORG_TIME_FORMAT)
+        )
 
 
 class ICal:
