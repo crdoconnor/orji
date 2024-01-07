@@ -92,7 +92,7 @@ pip install orji
 ```
 
 As a command line app, it is typically best installed via
-[pipx](https://pypa.github.io/stable/).
+[pipx](https://pipx.pypa.io/stable/).
 
 ```bash
 pipx install orji
