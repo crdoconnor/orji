@@ -88,7 +88,7 @@ pip install orji
 ```
 
 As a command line app, it is typically best installed via
-[pipx](https://pypa.github.io/pipx/).
+[pipx](https://pypa.github.io/stable/).
 
 ```bash
 pipx install orji
@@ -98,11 +98,11 @@ pipx install orji
 
 - [Demonstration of all template features](https://hitchdev.com/orji/using/all-template-features)
 - [Deliberately trigger a template failure](https://hitchdev.com/orji/using/deliberate-failure)
-- [Insert file into org mode file](https://hitchdev.com/orji/using/insert)
+- [Insert file](https://hitchdev.com/orji/using/insert)
 - [Example of Generated LaTeX A4 CV](https://hitchdev.com/orji/using/latex-cv)
 - [Example of Generated LaTeX A4 Letter](https://hitchdev.com/orji/using/latex-letter)
 - [Convert chunks of orgmode text into markdown](https://hitchdev.com/orji/using/markdown)
 - [Use a python module with template variables and methods](https://hitchdev.com/orji/using/module)
 - [Templated with more than one note](https://hitchdev.com/orji/using/orji-run-multiple)
-- [Run templated script to send email](https://hitchdev.com/orji/using/orji-run)
+- [Run](https://hitchdev.com/orji/using/orji-run)
 

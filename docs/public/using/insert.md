@@ -1,7 +1,7 @@
 ---
-title: Insert file into org mode file
+title: Insert file
 ---
-# Insert file into org mode file
+# Insert file
 
 
 Insert a file as a note.
@@ -12,8 +12,9 @@ Insert a file as a note.
 
 org/simple.org
 ```
-* TODO Insert before this note
-
+* Top note
+** Subnote
+** TODO Insert above, under or below, replace this  
 * DONE Done item
 
 ```
@@ -33,24 +34,5 @@ notetemplate.jinja2
 
 ```
 
-
-tmp/_
-```
-
-```
-
-
-
-
-Running:
-```bash
-orji in notetemplate.jinja2 before org/simple.org/0 --text speech.txt
-```
-
-Will output:
-```
-Written note successfully
-
-```
 
 

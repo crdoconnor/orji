@@ -92,7 +92,7 @@ pip install orji
 ```
 
 As a command line app, it is typically best installed via
-[pipx](https://pypa.github.io/pipx/).
+[pipx](https://pypa.github.io/stable/).
 
 ```bash
 pipx install orji
@@ -102,11 +102,11 @@ pipx install orji
 
 - [Demonstration of all template features](using/all-template-features)
 - [Deliberately trigger a template failure](using/deliberate-failure)
-- [Insert file into org mode file](using/insert)
+- [Insert file](using/insert)
 - [Example of Generated LaTeX A4 CV](using/latex-cv)
 - [Example of Generated LaTeX A4 Letter](using/latex-letter)
 - [Convert chunks of orgmode text into markdown](using/markdown)
 - [Use a python module with template variables and methods](using/module)
 - [Templated with more than one note](using/orji-run-multiple)
-- [Run templated script to send email](using/orji-run)
+- [Run](using/orji-run)
 
