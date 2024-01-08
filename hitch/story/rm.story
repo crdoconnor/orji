@@ -15,24 +15,21 @@ Delete:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: rm 0
+          cmd: rm org/simple.org//0
           output: |
             Deleted note(s) successfully
 
       - file contents:
           filename: org/simple.org
           contents: |
-            * Top note
-            ** Subnote 1
-            ** Subnote 2
-            * DONE Done item     
+            * DONE Done item
 
     Children:
       steps:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: rm 0 --children
+          cmd: rm org/simple.org//0 --children
           output: |
             Deleted note(s) successfully
 
@@ -40,6 +37,4 @@ Delete:
           filename: org/simple.org
           contents: |
             * Top note
-            ** Subnote 1
-            ** Subnote 2
-            * DONE Done item     
+            * DONE Done item

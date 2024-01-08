@@ -114,6 +114,16 @@ class Note:
 
         return Note(node, self._loader, self._rg)
 
+    def delete(self):
+        parent = self._node.parent
+        node_index = [
+            i for i, node in enumerate(parent.children) if node == self._node
+        ][0]
+        del parent.children[node_index]
+
+    def delete_children(self):
+        self._node.children = []
+
     def has(self, lookup):
         return Lookup(lookup, relative_to=self).exists(loader=self._loader)
 
