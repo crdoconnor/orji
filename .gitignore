@@ -9,3 +9,4 @@ docs/src/using/
 hitchpylibrarytoolkit/
 
 *.pyc
+*.kate-swp

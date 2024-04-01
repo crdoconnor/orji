@@ -38,6 +38,38 @@ class TextChunk:
         return self.text.strip()
 
 
+class Links:
+    def __init__(self, note):
+        self._note = note
+
+    def _grab(self, link_type, link_name):
+        matching = list(
+            re.findall(link_type + r"\:(.*)?(?:\s|$)", self._note.body.text)
+        )
+        if len(matching) == 0:
+            raise OrjiError(f"No {link_name} detected")
+        elif len(matching) > 1:
+            raise OrjiError(f"Over one ({len(matching)}) {link_name} detected")
+        else:
+            return matching[0]
+
+    @property
+    def tel(self):
+        return self._grab(r"tel", "telephone numbers")
+
+    @property
+    def sms(self):
+        return self._grab(r"sms", "SMS numbers")
+
+    @property
+    def file(self):
+        return self._grab(r"file", "file (file:) links")
+
+    @property
+    def mailto(self):
+        return self._grab(r"mailto", "mailto (mailto:) links")
+
+
 class Body(TextChunk):
     def __init__(self, text, temp_dir):
         self.text = str(text) if text is not None else ""
@@ -69,6 +101,10 @@ class Note:
     @property
     def name(self):
         return self._node.headline.title
+
+    @property
+    def links(self):
+        return Links(self)
 
     @property
     def indexlookup(self):
@@ -132,6 +168,17 @@ class Note:
 
     def __str__(self):
         return str(self._org)
+
+    def _walk_iter(self, node):
+        if len(node.children) == 0:
+            return [Note(node, self._loader, self._org)]
+        children = []
+        for child in node.children:
+            children.extend(self._walk_iter(child))
+        return children
+
+    def walk(self):
+        return self._walk_iter(self._node)
 
     @property
     def children(self):
