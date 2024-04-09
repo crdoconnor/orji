@@ -4,6 +4,15 @@ from .lookup import Lookup
 import re
 
 
+class NoteGroup:
+    def __init__(self, notes):
+        self._notes = notes
+
+    def walk(self):
+        all_notes = [note.walk() for note in self._notes]
+        return [subnote for note in all_notes for subnote in note]
+
+
 class TextChunk:
     def __init__(self, text):
         self.text = str(text) if text is not None else ""
