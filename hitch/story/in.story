@@ -1,7 +1,7 @@
 Insert file:
   docs: insert
   about: |
-    Insert a file as a note.
+    Insert a text file as a note.
   given:
     files:
       org/simple.org: |
@@ -13,7 +13,7 @@ Insert file:
       notetemplate.jinja2: |
         * TODO New note
 
-        {{ text }}
+        {{ words }}
 
   variations:
     Above:
@@ -21,7 +21,7 @@ Insert file:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: in notetemplate.jinja2 above org/simple.org//0/1 --text speech.txt
+          cmd: in notetemplate.jinja2 above org/simple.org//0/1 words:text:speech.txt
           output: |
             Written note(s) successfully
 
@@ -38,7 +38,7 @@ Insert file:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: in notetemplate.jinja2 above org/simple.org//0 --text speech.txt
+          cmd: in notetemplate.jinja2 above org/simple.org//0 words:text:speech.txt
           output: |
             Written note(s) successfully
 
@@ -59,7 +59,7 @@ Insert file:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: in notetemplate.jinja2 below org/simple.org//0/1 --text speech.txt
+          cmd: in notetemplate.jinja2 below org/simple.org//0/1 words:text:speech.txt
           output: |
             Written note(s) successfully
 
@@ -76,7 +76,7 @@ Insert file:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: in notetemplate.jinja2 below org/simple.org//0 --text speech.txt
+          cmd: in notetemplate.jinja2 below org/simple.org//0 words:text:speech.txt
           output: |
             Written note(s) successfully
 
@@ -98,7 +98,7 @@ Insert file:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: in notetemplate.jinja2 under org/simple.org//0/1 --text speech.txt
+          cmd: in notetemplate.jinja2 under org/simple.org//0/1 words:text:speech.txt
           output: |
             Written note(s) successfully
 
@@ -115,7 +115,7 @@ Insert file:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: in notetemplate.jinja2 under org/simple.org//0 --text speech.txt
+          cmd: in notetemplate.jinja2 under org/simple.org//0 words:text:speech.txt
           output: |
             Written note(s) successfully
 
@@ -137,7 +137,7 @@ Insert file:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: in notetemplate.jinja2 replace org/simple.org//0/1 --text speech.txt
+          cmd: in notetemplate.jinja2 replace org/simple.org//0/1 words:text:speech.txt
           output: |
             Written note(s) successfully
 

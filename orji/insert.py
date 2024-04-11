@@ -1,6 +1,7 @@
 from pathlib import Path
 import click
 from .template import Template
+from .exceptions import OrjiError
 import orgmunge
 from .tempdir import TempDir
 from .loader import Loader
@@ -12,26 +13,24 @@ from .ical import ICal
 @click.argument("jinjafile")
 @click.argument("relative")
 @click.argument("location")
-@click.option(
-    "--text",
-    "textfile",
-    help="Put file contents into {{ text }}",
-)
-@click.option(
-    "--ical",
-    "icalfile",
-    help="Put ical file contents into {{ ical }}",
-)
-def insert(jinjafile, relative, location, textfile, icalfile):
+@click.argument("insertion")
+def insert(jinjafile, relative, location, insertion):
     temp_dir = TempDir()
     temp_dir.create()
     loader = Loader(temp_dir)
     lookup = Lookup(location)
     template_text = Path(jinjafile).read_text()
-    output_text = Template(template_text, jinjafile).render(
-        text=Path(textfile).read_text() if textfile is not None else None,
-        ical=ICal(icalfile) if icalfile is not None else None,
-    )
+
+    varname, insertion_type, insertion_file = insertion.split(":")
+    template = Template(template_text, jinjafile)
+
+    if insertion_type == "ical":
+        output_text = template.render(**{varname: ICal(insertion_file)})
+    elif insertion_type == "text":
+        output_text = template.render(**{varname: Path(insertion_file).read_text()})
+    else:
+        raise OrjiError(f"{insertion_type} not known")
+
     chunk_to_insert = orgmunge.Org(
         output_text,
         from_file=False,
