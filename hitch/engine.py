@@ -92,7 +92,7 @@ class Engine(BaseEngine):
     @no_stacktrace_for(AssertionError)
     def file_contents(self, filename, contents):
         filepath = self.path.working.joinpath(filename)
-        assert filepath.exists()
+        assert filepath.exists(), "file doesn't exist"
         try:
             strings_match(contents, filepath.text())
         except Failure:

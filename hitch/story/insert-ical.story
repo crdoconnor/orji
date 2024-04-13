@@ -9,7 +9,7 @@ Insert ical file:
         * Birthdays
       direct.jinja2: |
         {{ event.to_org() }}
-      calendar.ical: |
+      calendar.vcf: |
         BEGIN:VCALENDAR
         PRODID:-//xyz Corp//NONSGML PDA Calendar Version 1.0//EN
         VERSION:2.0
@@ -34,7 +34,7 @@ Insert ical file:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: in direct.jinja2 under org/calendar.org//0 event:ical:calendar.ical
+          cmd: in direct.jinja2 under org/calendar.org//0 event:ical:calendar.vcf
           output: |
             Written note(s) successfully
 

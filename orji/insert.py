@@ -7,6 +7,7 @@ from .tempdir import TempDir
 from .loader import Loader
 from .lookup import Lookup
 from .ical import ICal
+from .vcf import VCF
 
 
 @click.command()
@@ -28,6 +29,8 @@ def insert(jinjafile, relative, location, insertion):
         output_text = template.render(**{varname: ICal(insertion_file)})
     elif insertion_type == "text":
         output_text = template.render(**{varname: Path(insertion_file).read_text()})
+    elif insertion_type == "vcf":
+        output_text = template.render(**{varname: VCF(insertion_file)})
     else:
         raise OrjiError(f"{insertion_type} not known")
 
