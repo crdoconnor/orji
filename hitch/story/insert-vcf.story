@@ -7,13 +7,19 @@ Insert vcf file:
       org/contacts.org: |
         * From phone
       direct.jinja2: |
-        {{ contact.to_org() }}
-      fromphone.ical: |
+        {{ contacts.to_org() }}
+      fromphone.vcf: |
         BEGIN:VCARD
         VERSION:4.0
         FN:John
         N:John;;;;
         TEL:+447777777774
+        END:VCARD
+        BEGIN:VCARD
+        VERSION:4.0
+        FN:Peter
+        N:Peter;;;;
+        TEL:+447777777775
         END:VCARD
 
   variations:
@@ -22,7 +28,7 @@ Insert vcf file:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: in direct.jinja2 under org/contacts.org//0 contact:vcf:fromphone.ical
+          cmd: in direct.jinja2 under org/contacts.org//0 contacts:vcf:fromphone.vcf
           output: |
             Written note(s) successfully
 
@@ -32,3 +38,5 @@ Insert vcf file:
             * From phone
             ** John
             tel:+447777777774
+            ** Peter
+            tel:+447777777775

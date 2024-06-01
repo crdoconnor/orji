@@ -42,7 +42,6 @@ def insert(jinjafile, relative, location, insertion):
 
     write_note = lookup.load(loader)
 
-    assert len(chunk_to_insert.root.children) == 1
     if relative == "above":
         for note in chunk_to_insert.root.children:
             if write_note._node.sibling is None:
@@ -59,12 +58,15 @@ def insert(jinjafile, relative, location, insertion):
                 note.sibling = write_note._node
                 note.demote()
     elif relative == "under":
+        node_to_insert_under = write_note._node
         for note in chunk_to_insert.root.children:
-            write_note._node.parent.add_child(note)
+            node_to_insert_under.parent.add_child(note)
 
             for _ in range(write_note._node.level):
                 note.sibling = write_note._node
                 note.demote()
+
+            node_to_insert_under = note
     elif relative == "replace":
         for note in chunk_to_insert.root.children:
             write_note._node.sibling.add_child(note)
