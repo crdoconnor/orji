@@ -14,13 +14,13 @@ def calculation(relative):
     lookup = Lookup(relative)
     write_note = lookup.load(loader)
 
-    headline = write_note._node.headline.title
-    body = write_note._node.body
+    headline = write_note.name
+    body = write_note.body.text
 
     if body.startswith("=") and "=" in headline:
         actual_value = eval(body.lstrip("="))
         left_hand_side = headline.split("=")[0]
-        write_note._node.headline.title = left_hand_side + "= " + str(actual_value)
+        write_note.set_name(left_hand_side + "= " + str(actual_value))
 
     Path(lookup.filepath).write_text(str(write_note))
     click.echo("Written note(s) successfully")

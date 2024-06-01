@@ -111,6 +111,9 @@ class Note:
     def name(self):
         return self._node.headline.title
 
+    def set_name(self, new_name):
+        self._node.headline.title = new_name
+
     @property
     def links(self):
         return Links(self)
