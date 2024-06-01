@@ -29,7 +29,7 @@ Insert ical file:
         END:VCALENDAR
 
   variations:
-    Directly under meetings header:
+    Add within meetings header:
       steps:
       - orji:
           env:
