@@ -21,15 +21,24 @@ def calculation(relative):
     if body.startswith("=") and "=" in headline:
         formula = body.lstrip("=")
         left_hand_side = headline.split("=")[0]
+        children = [
+            node
+            for node in write_note._node.children
+            if node.tags is None or "calcerror" not in node.tags
+        ]
 
         try:
             actual_value = eval(formula)
             write_note.set_name(left_hand_side + "= " + str(actual_value))
+            write_note._node.children = children
         except Exception as error:
             chunk_to_insert = orgmunge.Org(
                 f"* {type(error).__name__.strip()} :calcerror:\n{str(error)}",
                 from_file=False,
-                todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
+                todos={
+                    "todo_states": {"todo": "TODO"},
+                    "done_states": {"done": "DONE"},
+                },
             ).root.children[0]
             write_note._node.parent.add_child(chunk_to_insert)
             chunk_to_insert.sibling = write_note._node
