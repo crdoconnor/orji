@@ -27,7 +27,7 @@ def calculation(relative):
             write_note.set_name(left_hand_side + "= " + str(actual_value))
         except Exception as error:
             chunk_to_insert = orgmunge.Org(
-                f"* {str(type(error))}\n{str(error)}",
+                f"* {type(error).__name__.strip()} :calcerror:\n{str(error)}",
                 from_file=False,
                 todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
             ).root.children[0]

@@ -62,5 +62,5 @@ Calculation:
           contents: |
             * Destroy the universe = ?
             =1/0
-            ** <class 'ZeroDivisionError'>
+            ** ZeroDivisionError    :calcerror:
             division by zero
