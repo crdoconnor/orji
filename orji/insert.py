@@ -69,14 +69,13 @@ def insert(jinjafile, relative, location, insertion):
             node_to_insert_under = note
     elif relative == "replace":
         for note in chunk_to_insert.root.children:
-            write_note._node.sibling.add_child(note)
-            note.sibling = write_note._node.sibling
-            note.demote()
-            parent = write_note._node.parent
-            node_index = [
-                i for i, node in enumerate(parent.children) if node == write_note._node
-            ][0]
-            del parent.children[node_index]
+            if write_note._node.sibling is None:
+                write_note._org.root.add_child(note)
+            else:
+                write_note._node.sibling.add_child(note)
+                note.sibling = write_note._node.sibling
+                note.demote()
+        write_note.delete()
     else:
         raise NotImplementedError("f{relative} not implemented")
     Path(lookup.filepath).write_text(str(write_note))
