@@ -3,7 +3,7 @@ Calculation:
   about: |
     Run a calculation from within a note.
   variations:
-    Basic calculation:
+    Basic addition:
       given:
         files:
           org/calc.org: |
@@ -23,7 +23,7 @@ Calculation:
             * Number of chairs = 1400
             =300+500+600
 
-    Rerun chair calculation:
+    Rerun basic addition:
       given:
         files:
           org/calc.org: |
@@ -43,3 +43,24 @@ Calculation:
             * Number of chairs = 1400
             =300+500+600
 
+    Error in calculation:
+      given:
+        files:
+          org/calc.org: |
+            * Destroy the universe = ?
+            =1/0
+      steps:
+      - orji:
+          env:
+            ORJITMP: ./tmp
+          cmd: calc org/calc.org//0
+          output: |
+            Written note(s) successfully
+
+      - file contents:
+          filename: org/calc.org
+          contents: |
+            * Destroy the universe = ?
+            =1/0
+            ** <class 'ZeroDivisionError'>
+            division by zero
