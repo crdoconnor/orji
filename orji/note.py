@@ -222,6 +222,17 @@ class Note:
                 note.sibling = self._node
                 note.demote()
 
+    def insert_under(self, text):
+        node_to_insert_under = self._node
+        for note in parsed(text).root.children:
+            node_to_insert_under.parent.add_child(note)
+
+            for _ in range(self._node.level):
+                note.sibling = self._node
+                note.demote()
+
+            node_to_insert_under = note
+
     def __iter__(self):
         for node in self._node.children:
             yield Note(node, self._loader, self._org)
