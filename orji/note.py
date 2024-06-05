@@ -214,6 +214,14 @@ class Note:
                 note.sibling = self._node.sibling
                 note.demote()
 
+    def insert_below(self, text):
+        for note in parsed(text).root.children:
+            self._node.add_child(note)
+
+            for _ in range(self._node.level - 1):
+                note.sibling = self._node
+                note.demote()
+
     def __iter__(self):
         for node in self._node.children:
             yield Note(node, self._loader, self._org)
