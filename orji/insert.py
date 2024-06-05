@@ -43,13 +43,7 @@ def insert(jinjafile, relative, location, insertion):
     write_note = lookup.load(loader)
 
     if relative == "above":
-        for note in chunk_to_insert.root.children:
-            if write_note._node.sibling is None:
-                write_note._org.root.add_child(note)
-            else:
-                write_note._node.sibling.add_child(note)
-                note.sibling = write_note._node.sibling
-                note.demote()
+        write_note.insert_above(output_text)
     elif relative == "below":
         for note in chunk_to_insert.root.children:
             write_note._node.add_child(note)

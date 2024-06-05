@@ -1,6 +1,7 @@
 from slugify import slugify
 from .exceptions import OrjiError
 from .lookup import Lookup
+import orgmunge
 import re
 
 
@@ -101,6 +102,14 @@ class Body(TextChunk):
         ]
 
 
+def parsed(text):
+    return orgmunge.Org(
+        text,
+        from_file=False,
+        todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
+    )
+
+
 class Note:
     def __init__(self, node, loader, org):
         self._node = node
@@ -195,6 +204,15 @@ class Note:
     @property
     def children(self):
         return [Note(node, self._loader, self._org) for node in self._node.children]
+
+    def insert_above(self, text):
+        for note in parsed(text).root.children:
+            if self._node.sibling is None:
+                self._org.root.add_child(note)
+            else:
+                self._node.sibling.add_child(note)
+                note.sibling = self._node.sibling
+                note.demote()
 
     def __iter__(self):
         for node in self._node.children:
