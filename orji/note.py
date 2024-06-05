@@ -233,6 +233,16 @@ class Note:
 
             node_to_insert_under = note
 
+    def replace(self, text):
+        for note in parsed(text).root.children:
+            if self._node.sibling is None:
+                self._org.root.add_child(note)
+            else:
+                self._node.sibling.add_child(note)
+                note.sibling = self._node.sibling
+                note.demote()
+        self.delete()
+
     def __iter__(self):
         for node in self._node.children:
             yield Note(node, self._loader, self._org)

@@ -2,7 +2,6 @@ from pathlib import Path
 import click
 from .template import Template
 from .exceptions import OrjiError
-import orgmunge
 from .tempdir import TempDir
 from .loader import Loader
 from .lookup import Lookup
@@ -34,12 +33,6 @@ def insert(jinjafile, relative, location, insertion):
     else:
         raise OrjiError(f"{insertion_type} not known")
 
-    chunk_to_insert = orgmunge.Org(
-        output_text,
-        from_file=False,
-        todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
-    )
-
     write_note = lookup.load(loader)
 
     if relative == "above":
@@ -49,14 +42,7 @@ def insert(jinjafile, relative, location, insertion):
     elif relative == "under":
         write_note.insert_under(output_text)
     elif relative == "replace":
-        for note in chunk_to_insert.root.children:
-            if write_note._node.sibling is None:
-                write_note._org.root.add_child(note)
-            else:
-                write_note._node.sibling.add_child(note)
-                note.sibling = write_note._node.sibling
-                note.demote()
-        write_note.delete()
+        write_note.replace(output_text)
     else:
         raise NotImplementedError("f{relative} not implemented")
     Path(lookup.filepath).write_text(str(write_note))
