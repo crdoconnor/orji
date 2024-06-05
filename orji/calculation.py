@@ -72,8 +72,9 @@ def calculation(relative):
                     "done_states": {"done": "DONE"},
                 },
             ).root.children[0]
-            write_note._node.parent.add_child(chunk_to_insert)
+            children = list(children)
             chunk_to_insert.sibling = write_note._node
+            write_note._node.children = children
             chunk_to_insert.demote()
         else:
             raise NotImplementedError
