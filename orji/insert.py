@@ -13,29 +13,32 @@ from .vcf import VCF
 @click.argument("jinjafile")
 @click.argument("relative")
 @click.argument("location")
-@click.argument("insertion")
-def insert(jinjafile, relative, location, insertion):
+@click.argument("insertions", nargs=-1)
+def insert(jinjafile, relative, location, insertions):
     temp_dir = TempDir()
     temp_dir.create()
     loader = Loader(temp_dir)
     lookup = Lookup(location)
     template_text = Path(jinjafile).read_text()
 
-    varname, insertion_type, insertion_reference = insertion.split(":")
-    template = Template(template_text, jinjafile)
+    variables = {}
 
-    if insertion_type == "ical":
-        output_text = template.render(**{varname: ICal(insertion_reference)})
-    elif insertion_type == "text":
-        output_text = template.render(
-            **{varname: Path(insertion_reference).read_text()}
-        )
-    elif insertion_type == "vcf":
-        output_text = template.render(**{varname: VCF(insertion_reference)})
-    elif insertion_type == "snippet":
-        output_text = template.render(**{varname: insertion_reference})
-    else:
-        raise OrjiError(f"{insertion_type} not known")
+    for insertion in insertions:
+        varname, insertion_type, insertion_reference = insertion.split(":")
+        template = Template(template_text, jinjafile)
+
+        if insertion_type == "ical":
+            variables[varname] = ICal(insertion_reference)
+        elif insertion_type == "text":
+            variables[varname] = Path(insertion_reference).read_text()
+        elif insertion_type == "vcf":
+            variables[varname] = VCF(insertion_reference)
+        elif insertion_type == "snippet":
+            variables[varname] = insertion_reference
+        else:
+            raise OrjiError(f"{insertion_type} not known")
+
+    output_text = template.render(**variables)
 
     write_note = lookup.load(loader)
 
