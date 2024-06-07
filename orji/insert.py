@@ -21,15 +21,19 @@ def insert(jinjafile, relative, location, insertion):
     lookup = Lookup(location)
     template_text = Path(jinjafile).read_text()
 
-    varname, insertion_type, insertion_file = insertion.split(":")
+    varname, insertion_type, insertion_reference = insertion.split(":")
     template = Template(template_text, jinjafile)
 
     if insertion_type == "ical":
-        output_text = template.render(**{varname: ICal(insertion_file)})
+        output_text = template.render(**{varname: ICal(insertion_reference)})
     elif insertion_type == "text":
-        output_text = template.render(**{varname: Path(insertion_file).read_text()})
+        output_text = template.render(
+            **{varname: Path(insertion_reference).read_text()}
+        )
     elif insertion_type == "vcf":
-        output_text = template.render(**{varname: VCF(insertion_file)})
+        output_text = template.render(**{varname: VCF(insertion_reference)})
+    elif insertion_type == "snippet":
+        output_text = template.render(**{varname: insertion_reference})
     else:
         raise OrjiError(f"{insertion_type} not known")
 
