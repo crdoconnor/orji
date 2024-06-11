@@ -1,5 +1,5 @@
 Calculation with dependency:
-  docs: basic-calculation
+  docs: calculation-with-dependency
   about: |
     Run a calculation from within a note.
   variations:
