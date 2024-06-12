@@ -5,6 +5,9 @@ from .lookup import Lookup
 from pathlib import Path
 import orgmunge
 from copy import copy
+import inspect
+import importlib.machinery
+import importlib.util  #
 
 
 class Modification:
@@ -33,7 +36,7 @@ def underscore_slugify(text):
     return slugify(text, separator="_")
 
 
-def perform_calculation(calc_note, modifications, variables):
+def perform_calculation(calc_note, modifications, variables, module_contents):
     headline = calc_note.name
     body = calc_note.body.text
 
@@ -48,8 +51,11 @@ def perform_calculation(calc_note, modifications, variables):
         if body.startswith("="):
             formula = body.lstrip("=")
 
+            injected = copy(module_contents)
+            injected.update(copy(variables))
+
             try:
-                actual_value = eval(formula, copy(variables))
+                actual_value = eval(formula, injected)
                 modifications.append(NewTitle(calc_note, actual_value))
                 new_title = left_hand_side + "= " + str(actual_value)
                 if new_title != calc_note.name:
@@ -66,7 +72,34 @@ def perform_calculation(calc_note, modifications, variables):
 
 @click.command()
 @click.argument("relative")
-def calculation(relative):
+@click.option(
+    "--module",
+    "pymodule",
+    help="Specify python module to use in calculations.",
+)
+def calculation(relative, pymodule):
+    if pymodule is not None:
+        pymodule_filepath = Path(pymodule)
+
+        if not pymodule_filepath.exists():
+            click.echo(f"{pymodule} not found", err=True)
+            exit(1)
+
+        loader = importlib.machinery.SourceFileLoader(
+            pymodule_filepath.stem, str(pymodule_filepath.absolute())
+        )
+        spec = importlib.util.spec_from_loader(loader.name, loader)
+        imported_pymodule = importlib.util.module_from_spec(spec)
+        loader.exec_module(imported_pymodule)
+
+        module_contents = {
+            key: item
+            for key, item in inspect.getmembers(imported_pymodule)
+            if not key.startswith("_")
+        }
+    else:
+        module_contents = {}
+
     temp_dir = TempDir()
     temp_dir.create()
     loader = Loader(temp_dir)
@@ -81,9 +114,9 @@ def calculation(relative):
     children.reverse()
 
     for child in children:
-        perform_calculation(child, modifications, variables)
+        perform_calculation(child, modifications, variables, module_contents)
 
-    perform_calculation(calc_note, modifications, variables)
+    perform_calculation(calc_note, modifications, variables, module_contents)
 
     for modification in modifications:
         modify_note = modification.relative
