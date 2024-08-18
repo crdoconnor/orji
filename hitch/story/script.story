@@ -66,6 +66,7 @@ Run:
 
 
 Run while ignoring file:
+  docs: orji-run-ignore
   based on: run
   given:
     files:
