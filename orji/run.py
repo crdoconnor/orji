@@ -19,11 +19,15 @@ from .loader import Loader
     help="Output folder. Defaults to current.",
 )
 @click.option(
+    "--ignore",
+    help="Ignore glob - files to avoid parsing.",
+)
+@click.option(
     "--multiple/--single",
     help="Output folder. Defaults to current.",
     default=False,
 )
-def run(orgdir, rundir, out, multiple):
+def run(orgdir, rundir, out, ignore, multiple):
     temp_dir = TempDir()
     temp_dir.create()
     loader = Loader(temp_dir)
@@ -45,17 +49,21 @@ def run(orgdir, rundir, out, multiple):
     matching_notes = []
 
     for orgfile in orgdir.glob("*.org"):
-        parsed_munge = orgmunge.Org(
-            Path(orgfile).read_text(),
-            from_file=False,
-            todos={"todo_states": {"todo": "TODO"}, "done_states": {"done": "DONE"}},
-        )
+        if ignore is None or not orgfile.match(ignore):
+            parsed_munge = orgmunge.Org(
+                Path(orgfile).read_text(),
+                from_file=False,
+                todos={
+                    "todo_states": {"todo": "TODO"},
+                    "done_states": {"done": "DONE"},
+                },
+            )
 
-        for note in Note(parsed_munge.root, loader=loader, org=parsed_munge):
-            if note.state == "TODO":
-                for tag in note.tags:
-                    if tag in scripts.keys():
-                        matching_notes.append((orgfile, tag, note))
+            for note in Note(parsed_munge.root, loader=loader, org=parsed_munge):
+                if note.state == "TODO":
+                    for tag in note.tags:
+                        if tag in scripts.keys():
+                            matching_notes.append((orgfile, tag, note))
 
     if len(matching_notes) == 0 and not multiple:
         temp_dir.destroy()

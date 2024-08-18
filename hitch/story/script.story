@@ -65,6 +65,23 @@ Run:
         /gen/working
 
 
+Run while ignoring file:
+  based on: run
+  given:
+    files:
+      org/ignore.org: |
+        * TODO An email I don't want to send :email:
+  replacement steps:
+  - orji:
+      env:
+        ORJITMP: ./tmp
+      cmd: run --ignore org/ignore.org org orun
+      output: |
+        Windows sucks.
+        billg@microsoft.com
+        /gen/working/org/simple.org
+        /gen/working/tmp/11111.tmp
+        /gen/working
 
 Run failing:
   based on: run
@@ -85,5 +102,6 @@ Run failing:
         billg@microsoft.com
 
         ERROR running email.sh in /gen/working/11111.tmp
+
 
 
