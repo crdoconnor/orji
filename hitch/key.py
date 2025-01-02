@@ -3,6 +3,8 @@ from pathquery import pathquery
 from click import argument, group, pass_context
 import hitchpylibrarytoolkit
 from engine import Engine
+from commandlib import Command, CommandError
+import sys
 
 
 toolkit = hitchpylibrarytoolkit.ProjectToolkitV2(
@@ -23,6 +25,14 @@ def cli(ctx):
 DIR = toolkit.DIR
 
 
+def _doctests(python_path):
+    try:
+        Command(python_path)(
+            "-m", "doctest", "-v", DIR.project.joinpath("orji", "utils.py")
+        ).in_dir(DIR.project.joinpath("orji")).run()
+    except CommandError:
+        sys.exit(1)
+
 def _storybook(**settings):
     return StoryCollection(pathquery(DIR.key).ext("story"), Engine(DIR, **settings))
 
@@ -34,6 +44,13 @@ def _current_version():
 def _devenv():
     return toolkit.devenv()
 
+
+@cli.command()
+def doctests():
+    """
+    Run doctests in utils.py in latest version.
+    """
+    _doctests(_devenv().python_path)
 
 @cli.command()
 @argument("keywords", nargs=-1)
