@@ -33,6 +33,7 @@ def _doctests(python_path):
     except CommandError:
         sys.exit(1)
 
+
 def _storybook(**settings):
     return StoryCollection(pathquery(DIR.key).ext("story"), Engine(DIR, **settings))
 
@@ -51,6 +52,7 @@ def doctests():
     Run doctests in utils.py in latest version.
     """
     _doctests(_devenv().python_path)
+
 
 @cli.command()
 @argument("keywords", nargs=-1)
