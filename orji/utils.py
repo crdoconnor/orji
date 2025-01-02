@@ -6,6 +6,7 @@ class Insertion(Enum):
     ABOVE = 0
     BELOW = 1
     UNDER = 2
+    REPLACE = 3
 
 
 def _insert(
@@ -22,7 +23,7 @@ def _insert(
 
     last_index = (
         indexes[-1] + 1
-        if insertion_type in (Insertion.BELOW, Insertion.UNDER)
+        if insertion_type in (Insertion.BELOW, Insertion.UNDER, Insertion.REPLACE)
         else indexes[-1]
     )
 
@@ -40,6 +41,9 @@ def _insert(
         ]:
             for _ in range(len(indexes)):
                 element.demote()
+
+    if insertion_type == Insertion.REPLACE:
+        del reread.root.children[last_index - 1]
     return reread
 
 
@@ -71,3 +75,11 @@ def above(document: str, to_insert: str, indexes: list[int]):
     \'* IN1\\n* O1\\n* O2\\n\'
     """
     return _insert(document, to_insert, indexes, Insertion.ABOVE)
+
+
+def replace(document: str, to_insert: str, indexes: list[int]):
+    """
+    >>> str(replace("* O1\\n* O2\\n", "* IN1\\n", [0]))
+    \'* IN1\\n* O2\\n\'
+    """
+    return _insert(document, to_insert, indexes, Insertion.REPLACE)
