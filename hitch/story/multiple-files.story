@@ -63,24 +63,6 @@ Multiple files - grabbing phone numbers from contact notes:
         VERSION:4.0
         FN:John
         N:John;;;;
-        TEL:+447777777774
-        END:VCARD
-        BEGIN:VCARD
-        VERSION:4.0
-        FN:Fred
-        N:Fred;;;;
-        TEL:+447777777775
-        END:VCARD
-        BEGIN:VCARD
-        VERSION:4.0
-        FN:James
-        N:James;;;;
-        TEL:+447777777776
-        END:VCARD
-        BEGIN:VCARD
-        VERSION:4.0
-        FN:John
-        N:John;;;;
         TEL:+447777777771
         END:VCARD
         BEGIN:VCARD
@@ -94,6 +76,24 @@ Multiple files - grabbing phone numbers from contact notes:
         FN:James
         N:James;;;;
         TEL:+447777777773
+        END:VCARD
+        BEGIN:VCARD
+        VERSION:4.0
+        FN:John
+        N:John;;;;
+        TEL:+447777777774
+        END:VCARD
+        BEGIN:VCARD
+        VERSION:4.0
+        FN:Fred
+        N:Fred;;;;
+        TEL:+447777777775
+        END:VCARD
+        BEGIN:VCARD
+        VERSION:4.0
+        FN:James
+        N:James;;;;
+        TEL:+447777777776
         END:VCARD
 
 ...

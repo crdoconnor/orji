@@ -12,7 +12,7 @@ authors = [
 ]
 description = "Org mode to jinja2 templating."
 license = {text = "MIT"}
-requires-python = ">=3.7.0"
+requires-python = ">=3.10.0"
 keywords = ["orgmode", "markdown", "latex", "jinja2"]
 classifiers = [
     "Programming Language :: Python :: 3",

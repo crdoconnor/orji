@@ -12,13 +12,14 @@ IMAGE_NAME=hitch-${FOLDER_HASH}-${PROJECT_NAME}
 
 hitchrun() {
     podman run --privileged -it --rm \
+        --network host \
         -v $PROJECT_DIR:/src \
         -v $GEN_VOLUME_NAME:/gen \
         -v ~/.ssh/id_rsa:/root/.ssh/id_rsa \
         -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub \
         -e CI=$CI \
-        -p 5555:5555 \
         --secret pypitoken,type=env,target=PYPITOKEN \
+        --secret github-orji-token,type=env,target=GITHUBTOKEN \
         --workdir /src \
         $IMAGE_NAME \
         $1
@@ -42,8 +43,8 @@ case "$1" in
                 fi
                 podman volume create $GEN_VOLUME_NAME
                 ;;
-            "pyenv")
-                hitchrun "rm -rf /gen/pyenv/"
+            "uvcache")
+                hitchrun "rm -rf /gen/uvcache/"
                 ;;
             "devenv")
                 hitchrun "rm /gen/pyenv/versions/devvenv"
@@ -62,20 +63,21 @@ case "$1" in
                     podman volume create $GEN_VOLUME_NAME
                 fi
                 podman build -f hitch/Dockerfile-hitch -t $IMAGE_NAME $PROJECT_DIR
-                hitchrun "virtualenv --python=python3 /gen/venv"
-                hitchrun "/gen/venv/bin/pip install setuptools-rust"
-                hitchrun "/gen/venv/bin/pip install -r /src/hitch/hitchreqs.txt"
-                hitchrun "/gen/venv/bin/python hitch/key.py build"
+                hitchrun "uv venv /gen/venv"
+                hitchrun "uv sync --directory /src/hitch --python /gen/venv/bin/python"
+                hitchrun "uv run --directory /src/hitch --python /gen/venv/bin/python key.py build"
                 ;;
             "gen")
-                hitchrun "virtualenv --python=python3 /gen/venv"
-                hitchrun "/gen/venv/bin/pip install setuptools-rust"
-                hitchrun "/gen/venv/bin/pip install -r /src/hitch/hitchreqs.txt"
-                hitchrun "/gen/venv/bin/python hitch/key.py build"
+                hitchrun "uv venv /gen/venv"
+                hitchrun "uv sync --directory /src/hitch --python /gen/venv/bin/python"
+                hitchrun "uv run --directory /src/hitch --python /gen/venv/bin/python key.py build"
                 ;;
             "pylibrarytoolkit")
-                hitchrun "/gen/venv/bin/pip uninstall hitchpylibrarytoolkit -y"
-                hitchrun "/gen/venv/bin/pip install --no-deps -e /src/hitchpylibrarytoolkit"
+                hitchrun "uv pip uninstall hitchpylibrarytoolkit --directory /src/hitch --python /gen/venv/bin/python"
+                hitchrun "uv pip install -e ../hitchpylibrarytoolkit/ --directory /src/hitch --python /gen/venv/bin/python"
+                ;;
+            "lock")
+                hitchrun "uv lock --directory /src/hitch --python /gen/venv/bin/python"
                 ;;
             *)
                 echo "Invalid make target. ./key.sh make [all|gen|pylibrarytoolkit]"
@@ -86,11 +88,8 @@ case "$1" in
     "bash")
         hitchrun "bash"
         ;;
-    "ipy")
-        hitchrun "/gen/pyenv/versions/devvenv/bin/ipython"
-        ;;
     *)
-        hitchrun "/gen/venv/bin/python hitch/key.py $1 $2 $3 $4 $5 $6 $7 $8 $9"
+        hitchrun "uv run --directory /src/hitch --python /gen/venv/bin/python key.py $1 $2 $3 $4 $5 $6 $7 $8 $9"
         ;; 
 esac
 
