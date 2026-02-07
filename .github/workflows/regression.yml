@@ -21,6 +21,7 @@ jobs:
           touch ~/.ssh/id_rsa
           touch ~/.ssh/id_rsa.pub
           echo test | podman secret create pypitoken -
+          echo test | podman secret create github-orji-token -
           ./key.sh make
 
       - name: regression
