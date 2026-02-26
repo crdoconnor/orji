@@ -13,7 +13,7 @@ Calculation errors:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: calc org/calc.org//0
+          cmd: calc org/calc.org
           output: |
             Written note(s) successfully
 
@@ -38,7 +38,7 @@ Calculation errors:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: calc org/calc.org//0
+          cmd: calc org/calc.org
           output: |
             Written note(s) successfully
 

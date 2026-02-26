@@ -107,15 +107,10 @@ def calculation(relative, pymodule):
     modifications: Modification = []
     variables = {}
 
-    calc_note = lookup.load(loader)
+    calc_notes = lookup.load(loader)
 
-    children = calc_note.children
-    children.reverse()
-
-    for child in children:
-        perform_calculation(child, modifications, variables, module_contents)
-
-    perform_calculation(calc_note, modifications, variables, module_contents)
+    for calc_note in calc_notes:
+        perform_calculation(calc_note, modifications, variables, module_contents)
 
     for modification in modifications:
         modify_note = modification.relative
@@ -144,6 +139,6 @@ def calculation(relative, pymodule):
         else:
             raise NotImplementedError
 
-    Path(lookup.filepath).write_text(str(calc_note))
+    Path(lookup.filepath).write_text(str(calc_notes))
     click.echo("Written note(s) successfully")
     temp_dir.destroy()
