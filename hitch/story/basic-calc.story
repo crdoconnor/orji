@@ -1,7 +1,7 @@
 Basic calculation:
   docs: basic-calculation
   about: |
-    Run a calculation from within a note.
+    Run calculations from within a note and see the results appear within the note.
   variations:
     First run:
       given:
@@ -9,11 +9,13 @@ Basic calculation:
           org/calc.org: |
             * Number of chairs = ?
             =300+500+600
+            * Weight = ?
+            =34.5+34.2
       steps:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: calc org/calc.org//0
+          cmd: calc org/calc.org
           output: |
             Written note(s) successfully
 
@@ -22,6 +24,8 @@ Basic calculation:
           contents: |
             * Number of chairs = 1400
             =300+500+600
+            * Weight = 68.7
+            =34.5+34.2
 
     Second run:
       given:
@@ -29,11 +33,13 @@ Basic calculation:
           org/calc.org: |
             * Number of chairs = 1500
             =300+500+600
+            * Weight = 68.7
+            =34.5+34.2
       steps:
       - orji:
           env:
             ORJITMP: ./tmp
-          cmd: calc org/calc.org//0
+          cmd: calc org/calc.org
           output: |
             Written note(s) successfully
 
@@ -42,3 +48,5 @@ Basic calculation:
           contents: |
             * Number of chairs = 1400
             =300+500+600
+            * Weight = 68.7
+            =34.5+34.2

@@ -8,3 +8,4 @@ sure
 ensure
 python-slugify
 pytest
+web-pdb

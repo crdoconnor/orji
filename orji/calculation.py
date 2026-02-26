@@ -56,7 +56,6 @@ def perform_calculation(calc_note, modifications, variables, module_contents):
 
             try:
                 actual_value = eval(formula, injected)
-                modifications.append(NewTitle(calc_note, actual_value))
                 new_title = left_hand_side + "= " + str(actual_value)
                 if new_title != calc_note.name:
                     modifications.append(NewTitle(calc_note, new_title))
