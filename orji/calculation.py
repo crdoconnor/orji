@@ -110,7 +110,12 @@ def calculation(relative, pymodule):
     calc_notes = lookup.load(loader)
 
     for calc_note in calc_notes:
-        perform_calculation(calc_note, modifications, variables, module_contents)
+        if calc_note.state != "DONE":
+            perform_calculation(calc_note, modifications, variables, module_contents)
+
+            if "subcalc" in calc_note.tags:
+                for subcalc_note in calc_note.children:
+                    perform_calculation(subcalc_note, modifications, variables, module_contents)
 
     for modification in modifications:
         modify_note = modification.relative

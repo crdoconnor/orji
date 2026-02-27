@@ -31,6 +31,15 @@ dependencies = [
 ]
 dynamic = ["version", "readme"]
 
+[project.optional-dependencies]
+test = [
+    "flake8",
+    "ipython",
+    "q",
+    "ipykernel",
+    "web-pdb",
+]
+
 [project.scripts]
 orji = "orji:cli"
 
