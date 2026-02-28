@@ -10,6 +10,7 @@ import importlib.machinery
 import importlib.util  #
 from dataclasses import dataclass
 from datetime import datetime
+from orgmunge.classes import Scheduling, TimeStamp
 
 class Modification:
     pass
@@ -19,6 +20,12 @@ class NewTitle(Modification):
     def __init__(self, relative, title):
         self.relative = relative
         self.title = title
+
+
+class NewDatetime(Modification):
+    def __init__(self, relative, new_datetime):
+        self.relative = relative
+        self.new_datetime = new_datetime
 
 
 class AddError(Modification):
@@ -69,6 +76,24 @@ def perform_calculation(calc_note, modifications, variables, module_contents):
                 new_title = left_hand_side + "= " + str(actual_value)
                 if new_title != calc_note.name:
                     modifications.append(NewTitle(calc_note, new_title))
+            except Exception as error:
+                modifications.append(
+                    AddError(calc_note, type(error).__name__.strip(), str(error))
+                )
+
+        if body.startswith("sched ="):
+            formula = body.lstrip("sched").lstrip().lstrip("=").lstrip()
+
+            injected = copy(module_contents)
+            injected.update(copy(variables))
+
+            try:
+                new_datetime = eval(formula, injected)
+                if calc_note._node.scheduling is None:
+                    modifications.append(NewDatetime(calc_note, new_datetime))
+                else:
+                    if new_datetime != calc_note._node.scheduling.SCHEDULED.start_time:
+                        modifications.append(NewDatetime(calc_note, new_datetime))
             except Exception as error:
                 modifications.append(
                     AddError(calc_note, type(error).__name__.strip(), str(error))
@@ -144,6 +169,9 @@ def calculation(relative, pymodule):
 
         if isinstance(modification, NewTitle):
             modify_note.set_name(modification.title)
+            modify_note._node.children = children
+        elif isinstance(modification, NewDatetime):
+            modify_note._node.scheduling = Scheduling(keyword="scheduled", timestamp=TimeStamp(modification.new_datetime.strftime("<%Y-%m-%d %a>")))
             modify_note._node.children = children
         elif isinstance(modification, AddError):
             chunk_to_insert = orgmunge.Org(
