@@ -8,7 +8,8 @@ from copy import copy
 import inspect
 import importlib.machinery
 import importlib.util  #
-
+from dataclasses import dataclass
+from datetime import datetime
 
 class Modification:
     pass
@@ -34,6 +35,15 @@ def slugify(text, separator="-"):
 def underscore_slugify(text):
     """Changes "Something like this" to "something_like_this"."""
     return slugify(text, separator="_")
+
+@dataclass
+class CalcNote:
+    sched_start: datetime | None = None
+    sched_end: datetime | None = None
+
+    @property
+    def sched(self):
+        return self.sched_start
 
 
 def perform_calculation(calc_note, modifications, variables, module_contents):
@@ -66,6 +76,13 @@ def perform_calculation(calc_note, modifications, variables, module_contents):
 
         variables[underscore_slugify(left_hand_side)] = (
             float(actual_value) if actual_value is not None else None
+        )
+
+    if calc_note._node.scheduling is not None:
+        start_time = calc_note._node.scheduling.SCHEDULED.start_time
+        variables[underscore_slugify(headline)] = CalcNote(
+            sched_start=calc_note._node.scheduling.SCHEDULED.start_time,
+            sched_end=calc_note._node.scheduling.SCHEDULED.end_time
         )
 
 
