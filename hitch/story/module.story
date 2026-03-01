@@ -33,12 +33,15 @@ Use a python module:
     With calculations:
       given:
         files:
-          calc.org: |
-            * Five squared = ?
-            =squared(5)
           calc.py: |
             def squared(number):
                 return number * number
+
+          calc.org: |
+            * Five squared = ?
+            =squared(5)
+            * Upper case = ?
+            ="aaa".upper()
       steps:
       - orji:
           cmd: calc --module calc.py calc.org
@@ -50,3 +53,5 @@ Use a python module:
           contents: |
             * Five squared = 25
             =squared(5)
+            * Upper case = AAA
+            ="aaa".upper()

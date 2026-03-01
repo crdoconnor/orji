@@ -99,9 +99,7 @@ def perform_calculation(calc_note, modifications, variables, module_contents):
                     AddError(calc_note, type(error).__name__.strip(), str(error))
                 )
 
-        variables[underscore_slugify(left_hand_side)] = (
-            float(actual_value) if actual_value is not None else None
-        )
+        variables[underscore_slugify(left_hand_side)] = actual_value
 
     if calc_note._node.scheduling is not None:
         start_time = calc_note._node.scheduling.SCHEDULED.start_time
