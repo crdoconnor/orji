@@ -7,14 +7,21 @@ import orgmunge
 from copy import copy
 import inspect
 import importlib.machinery
-import importlib.util  #
+import importlib.util
 from dataclasses import dataclass
 from datetime import datetime
 from orgmunge.classes import Scheduling, TimeStamp
+from orgmunge import Headline, Heading
+from datetime import datetime
 
 class Modification:
     pass
 
+
+class NewChildren(Modification):
+    def __init__(self, relative, new_children):
+        self.relative = relative
+        self.new_children = new_children
 
 class NewTitle(Modification):
     def __init__(self, relative, title):
@@ -56,6 +63,21 @@ class CalcNote:
 def perform_calculation(calc_note, modifications, variables, module_contents):
     headline = calc_note.name
     body = calc_note.body.text
+
+    if headline.endswith(">"):
+        if body.startswith("="):
+            formula = body.lstrip("=")
+            injected = copy(module_contents)
+            injected.update(copy(variables))
+            actual_list = eval(formula, injected)
+
+            try:
+                modifications.append(NewChildren(calc_note, actual_list))
+            except Exception as error:
+                modifications.append(
+                    AddError(calc_note, type(error).__name__.strip(), str(error))
+                )
+
 
     if "=" in headline:
         left_hand_side = headline.split("=")[0]
@@ -102,11 +124,12 @@ def perform_calculation(calc_note, modifications, variables, module_contents):
         variables[underscore_slugify(left_hand_side)] = actual_value
 
     if calc_note._node.scheduling is not None:
-        start_time = calc_note._node.scheduling.SCHEDULED.start_time
-        variables[underscore_slugify(headline)] = CalcNote(
-            sched_start=calc_note._node.scheduling.SCHEDULED.start_time,
-            sched_end=calc_note._node.scheduling.SCHEDULED.end_time
-        )
+        if calc_note._node.scheduling.SCHEDULED is not None:
+            start_time = calc_note._node.scheduling.SCHEDULED.start_time
+            variables[underscore_slugify(headline)] = CalcNote(
+                sched_start=calc_note._node.scheduling.SCHEDULED.start_time,
+                sched_end=calc_note._node.scheduling.SCHEDULED.end_time
+            )
 
 
 @click.command()
@@ -138,6 +161,14 @@ def calculation(relative, pymodule):
         }
     else:
         module_contents = {}
+
+    @dataclass
+    class CalcNote:
+        state: str
+        title: str
+        scheduled: datetime
+
+    module_contents["CalcNote"] = CalcNote
 
     temp_dir = TempDir()
     temp_dir.create()
@@ -171,6 +202,24 @@ def calculation(relative, pymodule):
         elif isinstance(modification, NewDatetime):
             modify_note._node.scheduling = Scheduling(keyword="scheduled", timestamp=TimeStamp(modification.new_datetime.strftime("<%Y-%m-%d %a>")))
             modify_note._node.children = children
+        elif isinstance(modification, NewChildren):
+            heading_level = "*" * (modify_note._node.headline.level + 1)
+            todos = modify_note._org.todos
+            modify_note._node.children = [
+                Heading(
+                    headline=Headline(
+                        level=heading_level,
+                        title=child.title,
+                        todos=todos,
+                        todo=child.state,
+                    ),
+                    contents=(
+                        Scheduling(keyword="scheduled", timestamp=TimeStamp(child.scheduled.strftime("<%Y-%m-%d %a>"))),
+                        None,
+                        None
+                    ),
+                ) for child in modification.new_children
+            ]
         elif isinstance(modification, AddError):
             chunk_to_insert = orgmunge.Org(
                 f"* {modification.error_title} :calcerror:\n{modification.error_text}",
