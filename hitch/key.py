@@ -75,6 +75,14 @@ def bdd(keywords):
 
 
 @cli.command()
+def ipython():
+    """
+    Run ipython in devenv.
+    """
+    Command(_devenv().python_path, "-m", "IPython").run()
+
+
+@cli.command()
 @argument("filename")
 def regressfile(filename):
     """
