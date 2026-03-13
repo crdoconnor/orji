@@ -16,7 +16,7 @@ Date calculation:
             * Days lived in New York = ?
             = (date_moved_to_philadelphia.sched - date_moved_to_new_york.sched).days
             * Eight weeks after moving to New York = ?
-            sched =  date_moved_to_new_york.sched + timedelta(weeks=8)
+            sched = date_moved_to_new_york.sched + timedelta(weeks=8)
       steps:
       - orji:
           env:
@@ -36,4 +36,4 @@ Date calculation:
             = (date_moved_to_philadelphia.sched - date_moved_to_new_york.sched).days
             * Eight weeks after moving to New York = ?
             SCHEDULED: <2025-02-26 Wed>
-            sched =  date_moved_to_new_york.sched + timedelta(weeks=8)
+            sched = date_moved_to_new_york.sched + timedelta(weeks=8)

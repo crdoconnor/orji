@@ -131,6 +131,9 @@ def perform_calculation(calc_note, modifications, variables, module_contents):
                 sched_end=calc_note._node.scheduling.SCHEDULED.end_time
             )
 
+    if len(calc_note._node.tags) > 0 and "calctext" in calc_note._node.tags:
+        variables[underscore_slugify(headline)] = calc_note.body.text
+
 
 @click.command()
 @click.argument("relative")
@@ -167,6 +170,7 @@ def calculation(relative, pymodule):
         state: str
         title: str
         scheduled: datetime
+        body: str | None
 
     module_contents["CalcNote"] = CalcNote
 
@@ -216,7 +220,7 @@ def calculation(relative, pymodule):
                     contents=(
                         Scheduling(keyword="scheduled", timestamp=TimeStamp(child.scheduled.strftime("<%Y-%m-%d %a>"))),
                         None,
-                        None
+                        child.body
                     ),
                 ) for child in modification.new_children
             ]
